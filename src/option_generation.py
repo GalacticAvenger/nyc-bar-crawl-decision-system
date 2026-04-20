@@ -89,14 +89,15 @@ def unlock_hint_for(
     best_crit = max(deltas, key=deltas.get)
     if deltas[best_crit] <= 0:
         return "(runner-up doesn't beat the winner on any single criterion)"
+    # Phrases must compose cleanly after "if you'd" (conditional past participle form).
     phrase_map = {
         "vibe": "weighted vibes differently",
         "budget": "had a tighter budget",
         "drink_match": "specifically wanted a drink this bar carries",
         "noise": "wanted a different noise level",
-        "distance": "were starting from a different location",
+        "distance": "started from a different location",
         "happy_hour_active": "arrived during its happy hour",
-        "specials_match": "were there during its special event",
+        "specials_match": "been there during its special event",
         "crowd_fit": "wanted a different crowd energy",
         "novelty": "prioritized novelty",
         "quality_signal": "prioritized widely-loved picks",

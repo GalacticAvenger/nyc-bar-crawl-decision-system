@@ -266,7 +266,12 @@ def explain_route(route: Route, group: GroupInput, rules: dict) -> str:
                 "the planner.")
 
     n = len(route.stops)
-    user_names = ", ".join(u.name for u in group.users)
+    # Cap the user-name roll call so it doesn't blow up for 10+ person groups
+    if len(group.users) <= 4:
+        user_names = ", ".join(u.name for u in group.users)
+    else:
+        shown = [u.name for u in group.users[:3]]
+        user_names = ", ".join(shown) + f", and {len(group.users) - 3} others"
     names = " → ".join(s.bar.name for s in route.stops)
     walking = f"{route.total_walking_miles:.1f} miles of walking"
     windows = len(route.windows_captured)
