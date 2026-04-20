@@ -1,0 +1,209 @@
+# ============================================================================
+# Default Open Hours by Bar Type
+# ============================================================================
+# Close times past midnight use 24+ (e.g., "26:00" = 2am next day).
+# null means closed that day.
+# ----------------------------------------------------------------------------
+
+_version: "1.0"
+
+standard_bar:
+  description: "Generic bar. 4pm open, 2am close."
+  hours:
+    mon: null
+    tue: ["16:00", "26:00"]
+    wed: ["16:00", "26:00"]
+    thu: ["16:00", "26:00"]
+    fri: ["16:00", "28:00"]
+    sat: ["14:00", "28:00"]
+    sun: ["14:00", "24:00"]
+  default_happy_hour:
+    days: [tue, wed, thu, fri]
+    start: "16:00"
+    end: "19:00"
+    details: "$2 off drafts, $3 off cocktails"
+    bonus: 0.20
+  default_specials: []
+
+cocktail_bar:
+  description: "Cocktail-forward bars."
+  hours:
+    mon: null
+    tue: ["17:00", "26:00"]
+    wed: ["17:00", "26:00"]
+    thu: ["17:00", "26:00"]
+    fri: ["17:00", "28:00"]
+    sat: ["17:00", "28:00"]
+    sun: ["17:00", "24:00"]
+  default_happy_hour:
+    days: [tue, wed, thu]
+    start: "17:00"
+    end: "19:00"
+    details: "$2 off featured cocktails"
+    bonus: 0.18
+  default_specials:
+    - kind: industry_night
+      days: [sun]
+      start: "22:00"
+      end: "26:00"
+      details: "20% off for service-industry workers"
+      bonus: 0.10
+
+pub:
+  description: "Pubs, Irish pubs, gastropubs."
+  hours:
+    mon: ["12:00", "26:00"]
+    tue: ["12:00", "26:00"]
+    wed: ["12:00", "26:00"]
+    thu: ["12:00", "26:00"]
+    fri: ["12:00", "28:00"]
+    sat: ["11:00", "28:00"]
+    sun: ["11:00", "24:00"]
+  default_happy_hour:
+    days: [mon, tue, wed, thu, fri]
+    start: "16:00"
+    end: "19:00"
+    details: "$5 drafts, $7 wells"
+    bonus: 0.22
+  default_specials:
+    - kind: trivia
+      days: [tue]
+      start: "19:00"
+      end: "21:00"
+      details: "Pub trivia night"
+      bonus: 0.12
+
+beer_garden:
+  description: "Beer gardens and beer halls."
+  hours:
+    mon: ["16:00", "24:00"]
+    tue: ["16:00", "24:00"]
+    wed: ["16:00", "24:00"]
+    thu: ["16:00", "25:00"]
+    fri: ["15:00", "26:00"]
+    sat: ["12:00", "26:00"]
+    sun: ["12:00", "24:00"]
+  default_happy_hour:
+    days: [mon, tue, wed, thu]
+    start: "16:00"
+    end: "18:00"
+    details: "$2 off steins"
+    bonus: 0.18
+  default_specials: []
+
+sports_bar:
+  description: "Sports bars and pool halls."
+  hours:
+    mon: ["15:00", "26:00"]
+    tue: ["15:00", "26:00"]
+    wed: ["15:00", "26:00"]
+    thu: ["15:00", "26:00"]
+    fri: ["14:00", "28:00"]
+    sat: ["12:00", "28:00"]
+    sun: ["12:00", "26:00"]
+  default_happy_hour:
+    days: [mon, tue, wed, thu, fri]
+    start: "15:00"
+    end: "19:00"
+    details: "$4 drafts, $6 wells, $8 wings"
+    bonus: 0.20
+  default_specials:
+    - kind: game_day_special
+      days: [sat, sun]
+      start: "12:00"
+      end: "18:00"
+      details: "Game-day discount on pitchers"
+      bonus: 0.10
+
+karaoke:
+  description: "Karaoke bars."
+  hours:
+    mon: null
+    tue: ["19:00", "26:00"]
+    wed: ["19:00", "26:00"]
+    thu: ["19:00", "26:00"]
+    fri: ["19:00", "28:00"]
+    sat: ["19:00", "28:00"]
+    sun: ["19:00", "24:00"]
+  default_happy_hour:
+    days: [tue, wed, thu]
+    start: "19:00"
+    end: "21:00"
+    details: "$7 highballs, free room fee before 9pm"
+    bonus: 0.22
+  default_specials:
+    - kind: karaoke_night
+      days: [thu, fri, sat]
+      start: "21:00"
+      end: "26:00"
+      details: "Open karaoke; no cover"
+      bonus: 0.20
+
+lounge:
+  description: "Lounges."
+  hours:
+    mon: null
+    tue: ["18:00", "26:00"]
+    wed: ["18:00", "26:00"]
+    thu: ["18:00", "26:00"]
+    fri: ["18:00", "28:00"]
+    sat: ["18:00", "28:00"]
+    sun: ["18:00", "24:00"]
+  default_happy_hour: null
+  default_specials: []
+
+wine_bar:
+  description: "Wine bars. Evening-only, early close."
+  hours:
+    mon: null
+    tue: ["17:00", "24:00"]
+    wed: ["17:00", "24:00"]
+    thu: ["17:00", "25:00"]
+    fri: ["17:00", "26:00"]
+    sat: ["15:00", "26:00"]
+    sun: ["15:00", "23:00"]
+  default_happy_hour:
+    days: [tue, wed]
+    start: "17:00"
+    end: "19:00"
+    details: "Half-price glasses of the featured varietal"
+    bonus: 0.20
+  default_specials: []
+
+nightclub:
+  description: "Nightclubs. Late open only."
+  hours:
+    mon: null
+    tue: null
+    wed: null
+    thu: ["22:00", "28:00"]
+    fri: ["22:00", "28:00"]
+    sat: ["22:00", "28:00"]
+    sun: null
+  default_happy_hour: null
+  default_specials:
+    - kind: theme_night
+      days: [fri, sat]
+      start: "23:00"
+      end: "28:00"
+      details: "Resident DJ"
+      bonus: 0.15
+
+music_venue:
+  description: "Live music venues."
+  hours:
+    mon: null
+    tue: ["19:00", "26:00"]
+    wed: ["19:00", "26:00"]
+    thu: ["19:00", "26:00"]
+    fri: ["19:00", "28:00"]
+    sat: ["19:00", "28:00"]
+    sun: ["19:00", "24:00"]
+  default_happy_hour: null
+  default_specials:
+    - kind: live_music
+      days: [thu, fri, sat]
+      start: "20:00"
+      end: "23:00"
+      details: "Live music set"
+      bonus: 0.15

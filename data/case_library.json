@@ -1,0 +1,278 @@
+{
+  "_comment": "Case-Based Reasoning library. 20 crawl archetypes anchored in the seed dataset's neighborhoods. Each case describes a SOLUTION SHAPE (bar-type sequence + vibe profile per stop), not specific bars — the adapter maps types to concrete bars at runtime.",
+  "_version": "1.0",
+  "_count": 20,
+
+  "cases": [
+    {
+      "id": "case_les_speakeasy_ladder",
+      "name": "LES Speakeasy Ladder",
+      "group_profile": {"size": [2, 3], "vibe_summary": "intimate + sophisticated", "budget_tier": "premium"},
+      "context": {"start_neighborhoods": ["LES", "Lower East Side"], "nights": ["thu", "fri", "sat"], "duration_hours": 3, "stop_count": 3},
+      "solution_sequence": [
+        {"bar_type": ["cocktail_bar"], "vibe_profile": {"intimate": 0.9, "polished": 0.8, "conversation": 0.9}, "role": "warm_up"},
+        {"bar_type": ["cocktail_bar", "themed"], "vibe_profile": {"dim": 0.9, "themed": 0.8, "historic": 0.6}, "role": "main"},
+        {"bar_type": ["wine_bar", "lounge"], "vibe_profile": {"intimate": 0.9, "cozy": 0.8}, "role": "nightcap"}
+      ],
+      "success_narrative": "Opens with conversation, peaks in theatricality at the speakeasy, softens into a quiet close.",
+      "fails_when": ["group_size > 4", "budget_tier == cheap", "pregame in purpose"],
+      "example_bars_in_dataset": ["Madame George", "The Back Room", "Please Don't Tell", "Banzarbar"]
+    },
+    {
+      "id": "case_east_village_dive_tour",
+      "name": "East Village Dive Tour",
+      "group_profile": {"size": [3, 6], "vibe_summary": "divey + unpretentious", "budget_tier": "cheap"},
+      "context": {"start_neighborhoods": ["East Village"], "nights": ["wed", "thu", "fri", "sat"], "duration_hours": 3.5, "stop_count": 4},
+      "solution_sequence": [
+        {"bar_type": ["pub", "irish_pub"], "vibe_profile": {"unpretentious": 0.9, "local-institution": 0.9, "historic": 0.7}, "role": "warm_up"},
+        {"bar_type": ["generic_bar"], "vibe_profile": {"divey": 0.9, "unpretentious": 0.8}, "role": "middle_1"},
+        {"bar_type": ["generic_bar"], "vibe_profile": {"divey": 0.8, "lively": 0.8}, "role": "middle_2"},
+        {"bar_type": ["generic_bar"], "vibe_profile": {"divey": 0.8, "cozy": 0.6}, "role": "nightcap"}
+      ],
+      "success_narrative": "Historic opener, three dives in walking distance, closes cheap.",
+      "fails_when": ["budget_tier == premium", "date in purpose"],
+      "example_bars_in_dataset": ["McSorley's Old Ale House", "Burp Castle", "Sake Bar Decibel", "11th St. Bar", "Blue & Gold Tavern", "Otto's Shrunken Head"]
+    },
+    {
+      "id": "case_astoria_beer_garden_night",
+      "name": "Astoria Beer Garden Night",
+      "group_profile": {"size": [4, 10], "vibe_summary": "outdoor + large groups", "budget_tier": "moderate"},
+      "context": {"start_neighborhoods": ["Astoria"], "nights": ["fri", "sat", "sun"], "duration_hours": 4, "stop_count": 2},
+      "solution_sequence": [
+        {"bar_type": ["beer_garden", "beer_hall"], "vibe_profile": {"outdoor": 0.9, "large-groups": 0.9, "lively": 0.8}, "role": "main"},
+        {"bar_type": ["pub", "irish_pub"], "vibe_profile": {"unpretentious": 0.8, "lively": 0.7}, "role": "nightcap"}
+      ],
+      "success_narrative": "Long, social beer-garden session; simple pub to close.",
+      "fails_when": ["group_size < 4"],
+      "example_bars_in_dataset": ["Bohemian Hall & Beer Garden", "Sunswick 35/35", "The Bonnie", "Slainte"]
+    },
+    {
+      "id": "case_bushwick_dance_crawl",
+      "name": "Bushwick Dance Crawl",
+      "group_profile": {"size": [2, 6], "vibe_summary": "artsy + dancing", "budget_tier": "moderate"},
+      "context": {"start_neighborhoods": ["Bushwick"], "nights": ["fri", "sat"], "duration_hours": 4, "stop_count": 3},
+      "solution_sequence": [
+        {"bar_type": ["generic_bar", "cocktail_bar"], "vibe_profile": {"hipster": 0.8, "artsy": 0.7, "chill": 0.6}, "role": "warm_up"},
+        {"bar_type": ["nightclub", "dance"], "vibe_profile": {"dancing": 0.9, "loud": 0.8, "artsy": 0.7}, "role": "main"},
+        {"bar_type": ["event_venue", "music_venue"], "vibe_profile": {"themed": 0.9, "rowdy": 0.8, "lgbtq-friendly": 0.6}, "role": "nightcap"}
+      ],
+      "success_narrative": "Low-key opener, high-energy dance floor, surreal close.",
+      "fails_when": ["first-meet in purpose", "budget_tier == cheap"],
+      "example_bars_in_dataset": ["Mood Ring", "Bossa Nova Civic Club", "The Sultan Room", "House of Yes", "SILO"]
+    },
+    {
+      "id": "case_hells_kitchen_pub_crawl",
+      "name": "Hell's Kitchen Pub Crawl",
+      "group_profile": {"size": [3, 8], "vibe_summary": "unpretentious + pregame", "budget_tier": "cheap"},
+      "context": {"start_neighborhoods": ["Hell's Kitchen", "Midtown West"], "nights": ["fri", "sat"], "duration_hours": 3, "stop_count": 3},
+      "solution_sequence": [
+        {"bar_type": ["generic_bar"], "vibe_profile": {"divey": 0.8, "unpretentious": 0.9, "historic": 0.7}, "role": "warm_up"},
+        {"bar_type": ["generic_bar"], "vibe_profile": {"lively": 0.8, "large-groups": 0.7}, "role": "middle"},
+        {"bar_type": ["irish_pub", "pub"], "vibe_profile": {"loud": 0.7, "unpretentious": 0.8}, "role": "nightcap"}
+      ],
+      "success_narrative": "Cheap, walkable, unpretentious — the HK classic.",
+      "fails_when": ["date in purpose", "budget_tier == premium"],
+      "example_bars_in_dataset": ["Rudy's Bar & Grill", "Beer Culture", "As Is NYC", "The Pony Bar", "Pig 'N' Whistle", "The Mean Fiddler"]
+    },
+    {
+      "id": "case_williamsburg_indie_date",
+      "name": "Williamsburg Indie Date",
+      "group_profile": {"size": [2], "vibe_summary": "artsy + intimate", "budget_tier": "moderate"},
+      "context": {"start_neighborhoods": ["Williamsburg"], "nights": ["thu", "fri", "sat"], "duration_hours": 3, "stop_count": 3},
+      "solution_sequence": [
+        {"bar_type": ["generic_bar", "wine_bar"], "vibe_profile": {"intimate": 0.8, "hipster": 0.7, "hidden-gem": 0.6}, "role": "warm_up"},
+        {"bar_type": ["generic_bar", "pool_hall"], "vibe_profile": {"chill": 0.7, "unpretentious": 0.7, "themed": 0.5}, "role": "middle"},
+        {"bar_type": ["generic_bar"], "vibe_profile": {"cozy": 0.8, "dim": 0.7}, "role": "nightcap"}
+      ],
+      "success_narrative": "Quirky, walkable, date-friendly North Williamsburg loop.",
+      "fails_when": ["group_size > 2", "large-groups in purpose"],
+      "example_bars_in_dataset": ["Pete's Candy Store", "The Gutter", "Barcade", "Spritzenhaus33"]
+    },
+    {
+      "id": "case_rooftop_tour",
+      "name": "Summer Rooftop Tour",
+      "group_profile": {"size": [2, 5], "vibe_summary": "outdoor + polished", "budget_tier": "premium"},
+      "context": {"start_neighborhoods": ["Midtown", "Flatiron", "LES"], "nights": ["thu", "fri", "sat", "sun"], "duration_hours": 3, "stop_count": 3, "seasonal": "spring_summer_only"},
+      "solution_sequence": [
+        {"bar_type": ["generic_bar", "lounge"], "vibe_profile": {"outdoor": 0.9, "airy": 0.8, "polished": 0.7}, "role": "warm_up"},
+        {"bar_type": ["lounge", "cocktail_bar"], "vibe_profile": {"outdoor": 0.9, "touristy": 0.6, "polished": 0.8}, "role": "main"},
+        {"bar_type": ["cocktail_bar"], "vibe_profile": {"outdoor": 0.8, "intimate": 0.7}, "role": "nightcap"}
+      ],
+      "success_narrative": "Views through three neighborhoods; golden hour to skyline.",
+      "fails_when": ["season in [late-fall, winter]"],
+      "example_bars_in_dataset": ["230 Fifth Rooftop Bar", "Magic Hour Rooftop Bar & Lounge", "Lost in Paradise Rooftop", "msocial Rooftop", "Mr. Purple"]
+    },
+    {
+      "id": "case_karaoke_birthday",
+      "name": "Karaoke Birthday Night",
+      "group_profile": {"size": [4, 12], "vibe_summary": "loud + large groups + themed", "budget_tier": "moderate"},
+      "context": {"start_neighborhoods": ["East Village", "Koreatown", "Midtown"], "nights": ["fri", "sat"], "duration_hours": 4, "stop_count": 2},
+      "solution_sequence": [
+        {"bar_type": ["generic_bar", "pub"], "vibe_profile": {"lively": 0.8, "large-groups": 0.9, "unpretentious": 0.7}, "role": "warm_up"},
+        {"bar_type": ["karaoke"], "vibe_profile": {"loud": 0.9, "themed": 0.9, "birthday-party": 0.9}, "role": "main"}
+      ],
+      "success_narrative": "Pre-game to dissolve inhibitions, karaoke to cement the night.",
+      "fails_when": ["date in purpose", "first-meet in purpose", "conversation in purpose"],
+      "example_bars_in_dataset": ["Planet Rose", "Sing Sing Ave A.", "Iggy's", "AWOL Bar & Grill", "Turntable LP Bar & Karaoke"]
+    },
+    {
+      "id": "case_west_village_dignified",
+      "name": "West Village Dignified Evening",
+      "group_profile": {"size": [2, 4], "vibe_summary": "polished + conversation", "budget_tier": "premium"},
+      "context": {"start_neighborhoods": ["West Village", "Greenwich Village"], "nights": ["wed", "thu", "fri", "sat"], "duration_hours": 3, "stop_count": 3},
+      "solution_sequence": [
+        {"bar_type": ["wine_bar", "bar_with_food"], "vibe_profile": {"polished": 0.9, "conversation": 0.9, "intimate": 0.7}, "role": "warm_up"},
+        {"bar_type": ["cocktail_bar", "lounge"], "vibe_profile": {"polished": 0.9, "dim": 0.7}, "role": "main"},
+        {"bar_type": ["piano_bar", "cocktail_bar"], "vibe_profile": {"historic": 0.8, "intimate": 0.8, "themed": 0.6}, "role": "nightcap"}
+      ],
+      "success_narrative": "Grown-up pacing; every stop supports real conversation.",
+      "fails_when": ["pregame in purpose", "budget_tier == cheap"],
+      "example_bars_in_dataset": ["Bar Pisellino", "Cellar Dog", "Brandy's Piano Bar", "Cafe Balearica"]
+    },
+    {
+      "id": "case_cocktail_flight_date",
+      "name": "Cocktail Flight Date",
+      "group_profile": {"size": [2], "vibe_summary": "intimate + cocktails", "budget_tier": "splurge"},
+      "context": {"start_neighborhoods": ["Flatiron", "NoMad", "Chelsea", "LES"], "nights": ["thu", "fri", "sat"], "duration_hours": 3, "stop_count": 2},
+      "solution_sequence": [
+        {"bar_type": ["cocktail_bar"], "vibe_profile": {"intimate": 0.9, "polished": 0.9, "conversation": 0.8}, "role": "warm_up"},
+        {"bar_type": ["cocktail_bar", "themed"], "vibe_profile": {"themed": 0.8, "dim": 0.9, "hidden-gem": 0.7}, "role": "main"}
+      ],
+      "success_narrative": "Two-stop, quality-dense. The second place is the destination.",
+      "fails_when": ["group_size > 2", "budget_tier in [cheap, moderate]"],
+      "example_bars_in_dataset": ["Mister Paradise", "Bar Bonobo", "Patent Pending", "Banzarbar", "BELTANE", "Sunken Harbor Club"]
+    },
+    {
+      "id": "case_large_group_birthday",
+      "name": "Large-Group Birthday Crawl",
+      "group_profile": {"size": [8, 20], "vibe_summary": "lively + large-groups", "budget_tier": "moderate"},
+      "context": {"start_neighborhoods": ["Hell's Kitchen", "East Village", "Astoria"], "nights": ["sat"], "duration_hours": 4, "stop_count": 3},
+      "solution_sequence": [
+        {"bar_type": ["beer_garden", "beer_hall"], "vibe_profile": {"outdoor": 0.7, "large-groups": 0.9, "lively": 0.8}, "role": "warm_up"},
+        {"bar_type": ["generic_bar", "pub"], "vibe_profile": {"large-groups": 0.9, "lively": 0.9, "birthday-party": 0.8}, "role": "main"},
+        {"bar_type": ["karaoke", "event_venue", "nightclub"], "vibe_profile": {"dancing": 0.7, "loud": 0.8, "birthday-party": 0.9}, "role": "nightcap"}
+      ],
+      "success_narrative": "Starts wide, ends loud. Reserved-group-friendly venues.",
+      "fails_when": ["group_size < 6", "conversation in purpose"],
+      "example_bars_in_dataset": ["Bohemian Hall & Beer Garden", "The Standard Biergarten", "Reichenbach Hall", "VALERIE", "Webster Hall"]
+    },
+    {
+      "id": "case_themed_bar_hop",
+      "name": "Themed Bar Hop",
+      "group_profile": {"size": [2, 6], "vibe_summary": "themed + novelty", "budget_tier": "moderate"},
+      "context": {"start_neighborhoods": ["any"], "nights": ["any"], "duration_hours": 3.5, "stop_count": 3},
+      "solution_sequence": [
+        {"bar_type": ["themed"], "vibe_profile": {"themed": 0.9, "hidden-gem": 0.7}, "role": "warm_up"},
+        {"bar_type": ["themed"], "vibe_profile": {"themed": 0.9, "lively": 0.8}, "role": "main"},
+        {"bar_type": ["themed"], "vibe_profile": {"themed": 0.9, "dim": 0.7}, "role": "nightcap"}
+      ],
+      "success_narrative": "The whole crawl is a gimmick — all three stops are memorable.",
+      "fails_when": ["polished in vibe_profile"],
+      "example_bars_in_dataset": ["Beetle House", "Oscar Wilde", "Wicked Willy's", "The Flatiron Room NoMad", "Otto's Shrunken Head", "Speakeasy Magick", "Lillie's Victorian Establishment"]
+    },
+    {
+      "id": "case_whiskey_appreciation",
+      "name": "Whiskey Appreciation Night",
+      "group_profile": {"size": [2, 4], "vibe_summary": "intimate + spirit-focused", "budget_tier": "splurge"},
+      "context": {"start_neighborhoods": ["Flatiron", "NoMad", "LES"], "nights": ["wed", "thu", "fri"], "duration_hours": 2.5, "stop_count": 2},
+      "solution_sequence": [
+        {"bar_type": ["cocktail_bar", "themed"], "vibe_profile": {"polished": 0.9, "historic": 0.8, "intimate": 0.9}, "role": "warm_up"},
+        {"bar_type": ["cocktail_bar"], "vibe_profile": {"intimate": 0.9, "dim": 0.8}, "role": "main"}
+      ],
+      "success_narrative": "Slow, spirit-focused. Quality over quantity.",
+      "fails_when": ["pregame in purpose", "budget_tier in [cheap, moderate]"],
+      "example_bars_in_dataset": ["The Flatiron Room NoMad", "Banzarbar"]
+    },
+    {
+      "id": "case_brooklyn_vinyl_night",
+      "name": "Brooklyn Vinyl Night",
+      "group_profile": {"size": [2, 4], "vibe_summary": "artsy + music-focused", "budget_tier": "moderate"},
+      "context": {"start_neighborhoods": ["Gowanus", "Williamsburg", "Bushwick"], "nights": ["thu", "fri", "sat"], "duration_hours": 3, "stop_count": 2},
+      "solution_sequence": [
+        {"bar_type": ["music_venue", "generic_bar"], "vibe_profile": {"artsy": 0.9, "hipster": 0.8, "loud": 0.6}, "role": "warm_up"},
+        {"bar_type": ["generic_bar", "music_venue"], "vibe_profile": {"dim": 0.8, "artsy": 0.8, "hidden-gem": 0.7}, "role": "main"}
+      ],
+      "success_narrative": "Two music-room bars, vinyl-forward ambience.",
+      "fails_when": ["conversation in purpose"],
+      "example_bars_in_dataset": ["Public Records", "Record Room"]
+    },
+    {
+      "id": "case_nightcap_duo",
+      "name": "After-Dinner Nightcap",
+      "group_profile": {"size": [2, 4], "vibe_summary": "cozy + brief", "budget_tier": "moderate_to_premium"},
+      "context": {"start_neighborhoods": ["any"], "nights": ["any"], "duration_hours": 1.5, "stop_count": 1},
+      "solution_sequence": [
+        {"bar_type": ["wine_bar", "cocktail_bar", "pub"], "vibe_profile": {"cozy": 0.9, "intimate": 0.8, "quiet": 0.7}, "role": "nightcap"}
+      ],
+      "success_narrative": "Just one well-chosen drink before heading home.",
+      "fails_when": ["stop_count > 1"],
+      "example_bars_in_dataset": ["Burp Castle", "Bar Pisellino", "Brandy's Piano Bar", "Bibliotheque"]
+    },
+    {
+      "id": "case_sports_sunday",
+      "name": "Sports Sunday Session",
+      "group_profile": {"size": [3, 8], "vibe_summary": "sports-watching + casual", "budget_tier": "cheap"},
+      "context": {"start_neighborhoods": ["Hell's Kitchen", "Upper West Side", "Midtown"], "nights": ["sun"], "duration_hours": 4, "stop_count": 2},
+      "solution_sequence": [
+        {"bar_type": ["sports_bar", "pub"], "vibe_profile": {"sports-watching": 0.9, "loud": 0.8, "large-groups": 0.7}, "role": "main"},
+        {"bar_type": ["pub", "sports_bar"], "vibe_profile": {"unpretentious": 0.8, "lively": 0.7}, "role": "nightcap"}
+      ],
+      "success_narrative": "Two sports bars, game-day specials hit both.",
+      "fails_when": ["date in purpose", "conversation in purpose"],
+      "example_bars_in_dataset": ["Beer Authority", "The Stumble Inn", "Jake's Dilemma", "Pioneers Bar NYC", "Downtown Social", "Overlook"]
+    },
+    {
+      "id": "case_queer_centered_night",
+      "name": "Queer-Centered Dance Night",
+      "group_profile": {"size": [2, 6], "vibe_summary": "lgbtq-friendly + dancing", "budget_tier": "moderate"},
+      "context": {"start_neighborhoods": ["Bushwick", "East Village", "Hell's Kitchen"], "nights": ["fri", "sat"], "duration_hours": 4, "stop_count": 3},
+      "solution_sequence": [
+        {"bar_type": ["generic_bar", "cocktail_bar"], "vibe_profile": {"lgbtq-friendly": 0.9, "chill": 0.6, "conversation": 0.7}, "role": "warm_up"},
+        {"bar_type": ["nightclub", "dance", "event_venue"], "vibe_profile": {"lgbtq-friendly": 0.9, "dancing": 0.9, "loud": 0.8}, "role": "main"},
+        {"bar_type": ["generic_bar"], "vibe_profile": {"lgbtq-friendly": 0.9, "rowdy": 0.7}, "role": "nightcap"}
+      ],
+      "success_narrative": "Chill start, dance floor peak, after-party chase.",
+      "fails_when": ["group_size > 6"],
+      "example_bars_in_dataset": ["Mood Ring", "House of Yes", "Good Room"]
+    },
+    {
+      "id": "case_first_meeting",
+      "name": "First-Meet Low-Commitment",
+      "group_profile": {"size": [2], "vibe_summary": "conversation + low-stakes", "budget_tier": "moderate"},
+      "context": {"start_neighborhoods": ["any"], "nights": ["mon", "tue", "wed", "thu", "sun"], "duration_hours": 1.5, "stop_count": 1},
+      "solution_sequence": [
+        {"bar_type": ["wine_bar", "cocktail_bar", "bar_with_food"], "vibe_profile": {"conversation": 0.9, "polished": 0.7, "chill": 0.7, "quiet": 0.7}, "role": "main"}
+      ],
+      "success_narrative": "One well-lit, quiet spot. Easy to exit; easy to extend.",
+      "fails_when": ["stop_count > 1", "dancing in purpose"],
+      "example_bars_in_dataset": ["Bibliotheque", "Bar Orai", "Fairweather", "Avoca"]
+    },
+    {
+      "id": "case_late_night_after_hours",
+      "name": "Late-Night After-Hours",
+      "group_profile": {"size": [2, 6], "vibe_summary": "post-midnight + dancing", "budget_tier": "moderate"},
+      "context": {"start_neighborhoods": ["Bushwick", "LES", "East Village"], "nights": ["fri", "sat"], "duration_hours": 3, "stop_count": 2, "start_time_after": "23:00"},
+      "solution_sequence": [
+        {"bar_type": ["generic_bar", "cocktail_bar"], "vibe_profile": {"dim": 0.8, "lively": 0.7}, "role": "warm_up"},
+        {"bar_type": ["nightclub", "event_venue", "dance"], "vibe_profile": {"dancing": 0.9, "loud": 0.8, "themed": 0.6}, "role": "main"}
+      ],
+      "success_narrative": "Starts where others have closed; dances until close.",
+      "fails_when": ["end_time_before < 02:00"],
+      "example_bars_in_dataset": ["Nowadays", "All Night Skate", "Bossa Nova Civic Club", "169 Bar", "Double Down Saloon"]
+    },
+    {
+      "id": "case_astoria_irish_crawl",
+      "name": "Astoria Irish Crawl",
+      "group_profile": {"size": [3, 6], "vibe_summary": "pub + local", "budget_tier": "moderate"},
+      "context": {"start_neighborhoods": ["Astoria", "Queens"], "nights": ["thu", "fri", "sat", "sun"], "duration_hours": 3, "stop_count": 3},
+      "solution_sequence": [
+        {"bar_type": ["irish_pub", "pub"], "vibe_profile": {"local-institution": 0.9, "unpretentious": 0.9, "conversation": 0.7}, "role": "warm_up"},
+        {"bar_type": ["irish_pub", "pub"], "vibe_profile": {"lively": 0.8, "large-groups": 0.7}, "role": "main"},
+        {"bar_type": ["irish_pub", "pub"], "vibe_profile": {"loud": 0.6, "cozy": 0.7}, "role": "nightcap"}
+      ],
+      "success_narrative": "Three pubs, walkable. Old-school.",
+      "fails_when": ["date in purpose"],
+      "example_bars_in_dataset": ["Slainte", "Rosie Dunn's Victorian Pub", "The Bonnie", "Carmelo's"]
+    }
+  ]
+}

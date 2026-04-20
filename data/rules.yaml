@@ -1,0 +1,302 @@
+# ============================================================================
+# NYC Bar Crawl Decision System — Rules Configuration
+# ============================================================================
+# Every tunable threshold, rule, and policy lives here. Changing behavior
+# should not require touching source code. Every rule is documented with
+# the academic or design motivation so the writeup can cite it.
+# ============================================================================
+
+_version: "1.0"
+_editable: true
+
+# ----------------------------------------------------------------------------
+# 1. QUALITATIVE THRESHOLDS
+# ----------------------------------------------------------------------------
+
+qualitative_thresholds:
+
+  price_tier:
+    cheap:     {max: 8}
+    moderate:  {min: 8,  max: 14}
+    premium:   {min: 14, max: 20}
+    splurge:   {min: 20}
+
+  noise_level:
+    library:       "whispering encouraged; quieter than ambient conversation"
+    conversation:  "easy to talk without raising your voice"
+    lively:        "background music; comfortable at normal speaking volume"
+    loud:          "must raise voice; not great for conversation"
+    deafening:     "shouting required; impossible to hear a phone call"
+
+  distance_bucket:
+    next-door:       {max: 0.10}
+    short-walk:      {min: 0.10, max: 0.30}
+    walk:            {min: 0.30, max: 0.60}
+    hike:            {min: 0.60, max: 1.00}
+    transit-worthy:  {min: 1.00}
+
+  crowd_level:
+    dead:          {max: 0.25}
+    mellow:        {min: 0.25, max: 0.50}
+    lively:        {min: 0.50, max: 0.75}
+    packed:        {min: 0.75, max: 0.90}
+    overflowing:   {min: 0.90}
+
+  quality_signal:
+    weak_signal:       {max: 0.35}
+    moderate_signal:   {min: 0.35, max: 0.65}
+    strong_signal:     {min: 0.65, max: 0.85}
+    consensus_pick:    {min: 0.85}
+
+
+# ----------------------------------------------------------------------------
+# 2. SCORING DEFAULTS
+# ----------------------------------------------------------------------------
+
+scoring_defaults:
+
+  default_weights:
+    vibe:              0.30
+    budget:            0.20
+    drink_match:       0.10
+    noise:             0.05
+    distance:          0.05
+    happy_hour_active: 0.05
+    specials_match:    0.05
+    crowd_fit:         0.05
+    novelty:           0.05
+    quality_signal:    0.10
+
+  budget_penalty:
+    decay_kind: "exponential"
+    soft_over_ratio_tolerance: 0.25
+
+  vibe_scoring:
+    kind: "cosine_similarity"
+    opposing_pair_penalty: 0.15
+
+  drink_match_scoring:
+    kind: "jaccard"
+
+  noise_scoring:
+    ordinal_distance_penalty: 0.25
+
+
+# ----------------------------------------------------------------------------
+# 3. DEALBREAKER RULES
+# ----------------------------------------------------------------------------
+
+dealbreaker_rules:
+
+  - id: closed_at_arrival
+    description: "Bar is not open at the planned arrival time."
+    applies_to: bar
+    severity: hard
+    condition: "bar.open_hours[day] excludes arrival_time"
+    explanation_template: "{bar_name} is not open at {arrival_time} on {day}."
+
+  - id: user_veto
+    description: "Any user in the group has vetoed this bar."
+    applies_to: bar
+    severity: hard
+    condition: "bar.id in any(user.vetoes for user in group)"
+    explanation_template: "{bar_name} was vetoed by {vetoer_name}."
+
+  - id: accessibility_unmet
+    description: "Group requires step-free access and bar lacks it."
+    applies_to: bar
+    severity: hard
+    condition: "group.accessibility_needs.step_free AND NOT bar.accessibility.step_free"
+    explanation_template: "{bar_name} excluded: group requires step-free access, which this bar doesn't provide."
+
+  - id: accessible_restroom_unmet
+    description: "Group requires accessible restroom and bar lacks one."
+    applies_to: bar
+    severity: hard
+    condition: "group.accessibility_needs.accessible_restroom AND NOT bar.accessibility.accessible_restroom"
+    explanation_template: "{bar_name} excluded: accessible restroom required but not available."
+
+  - id: budget_gross_mismatch
+    description: "Bar's average drink price is more than 2x any user's max."
+    applies_to: bar
+    severity: hard
+    condition: "bar.avg_drink_price > 2.0 * min(user.max_per_drink for user in group)"
+    explanation_template: "{bar_name} ({price_tier}, ~${avg_drink_price}) exceeds {poorest_user}'s budget cap (${max_per_drink}) by more than 2x."
+
+  - id: age_policy_mismatch
+    description: "Bar is 21+ only and any user in group is under 21."
+    applies_to: bar
+    severity: hard
+    condition: "bar.age_policy == '21+' AND any(user.age < 21 for user in group)"
+    explanation_template: "{bar_name} is 21+ only and {underage_user} is under 21."
+
+  - id: neighborhood_excluded
+    description: "Group explicitly restricted crawl to specific neighborhoods."
+    applies_to: bar
+    severity: hard
+    condition: "group.neighborhoods is not empty AND bar.neighborhood not in group.neighborhoods"
+    explanation_template: "{bar_name} is in {neighborhood}, outside your requested neighborhoods ({allowed})."
+
+  - id: unreachable_within_time
+    description: "Even if we started here, we couldn't hit the remaining stops before end_time."
+    applies_to: bar
+    severity: hard
+    condition: "computed by routing; temporal infeasibility"
+    explanation_template: "{bar_name} excluded: adding it would make the remaining stops unreachable before {end_time}."
+
+
+# ----------------------------------------------------------------------------
+# 4. TEMPORAL BONUSES
+# ----------------------------------------------------------------------------
+
+temporal_bonuses:
+
+  happy_hour:
+    base_bonus: 0.20
+    budget_weight_multiplier: 1.5
+
+  specials:
+    base_bonus: 0.12
+    kind_multipliers:
+      industry_night: 1.0
+      trivia: 1.2
+      drag_brunch: 1.2
+      karaoke: 1.2
+      live_music: 1.0
+      theme_night: 1.0
+      ladies_night: 0.8
+
+  kitchen_open:
+    base_bonus: 0.05
+    only_if_user_wants_food: true
+
+  reservation_cutoff:
+    base_penalty: -0.30
+
+
+# ----------------------------------------------------------------------------
+# 5. NOVELTY AND VARIETY
+# ----------------------------------------------------------------------------
+
+novelty_and_variety:
+
+  repeat_bar_type_penalty: 0.10
+  repeat_vibe_dominant_penalty: 0.08
+  same_neighborhood_all_stops_penalty: 0.05
+  quality_signal_decay_with_route_length: false
+  novelty_bonus_hidden_gem: 0.05
+
+
+# ----------------------------------------------------------------------------
+# 6. WALKING AND DISTANCE
+# ----------------------------------------------------------------------------
+
+walking_and_distance:
+
+  per_mile_penalty: 0.08
+  comfortable_max_miles: 0.60
+  amplified_per_mile_penalty_over_threshold: 0.20
+  hard_cap_miles: 1.20
+
+  transit_override:
+    transit_time_estimate_minutes: 20
+    transit_fixed_penalty: 0.10
+
+
+# ----------------------------------------------------------------------------
+# 7. GROUP STRATEGY META-RULES (the VOTE-inspired heart)
+# ----------------------------------------------------------------------------
+
+group_strategy_rules:
+
+  profile_metrics:
+    dealbreaker_density:
+      description: "Fraction of bars vetoed by at least one user."
+    budget_spread_ratio:
+      description: "Ratio of highest to lowest user budget."
+    vibe_variance:
+      description: "Mean pairwise std-dev across users' vibe weights."
+    max_preference_intensity:
+      description: "Highest 'peakiness' of any single user's weights."
+    group_size:
+      description: "|users|."
+
+  selection_rules:
+
+    - id: strategy_veto
+      condition: "dealbreaker_density > 0.20"
+      strategy: "approval_veto"
+      rationale_template: "This group has substantial hard constraints — {percent}% of bars are vetoed by at least one member. Approval/veto voting ensures no one's dealbreaker is overridden."
+      priority: 1
+
+    - id: strategy_egalitarian
+      condition: "budget_spread_ratio > 3.0"
+      strategy: "egalitarian_min"
+      rationale_template: "The group's budget spread is wide ({ratio}x between highest and lowest). Egalitarian (Rawlsian) aggregation protects the member with the tightest budget."
+      priority: 2
+
+    - id: strategy_copeland
+      condition: "vibe_variance > 0.30"
+      strategy: "copeland_pairwise"
+      rationale_template: "Vibe preferences diverge significantly across the group (variance = {variance}). Copeland pairwise-majority finds a Condorcet-style consensus robust to this split."
+      priority: 3
+
+    - id: strategy_borda
+      condition: "max_preference_intensity > 0.35"
+      strategy: "borda_count"
+      rationale_template: "One or more users have very peaked preferences ({user} has intensity {intensity}). Borda counting prevents their strong weights from steamrolling the group."
+      priority: 4
+
+    - id: strategy_utilitarian
+      condition: "else (default)"
+      strategy: "utilitarian_sum"
+      rationale_template: "The group's preferences are aligned and budgets compatible. Utilitarian aggregation (sum of individual utilities) simply maximizes total group happiness."
+      priority: 5
+
+  strategies:
+
+    utilitarian_sum:
+      description: "G(b) = sum of U(b, u) across users. Maximizes average happiness."
+      best_for: "Aligned groups."
+      worst_for: "Groups where one member has intense preferences that drag the sum."
+
+    egalitarian_min:
+      description: "G(b) = min of U(b, u) across users. Rawlsian."
+      best_for: "Wide preference or budget gaps."
+      worst_for: "Homogeneous groups."
+
+    borda_count:
+      description: "Each user ranks bars; bar receives (n - rank) points per user."
+      best_for: "Groups with outlier intense preferences."
+      worst_for: "Groups where intensity matters (e.g., one user has a real allergy)."
+
+    copeland_pairwise:
+      description: "For every pair of bars, which wins under majority vote? Count wins."
+      best_for: "Groups split on vibe; Condorcet-consistent choice."
+      worst_for: "Small groups or when cycles exist."
+
+    approval_veto:
+      description: "Each user marks bars as approve / neutral / veto. Vetoes hard-exclude; approvals tally."
+      best_for: "Groups with strong hard constraints."
+      worst_for: "Groups with mild preferences (too coarse)."
+
+
+# ----------------------------------------------------------------------------
+# 8. ROUTING CONFIG
+# ----------------------------------------------------------------------------
+
+routing_config:
+
+  greedy_construction:
+    tiebreaker_order: ["quality_signal", "distance_to_current", "arbitrary_stable"]
+
+  two_opt:
+    max_iterations: 50
+    improvement_tolerance: 0.01
+
+  exact_enumeration_max_stops: 7
+
+  time_buffer_minutes: 10
+  min_stop_duration_minutes: 30
+  max_stop_duration_minutes: 90
+  default_stop_duration_minutes: 45

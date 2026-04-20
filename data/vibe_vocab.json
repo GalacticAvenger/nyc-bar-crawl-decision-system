@@ -1,0 +1,62 @@
+{
+  "_comment": "Fixed vibe vocabulary. Every bar.vibe_tags entry MUST be one of these strings. Every user's vibe preference MUST be a weight over this vocabulary. Adding or removing entries is a breaking change — regenerate bars.json and invalidate saved user preferences if you edit this file.",
+  "_version": "1.0",
+  "_total_vibes": 31,
+
+  "facets": {
+    "atmosphere": [
+      "intimate",
+      "lively",
+      "rowdy",
+      "chill",
+      "polished",
+      "divey",
+      "artsy",
+      "hipster",
+      "touristy",
+      "unpretentious"
+    ],
+    "purpose": [
+      "date",
+      "first-meet",
+      "pregame",
+      "nightcap",
+      "conversation",
+      "dancing",
+      "sports-watching",
+      "large-groups",
+      "birthday-party"
+    ],
+    "sensory": [
+      "dim",
+      "bright",
+      "quiet",
+      "loud",
+      "cozy",
+      "airy",
+      "outdoor",
+      "themed"
+    ],
+    "identity": [
+      "lgbtq-friendly",
+      "local-institution",
+      "hidden-gem",
+      "historic"
+    ]
+  },
+
+  "opposing_pairs": [
+    ["intimate", "rowdy"],
+    ["polished", "divey"],
+    ["dim", "bright"],
+    ["quiet", "loud"],
+    ["chill", "lively"],
+    ["touristy", "hidden-gem"]
+  ],
+
+  "notes": {
+    "opposing_pairs": "Used by the scoring engine to detect incoherent vibe profiles — if a user weights both sides of an opposing pair highly, the system flags this in the explanation ('You want both intimate and rowdy; we weighted intimate higher because it pairs with your other preferences').",
+    "facet_weighting": "The scoring engine can normalize weights per facet to prevent a user's atmosphere preferences from swamping their identity preferences.",
+    "no_drink_type_vibes": "Drink preferences (whiskey, beer, wine) live on Bar.drink_specialties and UserPreference.preferred_drinks, not here. Vibes describe atmosphere and purpose only."
+  }
+}

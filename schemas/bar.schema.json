@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.org/barcrawl/bar.schema.json",
+  "title": "EnrichedBar",
+  "description": "Schema for one entry in data/bars.json.",
+  "type": "object",
+  "required": [
+    "id", "seed_id", "name", "neighborhood", "address", "lat", "lon",
+    "bar_type", "vibe_tags", "price_tier", "avg_drink_price",
+    "drink_categories_served", "noise_level", "capacity_estimate",
+    "crowd_level_by_hour", "open_hours", "age_policy", "accessibility",
+    "happy_hour_windows", "specials", "google_rating", "google_review_count",
+    "quality_signal", "source"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "pattern": "^bar_[0-9]{3}$"},
+    "seed_id": {"type": "string", "pattern": "^seed_[0-9]{3}$"},
+    "name": {"type": "string", "minLength": 1},
+    "neighborhood": {"type": "string", "minLength": 1},
+    "address": {"type": "string", "minLength": 1},
+    "lat": {"type": "number", "minimum": 40.49, "maximum": 40.92},
+    "lon": {"type": "number", "minimum": -74.26, "maximum": -73.70},
+    "bar_type": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "vibe_tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "intimate", "lively", "rowdy", "chill", "polished", "divey",
+          "artsy", "hipster", "touristy", "unpretentious",
+          "date", "first-meet", "pregame", "nightcap", "conversation",
+          "dancing", "sports-watching", "large-groups", "birthday-party",
+          "dim", "bright", "quiet", "loud", "cozy", "airy", "outdoor", "themed",
+          "lgbtq-friendly", "local-institution", "hidden-gem", "historic"
+        ]
+      },
+      "minItems": 3, "maxItems": 8, "uniqueItems": true
+    },
+    "price_tier": {"type": "string", "enum": ["cheap", "moderate", "premium", "splurge"]},
+    "avg_drink_price": {"type": "number", "minimum": 1, "maximum": 50},
+    "drink_specialties": {"type": "array", "items": {"type": "string"}},
+    "drink_categories_served": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["beer", "wine", "cocktails", "whiskey", "spirits", "shots", "non-alcoholic"]},
+      "minItems": 1, "uniqueItems": true
+    },
+    "noise_level": {"type": "string", "enum": ["library", "conversation", "lively", "loud", "deafening"]},
+    "capacity_estimate": {"type": "integer", "minimum": 15, "maximum": 1500},
+    "crowd_level_by_hour": {
+      "type": "object",
+      "patternProperties": {
+        "^([0-9]|1[0-9]|2[0-3])$": {"type": "string", "enum": ["dead", "mellow", "lively", "packed", "overflowing"]}
+      },
+      "additionalProperties": false
+    },
+    "outdoor_seating": {"type": ["boolean", "null"]},
+    "food_quality": {"type": ["string", "null"], "enum": ["none", "snacks", "pub_food", "full_menu", "notable", null]},
+    "kitchen_open": {"type": ["object", "null"]},
+    "happy_hour_windows": {"type": "array", "items": {"$ref": "#/definitions/TemporalWindow"}},
+    "specials": {"type": "array", "items": {"$ref": "#/definitions/TemporalWindow"}},
+    "open_hours": {
+      "type": "object",
+      "required": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
+      "properties": {
+        "mon": {"$ref": "#/definitions/DayHours"},
+        "tue": {"$ref": "#/definitions/DayHours"},
+        "wed": {"$ref": "#/definitions/DayHours"},
+        "thu": {"$ref": "#/definitions/DayHours"},
+        "fri": {"$ref": "#/definitions/DayHours"},
+        "sat": {"$ref": "#/definitions/DayHours"},
+        "sun": {"$ref": "#/definitions/DayHours"}
+      },
+      "additionalProperties": false
+    },
+    "age_policy": {"type": "string", "enum": ["18+", "21+", "21+_after_10pm", "all_ages"]},
+    "accessibility": {
+      "type": "object",
+      "required": ["step_free", "accessible_restroom"],
+      "properties": {
+        "step_free": {"type": ["boolean", "null"]},
+        "accessible_restroom": {"type": ["boolean", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "reservations": {"type": "string", "enum": ["none", "accepted", "recommended", "required", "unknown"]},
+    "dress_code": {"type": "string", "enum": ["none", "casual", "smart_casual", "upscale", "unknown"]},
+    "novelty": {"type": "number", "minimum": 0, "maximum": 1},
+    "description": {"type": ["string", "null"]},
+    "good_for": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["start", "middle", "nightcap", "anytime", "large_groups", "date", "first_meet", "pregame"]},
+      "uniqueItems": true
+    },
+    "avoid_for": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["date", "first_meet", "conversation", "pregame", "nightcap", "large_groups", "sports_watching"]},
+      "uniqueItems": true
+    },
+    "google_rating": {"type": "number", "minimum": 1.0, "maximum": 5.0},
+    "google_review_count": {"type": "integer", "minimum": 0},
+    "google_price_indicator": {"type": ["string", "null"]},
+    "google_category": {"type": ["string", "null"]},
+    "quality_signal": {"type": "number", "minimum": 0, "maximum": 1},
+    "user_note": {"type": ["string", "null"]},
+    "primary_function": {"type": ["string", "null"]},
+    "editorial_note": {"type": ["string", "null"]},
+    "source": {"type": "string", "enum": ["user_seed_list", "curated_expansion"]}
+  },
+  "definitions": {
+    "DayHours": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^([0-2][0-9]|3[0-2]):[0-5][0-9]$"},
+          "minItems": 2, "maxItems": 2
+        }
+      ]
+    },
+    "TemporalWindow": {
+      "type": "object",
+      "required": ["days", "start", "end", "kind"],
+      "properties": {
+        "days": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]},
+          "minItems": 1, "uniqueItems": true
+        },
+        "start": {"type": "string", "pattern": "^([0-2][0-9]|3[0-2]):[0-5][0-9]$"},
+        "end": {"type": "string", "pattern": "^([0-2][0-9]|3[0-2]):[0-5][0-9]$"},
+        "kind": {
+          "type": "string",
+          "enum": ["happy_hour", "industry_night", "trivia", "karaoke_night", "live_music", "theme_night", "drag_brunch", "ladies_night", "game_day_special", "reservation_cutoff", "last_call"]
+        },
+        "details": {"type": "string"},
+        "bonus": {"type": "number", "minimum": -1, "maximum": 1}
+      },
+      "additionalProperties": false
+    }
+  }
+}
