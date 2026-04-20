@@ -1,0 +1,2491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_707450bbcfea7f5190836341e83dbaab {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_707450bbcfea7f5190836341e83dbaab" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_707450bbcfea7f5190836341e83dbaab = L.map(
+                "map_707450bbcfea7f5190836341e83dbaab",
+                {
+                    center: [40.722894, -73.98462933333333],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 14,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_4a21c89730788ee9e7e1602866072c12 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_4a21c89730788ee9e7e1602866072c12.addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            var circle_marker_58392feeeb0404aa569f2dde51cbc31b = L.circleMarker(
+                [40.728875, -73.984781],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_58392feeeb0404aa569f2dde51cbc31b.bindTooltip(
+                `<div>
+                     Slainte | Irish Pub & Restaurant (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2ee881ab19c4b43cb5a87d9c23dff150 = L.circleMarker(
+                [40.76415, -73.920875],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_2ee881ab19c4b43cb5a87d9c23dff150.bindTooltip(
+                `<div>
+                     Sunswick 35/35 (Astoria)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6dad80d99bb8c740e9807a83acb45649 = L.circleMarker(
+                [40.768213, -73.927406],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_6dad80d99bb8c740e9807a83acb45649.bindTooltip(
+                `<div>
+                     The Bonnie (Astoria)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3e6f19faf51b6108884f123ee0e5adf6 = L.circleMarker(
+                [40.763494, -73.926313],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_3e6f19faf51b6108884f123ee0e5adf6.bindTooltip(
+                `<div>
+                     Bohemian Hall & Beer Garden (Astoria)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_21c2c1bdc4c92105abc9e81a6d4b0e11 = L.circleMarker(
+                [40.696675, -73.918425],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_21c2c1bdc4c92105abc9e81a6d4b0e11.bindTooltip(
+                `<div>
+                     Bushwick Country Club (Bushwick)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8b2ddd2d43bd9db1c4da8a545631bbba = L.circleMarker(
+                [40.764025, -73.92025],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_8b2ddd2d43bd9db1c4da8a545631bbba.bindTooltip(
+                `<div>
+                     Carmelo’s (Astoria)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dd8e03f8e4038596b02ff7627a7fe8b6 = L.circleMarker(
+                [40.716619, -73.982794],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_dd8e03f8e4038596b02ff7627a7fe8b6.bindTooltip(
+                `<div>
+                     Banzarbar (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f76a8b9370df87eda582a18896067152 = L.circleMarker(
+                [40.715056, -73.990169],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_f76a8b9370df87eda582a18896067152.bindTooltip(
+                `<div>
+                     Bar Orai (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b28bb7cd4d72fa9a0da1de2b538f6c8f = L.circleMarker(
+                [40.7328, -74.002044],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_b28bb7cd4d72fa9a0da1de2b538f6c8f.bindTooltip(
+                `<div>
+                     So & So's Neighborhood Piano Bar (West Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0d9147a9b5608c4a74735331f74a4927 = L.circleMarker(
+                [40.719588, -73.9877],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_0d9147a9b5608c4a74735331f74a4927.bindTooltip(
+                `<div>
+                     56709 (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b5928b3d209742971739870d4dfae338 = L.circleMarker(
+                [40.718681, -73.987356],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_b5928b3d209742971739870d4dfae338.bindTooltip(
+                `<div>
+                     929 (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_09e2ecd916494d836bd4b0247e0ee0f7 = L.circleMarker(
+                [40.716838, -73.986544],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_09e2ecd916494d836bd4b0247e0ee0f7.bindTooltip(
+                `<div>
+                     Ask For Janice (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6f12e010d183c0aa95a9c6580e2a1673 = L.circleMarker(
+                [40.720588, -73.987481],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_6f12e010d183c0aa95a9c6580e2a1673.bindTooltip(
+                `<div>
+                     The Back Room (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ea3d69bdf46dfd97aa095935fba7a31a = L.circleMarker(
+                [40.722625, -73.980719],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_ea3d69bdf46dfd97aa095935fba7a31a.bindTooltip(
+                `<div>
+                     Please Don't Tell (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_142dc886b80be65b852e9740b145fccf = L.circleMarker(
+                [40.694175, -73.920425],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_142dc886b80be65b852e9740b145fccf.bindTooltip(
+                `<div>
+                     The Sultan Room (Bushwick)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cb49d33f36a905b3c56ef485a7034230 = L.circleMarker(
+                [40.690331, -73.919331],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_cb49d33f36a905b3c56ef485a7034230.bindTooltip(
+                `<div>
+                     SILO (Bushwick)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1dcfc793774beb9e1c430aec2c608a0e = L.circleMarker(
+                [40.729219, -73.978437],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_1dcfc793774beb9e1c430aec2c608a0e.bindTooltip(
+                `<div>
+                     Coyote Ugly New York (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_85eefb8e2678359e952e76e11adff2e0 = L.circleMarker(
+                [40.671469, -73.984837],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_85eefb8e2678359e952e76e11adff2e0.bindTooltip(
+                `<div>
+                     Union Hall (Park Slope)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f27f21e41b91e7e172062e393518ddc5 = L.circleMarker(
+                [40.770475, -73.957319],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_f27f21e41b91e7e172062e393518ddc5.bindTooltip(
+                `<div>
+                     VALERIE (Upper East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4789f73781d1dda6375c04b84cb5e7f4 = L.circleMarker(
+                [40.734256, -74.001731],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_4789f73781d1dda6375c04b84cb5e7f4.bindTooltip(
+                `<div>
+                     LPR (Greenwich Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_60485091ed7357f225a9dc53cc3760a6 = L.circleMarker(
+                [40.750181, -73.984713],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_60485091ed7357f225a9dc53cc3760a6.bindTooltip(
+                `<div>
+                     Turntable LP Bar & Karaoke (Koreatown)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c4ae44e4b1ac3328712df1c7d824a32a = L.circleMarker(
+                [40.752181, -73.985312],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_c4ae44e4b1ac3328712df1c7d824a32a.bindTooltip(
+                `<div>
+                     Studio 151 (Midtown)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_41135b0962a97770a81cebc80094576b = L.circleMarker(
+                [40.73025, -73.982312],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_41135b0962a97770a81cebc80094576b.bindTooltip(
+                `<div>
+                     Lucy's (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_74db4ed754f16f85720e3d7fe3d5a163 = L.circleMarker(
+                [40.693425, -73.922456],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_74db4ed754f16f85720e3d7fe3d5a163.bindTooltip(
+                `<div>
+                     Elsewhere (Bushwick)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_003df8c887cbf9e8ccbec398859daf7f = L.circleMarker(
+                [40.701287, -73.903875],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_003df8c887cbf9e8ccbec398859daf7f.bindTooltip(
+                `<div>
+                     H0L0 (Ridgewood)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1761b555758a84482e43aae4a384c9ca = L.circleMarker(
+                [40.691831, -73.920613],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_1761b555758a84482e43aae4a384c9ca.bindTooltip(
+                `<div>
+                     Bossa Nova Civic Club (Bushwick)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f85a05b2291e705bfdc2bad75ab29ef3 = L.circleMarker(
+                [40.698113, -73.92255],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_f85a05b2291e705bfdc2bad75ab29ef3.bindTooltip(
+                `<div>
+                     Mood Ring (Bushwick)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d1800a0967779e24b71b4c68c5cc4c76 = L.circleMarker(
+                [40.690331, -73.917987],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_d1800a0967779e24b71b4c68c5cc4c76.bindTooltip(
+                `<div>
+                     All Night Skate (Bushwick)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c516593d5f5120f251cb986fe9d625e5 = L.circleMarker(
+                [40.703506, -73.903969],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_c516593d5f5120f251cb986fe9d625e5.bindTooltip(
+                `<div>
+                     Nowadays (Ridgewood)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d30b94f8a3690cd5a0827afbc50e60e4 = L.circleMarker(
+                [40.716237, -73.955225],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_d30b94f8a3690cd5a0827afbc50e60e4.bindTooltip(
+                `<div>
+                     The Gutter (Williamsburg)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e5459991a92042abde759eff3b2887c2 = L.circleMarker(
+                [40.741569, -73.990887],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_e5459991a92042abde759eff3b2887c2.bindTooltip(
+                `<div>
+                     Magic Hour Rooftop Bar & Lounge (NoMad)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7f91fca286c81bcd9ca5a852727ee8d2 = L.circleMarker(
+                [40.674687, -73.989312],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_7f91fca286c81bcd9ca5a852727ee8d2.bindTooltip(
+                `<div>
+                     Public Records (Gowanus)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ff2465bb062b63ef8dfb11338d2b449b = L.circleMarker(
+                [40.696081, -73.922112],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_ff2465bb062b63ef8dfb11338d2b449b.bindTooltip(
+                `<div>
+                     Record Room (Bushwick)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_922761b04f72a6c58a3e619cb79e9366 = L.circleMarker(
+                [40.719612, -74.011038],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_922761b04f72a6c58a3e619cb79e9366.bindTooltip(
+                `<div>
+                     Puffy's Tavern (Tribeca)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_810a6e38535ff2fa1138dfd7e96e3443 = L.circleMarker(
+                [40.719712, -73.9857],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_810a6e38535ff2fa1138dfd7e96e3443.bindTooltip(
+                `<div>
+                     Arlene's Grocery (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_34731eced7ce118d5aa11ef4201b6d45 = L.circleMarker(
+                [40.734894, -74.006262],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_34731eced7ce118d5aa11ef4201b6d45.bindTooltip(
+                `<div>
+                     Sip&Guzzle (West Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ecd641a999ff6cabe73d73624902f643 = L.circleMarker(
+                [40.722969, -73.980937],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_ecd641a999ff6cabe73d73624902f643.bindTooltip(
+                `<div>
+                     Webster Hall (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0ddbaccf6f24a66625f25b75377cfba7 = L.circleMarker(
+                [40.717306, -73.990044],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_0ddbaccf6f24a66625f25b75377cfba7.bindTooltip(
+                `<div>
+                     Baby Grand LES (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_96044678182a4a7cb202318318290f4e = L.circleMarker(
+                [40.726219, -73.991625],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_96044678182a4a7cb202318318290f4e.bindTooltip(
+                `<div>
+                     Bar Bonobo (NoHo)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_09d3b018c2ca59c4e164b9118f7e63bb = L.circleMarker(
+                [40.7285, -73.982625],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_09d3b018c2ca59c4e164b9118f7e63bb.bindTooltip(
+                `<div>
+                     Mister Paradise (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d544810f72bda2f8c8f5032ef8275bf8 = L.circleMarker(
+                [40.740938, -73.992731],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_d544810f72bda2f8c8f5032ef8275bf8.bindTooltip(
+                `<div>
+                     Jungle Bird (Flatiron)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_982b452b444564ff5f709976de343e07 = L.circleMarker(
+                [40.714737, -73.960037],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_982b452b444564ff5f709976de343e07.bindTooltip(
+                `<div>
+                     Barcade (Williamsburg)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e958ad5c1dfeeeaa722998f4b7f2d4e6 = L.circleMarker(
+                [40.724469, -73.977906],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_e958ad5c1dfeeeaa722998f4b7f2d4e6.bindTooltip(
+                `<div>
+                     duckduck (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e02ade98e8ef7b863b5cbb48bee8b114 = L.circleMarker(
+                [40.712488, -73.959319],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_e02ade98e8ef7b863b5cbb48bee8b114.bindTooltip(
+                `<div>
+                     Pete's Candy Store (Williamsburg)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3a945b0d85c25c57cc3ca8605c267e7a = L.circleMarker(
+                [40.732894, -73.956531],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_3a945b0d85c25c57cc3ca8605c267e7a.bindTooltip(
+                `<div>
+                     Cafe Balearica (Greenpoint)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e6465417a79081f1a9547947bcc529e5 = L.circleMarker(
+                [40.727688, -73.982312],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_e6465417a79081f1a9547947bcc529e5.bindTooltip(
+                `<div>
+                     Blue & Gold Tavern (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_de110af53d142f28be905daa0a716faa = L.circleMarker(
+                [40.748, -74.000681],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_de110af53d142f28be905daa0a716faa.bindTooltip(
+                `<div>
+                     Speakeasy Magick (Chelsea)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5a81db81303ca601348218f5cc0cad65 = L.circleMarker(
+                [40.729781, -73.981094],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_5a81db81303ca601348218f5cc0cad65.bindTooltip(
+                `<div>
+                     Vida Verde - Tequila Bar (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9ed95052419f5e189f142c1cde7cb50e = L.circleMarker(
+                [40.732112, -74.006606],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_9ed95052419f5e189f142c1cde7cb50e.bindTooltip(
+                `<div>
+                     Cowgirl (West Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5b0874594e427494d2435778135d640e = L.circleMarker(
+                [40.722906, -73.979344],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_5b0874594e427494d2435778135d640e.bindTooltip(
+                `<div>
+                     Burp Castle (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_94dd3858659cbfc84fa80dffd10f0be9 = L.circleMarker(
+                [40.731156, -73.995531],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_94dd3858659cbfc84fa80dffd10f0be9.bindTooltip(
+                `<div>
+                     The Nines (NoHo)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9b44f7bc8e3faf9b958a907fc83cfbf8 = L.circleMarker(
+                [40.73025, -73.979406],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_9b44f7bc8e3faf9b958a907fc83cfbf8.bindTooltip(
+                `<div>
+                     Beetle House (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4a5f4b8d9e7b0f41d067dc621d51c0b5 = L.circleMarker(
+                [40.692956, -73.923269],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_4a5f4b8d9e7b0f41d067dc621d51c0b5.bindTooltip(
+                `<div>
+                     Paradise Lost (Bushwick)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5eddd19ec2785e4dfd242bc66ac9b6cc = L.circleMarker(
+                [40.729594, -73.983],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_5eddd19ec2785e4dfd242bc66ac9b6cc.bindTooltip(
+                `<div>
+                     Sake Bar Decibel (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_060029fa7aa75d98dcb0101c4389cd52 = L.circleMarker(
+                [40.729375, -73.985156],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_060029fa7aa75d98dcb0101c4389cd52.bindTooltip(
+                `<div>
+                     Motel No Tell (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_aeb5d5f7fb7b57a6dad252b5d8cb790a = L.circleMarker(
+                [40.747994, -73.989494],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_aeb5d5f7fb7b57a6dad252b5d8cb790a.bindTooltip(
+                `<div>
+                     Space Billiard Pool Hall & Sports Bar | Koreatown NYC (Koreatown)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0fef45f7e9cbbad55431ee697e9eacf1 = L.circleMarker(
+                [40.747681, -73.984056],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_0fef45f7e9cbbad55431ee697e9eacf1.bindTooltip(
+                `<div>
+                     Space Ping Pong Sports Bar & Lounge | Koreatown NYC (Koreatown)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d2269c04e6d278b71e346dc2fe6640f2 = L.circleMarker(
+                [40.7159, -73.989325],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_d2269c04e6d278b71e346dc2fe6640f2.bindTooltip(
+                `<div>
+                     BELTANE (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_33c1d6a38353d579a8a7e682d71613f7 = L.circleMarker(
+                [40.773819, -73.955163],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_33c1d6a38353d579a8a7e682d71613f7.bindTooltip(
+                `<div>
+                     Ethyl's Bar & Restaurant (Upper East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_750352d5e9c4ea5c133a67df682d820d = L.circleMarker(
+                [40.726469, -73.979656],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_750352d5e9c4ea5c133a67df682d820d.bindTooltip(
+                `<div>
+                     McSorley’s Old Ale House (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b98b23d8a0ac2815ffcb92d9648f0dd2 = L.circleMarker(
+                [40.729656, -73.98425],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_b98b23d8a0ac2815ffcb92d9648f0dd2.bindTooltip(
+                `<div>
+                     Loreley Beer Garden (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_efd51721e21ac98d51e4cb54b18819c0 = L.circleMarker(
+                [40.763863, -73.994019],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_efd51721e21ac98d51e4cb54b18819c0.bindTooltip(
+                `<div>
+                     Rosie Dunn's Victorian Pub (Hell's Kitchen)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_75e9bb30f1d9911777d818f481dac737 = L.circleMarker(
+                [40.741194, -73.984262],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_75e9bb30f1d9911777d818f481dac737.bindTooltip(
+                `<div>
+                     The Gem Saloon (NoMad)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_11395b3d4aaf35be3ce3c3418a325bfc = L.circleMarker(
+                [40.764938, -73.987656],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_11395b3d4aaf35be3ce3c3418a325bfc.bindTooltip(
+                `<div>
+                     Celtic Pub Restaurant (Midtown West)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a2ab1db58be47e5613c63a41785c9e24 = L.circleMarker(
+                [40.75825, -73.986812],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_a2ab1db58be47e5613c63a41785c9e24.bindTooltip(
+                `<div>
+                     Pig 'N' Whistle Public House (Midtown West)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f8b6d7a35ff711d76fd1d301e921588c = L.circleMarker(
+                [40.7658, -73.992519],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_f8b6d7a35ff711d76fd1d301e921588c.bindTooltip(
+                `<div>
+                     The Mean Fiddler (Hell's Kitchen)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b5ab43e218c3c368cee1e58cba4970c5 = L.circleMarker(
+                [40.698712, -73.9933],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_b5ab43e218c3c368cee1e58cba4970c5.bindTooltip(
+                `<div>
+                     Sunken Harbor Club (Brooklyn Heights)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3d942a0bf694ff922c1d4d957b6a2a07 = L.circleMarker(
+                [40.760688, -73.988906],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_3d942a0bf694ff922c1d4d957b6a2a07.bindTooltip(
+                `<div>
+                     Beer Authority (Midtown West)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ef31ac709f06ad30263b1be545b68531 = L.circleMarker(
+                [40.72375, -73.98025],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_ef31ac709f06ad30263b1be545b68531.bindTooltip(
+                `<div>
+                     Madame George (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_349dc5392f47de848043955be0d5e188 = L.circleMarker(
+                [40.714963, -73.98545],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_349dc5392f47de848043955be0d5e188.bindTooltip(
+                `<div>
+                     The Rhymers' Club (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_aa5ee833099683b69927252b48252873 = L.circleMarker(
+                [40.725906, -73.978219],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_aa5ee833099683b69927252b48252873.bindTooltip(
+                `<div>
+                     11th St. Bar (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_356e81347da31e04aa88e94c5005530b = L.circleMarker(
+                [40.710063, -74.01155],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_356e81347da31e04aa88e94c5005530b.bindTooltip(
+                `<div>
+                     Maiden Lane (FiDi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c1675ba7d15ffdbb42f7ac9625bf6ae0 = L.circleMarker(
+                [40.723531, -73.984719],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_c1675ba7d15ffdbb42f7ac9625bf6ae0.bindTooltip(
+                `<div>
+                     Sing Sing Ave A. (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5b94af4efd2e3e5280e3da7e305f620f = L.circleMarker(
+                [40.719931, -73.988669],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_5b94af4efd2e3e5280e3da7e305f620f.bindTooltip(
+                `<div>
+                     169 Bar (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6a9bcd6fcd1b3734e7c263162d35946c = L.circleMarker(
+                [40.728344, -73.984719],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_6a9bcd6fcd1b3734e7c263162d35946c.bindTooltip(
+                `<div>
+                     Planet Rose (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cce27295e96f380d3987cd715076cf42 = L.circleMarker(
+                [40.716931, -73.990294],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_cce27295e96f380d3987cd715076cf42.bindTooltip(
+                `<div>
+                     La Caverna (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_168d5377986575ca840bf93de0d03030 = L.circleMarker(
+                [40.727406, -73.995031],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_168d5377986575ca840bf93de0d03030.bindTooltip(
+                `<div>
+                     Von (NoHo)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_634b14297f6784a2712097377ced3030 = L.circleMarker(
+                [40.740656, -73.9845],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_634b14297f6784a2712097377ced3030.bindTooltip(
+                `<div>
+                     Eastpoint Bar (Gramercy)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4097806cf41604cadc6143880dea266f = L.circleMarker(
+                [40.723281, -73.980875],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_4097806cf41604cadc6143880dea266f.bindTooltip(
+                `<div>
+                     Double Down Saloon (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_475e88d50486c90a1683e2deeacf37f7 = L.circleMarker(
+                [40.727175, -73.957937],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_475e88d50486c90a1683e2deeacf37f7.bindTooltip(
+                `<div>
+                     The Five Lamps (Greenpoint)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c96d522f5b8f4c24512111c11a9445e7 = L.circleMarker(
+                [40.772913, -73.956537],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_c96d522f5b8f4c24512111c11a9445e7.bindTooltip(
+                `<div>
+                     George & Jack's Tap Room (Upper East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b62dafb568b3bbe809d231b0e52ceef0 = L.circleMarker(
+                [40.776881, -73.952631],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_b62dafb568b3bbe809d231b0e52ceef0.bindTooltip(
+                `<div>
+                     Pioneers Bar NYC (Upper East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e69cb3a6d5adec68f29f18b8de4ac9af = L.circleMarker(
+                [40.788594, -73.978244],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_e69cb3a6d5adec68f29f18b8de4ac9af.bindTooltip(
+                `<div>
+                     The Stumble Inn (Upper West Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_44ec343a2f419f4db3cf5f47c5be0579 = L.circleMarker(
+                [40.703875, -74.014331],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_44ec343a2f419f4db3cf5f47c5be0579.bindTooltip(
+                `<div>
+                     Downtown Social (FiDi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6834ff435e19520b5bce98986668f77c = L.circleMarker(
+                [40.7623, -73.991237],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_6834ff435e19520b5bce98986668f77c.bindTooltip(
+                `<div>
+                     AWOL Bar & Grill (Hell's Kitchen)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a782f1a07f7449548a67235046271baa = L.circleMarker(
+                [40.755431, -73.982187],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_a782f1a07f7449548a67235046271baa.bindTooltip(
+                `<div>
+                     The Ragtrader & Bo Peep Cocktail and Highball Store (Midtown)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ef69225c20ce491e644f2527f0a10b72 = L.circleMarker(
+                [40.6994, -73.993175],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_ef69225c20ce491e644f2527f0a10b72.bindTooltip(
+                `<div>
+                     Fairweather (Brooklyn Heights)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cb98c613f6b55f1a7881eb0652703785 = L.circleMarker(
+                [40.724562, -73.991469],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_cb98c613f6b55f1a7881eb0652703785.bindTooltip(
+                `<div>
+                     Lillie's Victorian Establishment (NoHo)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7156841fe434051fe8960d9ca0c2604e = L.circleMarker(
+                [40.783406, -73.975681],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_7156841fe434051fe8960d9ca0c2604e.bindTooltip(
+                `<div>
+                     e's BAR (Upper West Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_515bb0445b6633a9e3a0b5f3cb3e5f95 = L.circleMarker(
+                [40.787906, -73.974212],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_515bb0445b6633a9e3a0b5f3cb3e5f95.bindTooltip(
+                `<div>
+                     Jake's Dilemma (Upper West Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_10da0e662245271be292cf57abfa0aa2 = L.circleMarker(
+                [40.787094, -73.974994],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_10da0e662245271be292cf57abfa0aa2.bindTooltip(
+                `<div>
+                     Prohibition (Upper West Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2d7a414f2511529a4e0d2f344b32c1e5 = L.circleMarker(
+                [40.712769, -73.960037],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_2d7a414f2511529a4e0d2f344b32c1e5.bindTooltip(
+                `<div>
+                     Surf Bar Seafood Restaurant & Grill (Williamsburg)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_40cbd023eb90912c02d111bbfe2a4f58 = L.circleMarker(
+                [40.725987, -73.951719],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_40cbd023eb90912c02d111bbfe2a4f58.bindTooltip(
+                `<div>
+                     Spritzenhaus33 (Greenpoint)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2afd965daf4930914c038606ff050430 = L.circleMarker(
+                [40.704688, -74.009394],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_2afd965daf4930914c038606ff050430.bindTooltip(
+                `<div>
+                     O'Hara's Restaurant and Pub (FiDi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_43671078fdc1cc0b79a79191eb7b3970 = L.circleMarker(
+                [40.744125, -74.003431],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_43671078fdc1cc0b79a79191eb7b3970.bindTooltip(
+                `<div>
+                     Verlaine (Chelsea)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3bcbdeb67b7826218a5b97cfab55920e = L.circleMarker(
+                [40.733925, -74.0062],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_3bcbdeb67b7826218a5b97cfab55920e.bindTooltip(
+                `<div>
+                     Cellar Dog (West Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e972d6a95670d0f9496ef9bed1d80a05 = L.circleMarker(
+                [40.790281, -73.977994],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_e972d6a95670d0f9496ef9bed1d80a05.bindTooltip(
+                `<div>
+                     Brandy's Piano Bar (Upper West Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f11a4aafff325ce8447106701a92e278 = L.circleMarker(
+                [40.772506, -73.956881],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_f11a4aafff325ce8447106701a92e278.bindTooltip(
+                `<div>
+                     Treadwell Park (Upper East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_709f26d70362df9f554c5d3a7d714770 = L.circleMarker(
+                [40.77085, -73.954444],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_709f26d70362df9f554c5d3a7d714770.bindTooltip(
+                `<div>
+                     Mulligan's Pub (Upper East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_339d7022491f6bf19adff2b78c15c120 = L.circleMarker(
+                [40.70725, -74.010456],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_339d7022491f6bf19adff2b78c15c120.bindTooltip(
+                `<div>
+                     Local 42 Bar (FiDi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b32995245f14b739b2ee654c2a4091bd = L.circleMarker(
+                [40.767269, -73.993394],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_b32995245f14b739b2ee654c2a4091bd.bindTooltip(
+                `<div>
+                     Valhalla NYC (Hell's Kitchen)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e22e20d91a3782a2d303a7333b1241b5 = L.circleMarker(
+                [40.763738, -73.992987],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_e22e20d91a3782a2d303a7333b1241b5.bindTooltip(
+                `<div>
+                     Dutch Fred's (Hell's Kitchen)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_58de14609844e06866be931fff3eda72 = L.circleMarker(
+                [40.763238, -73.99055],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_58de14609844e06866be931fff3eda72.bindTooltip(
+                `<div>
+                     As Is NYC (Hell's Kitchen)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1ce62e7bf4c5d8d0d404fc55828f0ceb = L.circleMarker(
+                [40.766706, -73.989456],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_1ce62e7bf4c5d8d0d404fc55828f0ceb.bindTooltip(
+                `<div>
+                     Beer Culture (Hell's Kitchen)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8b102be35abc4c419cdec19f201bd200 = L.circleMarker(
+                [40.761769, -73.994956],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_8b102be35abc4c419cdec19f201bd200.bindTooltip(
+                `<div>
+                     Rudy's Bar & Grill (Hell's Kitchen)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_19684ad59d67820ff7d0ed6841a71c59 = L.circleMarker(
+                [40.734194, -74.006294],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_19684ad59d67820ff7d0ed6841a71c59.bindTooltip(
+                `<div>
+                     The Uncommons (Greenwich Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5d9725e230a73a943d77a04bf60e4523 = L.circleMarker(
+                [40.738737, -74.001825],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_5d9725e230a73a943d77a04bf60e4523.bindTooltip(
+                `<div>
+                     Bar Pisellino (West Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_55906b3db9ceae6a4e7a8802907ed553 = L.circleMarker(
+                [40.747006, -73.991731],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_55906b3db9ceae6a4e7a8802907ed553.bindTooltip(
+                `<div>
+                     230 Fifth Rooftop Bar (NoMad)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_46f857d6b0c5414a8132145fccf65ee2 = L.circleMarker(
+                [40.732363, -74.002794],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_46f857d6b0c5414a8132145fccf65ee2.bindTooltip(
+                `<div>
+                     Old Mates Pub (West Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9c1cedf81d0a570bc2ec13c7f17f457c = L.circleMarker(
+                [40.738719, -73.991169],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_9c1cedf81d0a570bc2ec13c7f17f457c.bindTooltip(
+                `<div>
+                     Oscar Wilde (Flatiron)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0e01ab7a718ac1392ed4855ae6255ebf = L.circleMarker(
+                [40.776631, -73.960412],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_0e01ab7a718ac1392ed4855ae6255ebf.bindTooltip(
+                `<div>
+                     Bibliotheque (Upper East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_feb46cc6d4dc28638568bfb7ec797999 = L.circleMarker(
+                [40.719556, -73.985388],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_feb46cc6d4dc28638568bfb7ec797999.bindTooltip(
+                `<div>
+                     Pineapple Club (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_00873018d32c6c43ad4fb8878f49c865 = L.circleMarker(
+                [40.75865, -73.986687],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_00873018d32c6c43ad4fb8878f49c865.bindTooltip(
+                `<div>
+                     msocial Rooftop (Midtown)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_462c6ba04f978edf7fc69ec5d9041bcd = L.circleMarker(
+                [40.747475, -73.984981],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_462c6ba04f978edf7fc69ec5d9041bcd.bindTooltip(
+                `<div>
+                     The Flatiron Room NoMad (NoMad)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2a5b0fe6197ead9bde5e306e7b47dcb7 = L.circleMarker(
+                [40.735269, -74.005231],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_2a5b0fe6197ead9bde5e306e7b47dcb7.bindTooltip(
+                `<div>
+                     Iggy's (West Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9e5828082b83fcd238db3a4b0d6aff31 = L.circleMarker(
+                [40.762269, -73.988831],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_9e5828082b83fcd238db3a4b0d6aff31.bindTooltip(
+                `<div>
+                     Hold Fast Kitchen and Spirits (Hell's Kitchen)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a4a5475700363e407190e106886cd56d = L.circleMarker(
+                [40.766019, -73.993019],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_a4a5475700363e407190e106886cd56d.bindTooltip(
+                `<div>
+                     The Pony Bar (Hell's Kitchen)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f61ebc2de30694b1aa02ee7e10a26282 = L.circleMarker(
+                [40.742125, -73.992919],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_f61ebc2de30694b1aa02ee7e10a26282.bindTooltip(
+                `<div>
+                     Patent Pending (Flatiron)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2bee653b953853c1fc21a533112494d2 = L.circleMarker(
+                [40.766863, -73.995644],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_2bee653b953853c1fc21a533112494d2.bindTooltip(
+                `<div>
+                     Avoca (Hell's Kitchen)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_34e2f9dc887a70825aecac40a7ae4739 = L.circleMarker(
+                [40.737219, -73.991762],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_34e2f9dc887a70825aecac40a7ae4739.bindTooltip(
+                `<div>
+                     Clemente Bar (Flatiron)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b31c35a9ec0c154eff527bcd91a48291 = L.circleMarker(
+                [40.715988, -73.957319],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_b31c35a9ec0c154eff527bcd91a48291.bindTooltip(
+                `<div>
+                     Ray’s (Williamsburg)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a66bc13cce8724054fe9ec1d4bbe8d27 = L.circleMarker(
+                [40.733194, -74.005044],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_a66bc13cce8724054fe9ec1d4bbe8d27.bindTooltip(
+                `<div>
+                     Wicked Willy's (Greenwich Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6f699e70cf2b94a3c00ec2832f54322f = L.circleMarker(
+                [40.732319, -74.001044],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_6f699e70cf2b94a3c00ec2832f54322f.bindTooltip(
+                `<div>
+                     Down the Hatch (Greenwich Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a35b218fe383a111a2fa307e93cb17e4 = L.circleMarker(
+                [40.730094, -73.983187],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_a35b218fe383a111a2fa307e93cb17e4.bindTooltip(
+                `<div>
+                     DROM (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f1ebf568beee6b6c6d2b80069c8b6533 = L.circleMarker(
+                [40.75725, -73.989469],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_f1ebf568beee6b6c6d2b80069c8b6533.bindTooltip(
+                `<div>
+                     The Skinny Bar and Lounge (Midtown West)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6d3bff9e7370730b909e974de7625bad = L.circleMarker(
+                [40.705375, -74.01355],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_6d3bff9e7370730b909e974de7625bad.bindTooltip(
+                `<div>
+                     Bayard's Ale House (FiDi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a4d972949c6ce58e9bbb0b8b5793c0a4 = L.circleMarker(
+                [40.6918, -73.9243],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_a4d972949c6ce58e9bbb0b8b5793c0a4.bindTooltip(
+                `<div>
+                     House of Yes (Bushwick)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1023e5fe449fa26b2b846f4d3793614e = L.circleMarker(
+                [40.761688, -73.992281],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_1023e5fe449fa26b2b846f4d3793614e.bindTooltip(
+                `<div>
+                     Reichenbach Hall (Midtown West)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_53c5a8f1c5a94c6af62363b37711327b = L.circleMarker(
+                [40.758406, -73.987344],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_53c5a8f1c5a94c6af62363b37711327b.bindTooltip(
+                `<div>
+                     The Standard Biergarten (Midtown West)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a0a7f1643900c85c526a98cc5080abcc = L.circleMarker(
+                [40.733863, -74.003262],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_a0a7f1643900c85c526a98cc5080abcc.bindTooltip(
+                `<div>
+                     The Penny Farthing (West Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3f34b526b5e25b531761b01f84e634eb = L.circleMarker(
+                [40.773788, -73.954194],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_3f34b526b5e25b531761b01f84e634eb.bindTooltip(
+                `<div>
+                     VICTORIA! (Upper East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a990117872811ff7f8ccca2655441608 = L.circleMarker(
+                [40.738125, -73.991169],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_a990117872811ff7f8ccca2655441608.bindTooltip(
+                `<div>
+                     La Victoria NYC (Flatiron)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_03a982a2d43b65a559b46d8bd09bec68 = L.circleMarker(
+                [40.730175, -73.951687],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_03a982a2d43b65a559b46d8bd09bec68.bindTooltip(
+                `<div>
+                     Good Room (Greenpoint)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7b379f7be2912eb431ecd1f3a5841144 = L.circleMarker(
+                [40.720619, -73.98295],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_7b379f7be2912eb431ecd1f3a5841144.bindTooltip(
+                `<div>
+                     Mr. Purple (Lower East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dd83dbfa2203c6e13bb013ce18ef37a7 = L.circleMarker(
+                [40.725687, -73.985344],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_dd83dbfa2203c6e13bb013ce18ef37a7.bindTooltip(
+                `<div>
+                     Wiggle Room (East Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7aa49814e4bba4bbf1f5748e060263a7 = L.circleMarker(
+                [40.764688, -73.990938],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_7aa49814e4bba4bbf1f5748e060263a7.bindTooltip(
+                `<div>
+                     The Spaniard (Midtown West)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4f49d50b513f2cbd1b74cc8cb9076888 = L.circleMarker(
+                [40.759344, -73.992219],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_4f49d50b513f2cbd1b74cc8cb9076888.bindTooltip(
+                `<div>
+                     Brass Monkey (Midtown West)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4515a8f3b2f8dcefa4c53f623e25b0ac = L.circleMarker(
+                [40.774381, -73.960194],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_4515a8f3b2f8dcefa4c53f623e25b0ac.bindTooltip(
+                `<div>
+                     Overlook (Upper East Side)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1f8582331574c6d645c728137dc81f0c = L.circleMarker(
+                [40.762188, -73.988531],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_1f8582331574c6d645c728137dc81f0c.bindTooltip(
+                `<div>
+                     The Factory 380 (Midtown West)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_81795b5ae3a3dde6aa5775069ac4352d = L.circleMarker(
+                [40.737131, -74.005513],
+                {"bubblingMouseEvents": true, "color": "#AAAAAA", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#AAAAAA", "fillOpacity": 0.3, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 0.5, "radius": 3, "stroke": true, "weight": 0.5}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            circle_marker_81795b5ae3a3dde6aa5775069ac4352d.bindTooltip(
+                `<div>
+                     Peculier Pub (Greenwich Village)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9873b8e263f756067c0406242c1ba942 = L.marker(
+                [40.717494, -73.986638],
+                {
+}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            var icon_033a884061256b5ee5960ab6fb2fff90 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "glass",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_038d0cf743948301de3fbdd07cd38601 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_8e41be2ca0e35c63861e379e81a0cfaf = $(`<div id="html_8e41be2ca0e35c63861e379e81a0cfaf" style="width: 100.0%; height: 100.0%;"><b>Stop 1: Lost in Paradise Rooftop</b><br>Arrive 7:13pm<br><i>Lower East Side</i> · moderate (~$14) · conversation</div>`)[0];
+                popup_038d0cf743948301de3fbdd07cd38601.setContent(html_8e41be2ca0e35c63861e379e81a0cfaf);
+            
+        
+
+        marker_9873b8e263f756067c0406242c1ba942.bindPopup(popup_038d0cf743948301de3fbdd07cd38601)
+        ;
+
+        
+    
+    
+            marker_9873b8e263f756067c0406242c1ba942.bindTooltip(
+                `<div>
+                     1. Lost in Paradise Rooftop
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9873b8e263f756067c0406242c1ba942.setIcon(icon_033a884061256b5ee5960ab6fb2fff90);
+            
+    
+            var marker_84e557227db59d75128691add3e10f37 = L.marker(
+                [40.723969, -73.982656],
+                {
+}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            var icon_ad0dd6e9988d18ef1be73b2176ee1cb0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "glass",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_292517f2bc0717d2636b1fa6672efed9 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_3d24f5140ea9069408bc1f033f046786 = $(`<div id="html_3d24f5140ea9069408bc1f033f046786" style="width: 100.0%; height: 100.0%;"><b>Stop 2: Barcade</b><br>Arrive 8:08pm<br><i>East Village</i> · moderate (~$14) · lively</div>`)[0];
+                popup_292517f2bc0717d2636b1fa6672efed9.setContent(html_3d24f5140ea9069408bc1f033f046786);
+            
+        
+
+        marker_84e557227db59d75128691add3e10f37.bindPopup(popup_292517f2bc0717d2636b1fa6672efed9)
+        ;
+
+        
+    
+    
+            marker_84e557227db59d75128691add3e10f37.bindTooltip(
+                `<div>
+                     2. Barcade
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_84e557227db59d75128691add3e10f37.setIcon(icon_ad0dd6e9988d18ef1be73b2176ee1cb0);
+            
+    
+            var marker_5824c5fd30e33c94da4cbc2d08839c87 = L.marker(
+                [40.727219, -73.984594],
+                {
+}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+    
+            var icon_fa2efc407b568dec9d244b90cb510229 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "glass",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_170bb79fb9f859993060442b1acfb819 = L.popup({
+  "maxWidth": 360,
+});
+
+        
+            
+                var html_683b097028521d1ec6ac9fdc54107323 = $(`<div id="html_683b097028521d1ec6ac9fdc54107323" style="width: 100.0%; height: 100.0%;"><b>Stop 3: Otto's Shrunken Head</b><br>Arrive 8:58pm<br><i>East Village</i> · cheap (~$4) · lively</div>`)[0];
+                popup_170bb79fb9f859993060442b1acfb819.setContent(html_683b097028521d1ec6ac9fdc54107323);
+            
+        
+
+        marker_5824c5fd30e33c94da4cbc2d08839c87.bindPopup(popup_170bb79fb9f859993060442b1acfb819)
+        ;
+
+        
+    
+    
+            marker_5824c5fd30e33c94da4cbc2d08839c87.bindTooltip(
+                `<div>
+                     3. Otto's Shrunken Head
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_5824c5fd30e33c94da4cbc2d08839c87.setIcon(icon_fa2efc407b568dec9d244b90cb510229);
+            
+    
+            var poly_line_13421f22168c1680f0330ce31b0a206c = L.polyline(
+                [[40.717494, -73.986638], [40.723969, -73.982656], [40.727219, -73.984594]],
+                {"bubblingMouseEvents": true, "color": "#333333", "dashArray": "5,5", "dashOffset": null, "fill": false, "fillColor": "#333333", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_707450bbcfea7f5190836341e83dbaab);
+        
+</script>
+</html>
