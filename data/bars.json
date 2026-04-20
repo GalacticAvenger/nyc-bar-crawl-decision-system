@@ -142,7 +142,6 @@
       "bar_with_food"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "lively",
       "local-institution",
@@ -382,7 +381,7 @@
       "airy",
       "large-groups",
       "lively",
-      "outdoor",
+      "patio",
       "unpretentious"
     ],
     "price_tier": "premium",
@@ -932,11 +931,11 @@
       "bar_with_food"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "historic",
+      "live-band",
       "polished",
-      "themed"
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -1013,7 +1012,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.5,
+    "novelty": 0.4,
     "description": "Restaurant (piano bar)",
     "good_for": [
       "start"
@@ -1044,6 +1043,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -1168,6 +1168,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -1401,6 +1402,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -1525,6 +1527,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -1648,10 +1651,11 @@
       "nightclub"
     ],
     "vibe_tags": [
-      "dancing",
+      "dance-floor",
+      "dj-set",
+      "late-close",
       "lively",
-      "loud",
-      "rowdy"
+      "music-loud"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -1724,7 +1728,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.4,
@@ -1750,10 +1753,11 @@
       "dance"
     ],
     "vibe_tags": [
-      "dancing",
+      "dance-floor",
+      "dj-set",
+      "late-close",
       "lively",
-      "loud",
-      "themed"
+      "music-loud"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -1819,14 +1823,13 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.5,
+    "novelty": 0.4,
     "description": "Dance club",
     "good_for": [
       "nightcap"
     ],
     "avoid_for": [
-      "conversation",
-      "first_meet"
+      "conversation"
     ],
     "google_rating": 4.4,
     "google_review_count": 489,
@@ -1962,8 +1965,8 @@
       "conversation",
       "historic",
       "lively",
-      "loud",
-      "themed",
+      "music-loud",
+      "retro",
       "touristy",
       "unpretentious"
     ],
@@ -2183,6 +2186,7 @@
     "vibe_tags": [
       "birthday-party",
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "large-groups",
@@ -2309,8 +2313,9 @@
     "vibe_tags": [
       "artsy",
       "hipster",
+      "live-band",
       "lively",
-      "loud"
+      "music-loud"
     ],
     "price_tier": "premium",
     "avg_drink_price": 32.5,
@@ -2392,8 +2397,7 @@
       "middle"
     ],
     "avoid_for": [
-      "conversation",
-      "first_meet"
+      "conversation"
     ],
     "google_rating": 4.4,
     "google_review_count": 2202,
@@ -2746,8 +2750,9 @@
     "vibe_tags": [
       "artsy",
       "hipster",
+      "live-band",
       "lively",
-      "loud"
+      "music-loud"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 11.0,
@@ -2829,8 +2834,7 @@
       "middle"
     ],
     "avoid_for": [
-      "conversation",
-      "first_meet"
+      "conversation"
     ],
     "google_rating": 4.4,
     "google_review_count": 3003,
@@ -2856,8 +2860,9 @@
     "vibe_tags": [
       "artsy",
       "hipster",
+      "live-band",
       "lively",
-      "loud"
+      "music-loud"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 11.0,
@@ -2939,8 +2944,7 @@
       "middle"
     ],
     "avoid_for": [
-      "conversation",
-      "first_meet"
+      "conversation"
     ],
     "google_rating": 4.3,
     "google_review_count": 406,
@@ -3509,7 +3513,6 @@
       "lounge"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "dim",
       "polished"
@@ -3608,10 +3611,11 @@
     ],
     "vibe_tags": [
       "artsy",
-      "chill",
       "conversation",
+      "craft-cocktails",
       "hipster",
-      "polished"
+      "polished",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -3828,9 +3832,9 @@
       "pub"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
-      "polished"
+      "polished",
+      "unpretentious"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -3957,8 +3961,9 @@
     "vibe_tags": [
       "artsy",
       "hipster",
+      "live-band",
       "lively",
-      "loud"
+      "music-loud"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -4040,8 +4045,7 @@
       "middle"
     ],
     "avoid_for": [
-      "conversation",
-      "first_meet"
+      "conversation"
     ],
     "google_rating": 4.4,
     "google_review_count": 1012,
@@ -4066,6 +4070,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -4191,8 +4196,9 @@
     "vibe_tags": [
       "artsy",
       "hipster",
+      "live-band",
       "lively",
-      "loud"
+      "music-loud"
     ],
     "price_tier": "premium",
     "avg_drink_price": 32.5,
@@ -4274,8 +4280,7 @@
       "middle"
     ],
     "avoid_for": [
-      "conversation",
-      "first_meet"
+      "conversation"
     ],
     "google_rating": 4.2,
     "google_review_count": 3105,
@@ -4409,6 +4414,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -4533,6 +4539,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -4659,7 +4666,7 @@
       "airy",
       "conversation",
       "lively",
-      "outdoor",
+      "rooftop",
       "unpretentious"
     ],
     "price_tier": "moderate",
@@ -4685,7 +4692,7 @@
       "1": "dead",
       "2": "dead"
     },
-    "outdoor_seating": true,
+    "outdoor_seating": false,
     "food_quality": "snacks",
     "kitchen_open": null,
     "happy_hour_windows": [
@@ -5316,7 +5323,7 @@
       "hidden-gem",
       "intimate",
       "polished",
-      "themed"
+      "theatrical"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -5437,6 +5444,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -5674,7 +5682,7 @@
     "vibe_tags": [
       "large-groups",
       "lively",
-      "themed"
+      "retro"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -5893,10 +5901,10 @@
       "bar_with_food"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "dim",
-      "polished"
+      "polished",
+      "walk-in"
     ],
     "price_tier": "splurge",
     "avg_drink_price": 50,
@@ -6113,6 +6121,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -6457,6 +6466,7 @@
       "sports_bar"
     ],
     "vibe_tags": [
+      "games",
       "large-groups",
       "lively",
       "unpretentious"
@@ -6559,7 +6569,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.5,
@@ -6584,9 +6593,10 @@
       "sports_bar"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "large-groups",
       "lively",
-      "loud",
+      "sports-watching",
       "unpretentious"
     ],
     "price_tier": "moderate",
@@ -6687,7 +6697,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.7,
@@ -6713,6 +6722,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -6838,7 +6848,7 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "themed",
+      "retro",
       "unpretentious"
     ],
     "price_tier": "premium",
@@ -6962,10 +6972,10 @@
       "pub"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "local-institution",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -7095,7 +7105,7 @@
       "airy",
       "large-groups",
       "lively",
-      "outdoor",
+      "patio",
       "unpretentious"
     ],
     "price_tier": "moderate",
@@ -7843,6 +7853,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -7966,9 +7977,10 @@
       "sports_bar"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "large-groups",
       "lively",
-      "loud",
+      "sports-watching",
       "unpretentious"
     ],
     "price_tier": "premium",
@@ -8069,7 +8081,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.3,
@@ -8095,6 +8106,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -8219,6 +8231,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -8562,11 +8575,10 @@
     ],
     "vibe_tags": [
       "birthday-party",
+      "dj-set",
       "large-groups",
       "lively",
-      "loud",
-      "rowdy",
-      "themed"
+      "music-loud"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -8657,7 +8669,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.7,
+    "novelty": 0.6,
     "description": "Karaoke bar",
     "good_for": [
       "middle",
@@ -8665,7 +8677,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.0,
@@ -8801,11 +8812,10 @@
     ],
     "vibe_tags": [
       "birthday-party",
+      "dj-set",
       "large-groups",
       "lively",
-      "loud",
-      "rowdy",
-      "themed"
+      "music-loud"
     ],
     "price_tier": "cheap",
     "avg_drink_price": 3.7,
@@ -8896,7 +8906,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.7,
+    "novelty": 0.6,
     "description": "Karaoke bar",
     "good_for": [
       "middle",
@@ -8904,7 +8914,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.1,
@@ -8929,7 +8938,6 @@
       "lounge"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "dim",
       "polished"
@@ -9572,9 +9580,10 @@
       "sports_bar"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "large-groups",
       "lively",
-      "loud",
+      "sports-watching",
       "unpretentious"
     ],
     "price_tier": "moderate",
@@ -9675,7 +9684,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.2,
@@ -9700,9 +9708,10 @@
       "sports_bar"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "large-groups",
       "lively",
-      "loud",
+      "sports-watching",
       "unpretentious"
     ],
     "price_tier": "premium",
@@ -9803,7 +9812,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.3,
@@ -9828,9 +9836,10 @@
       "sports_bar"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "large-groups",
       "lively",
-      "loud",
+      "sports-watching",
       "unpretentious"
     ],
     "price_tier": "moderate",
@@ -9931,7 +9940,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.2,
@@ -9958,11 +9966,10 @@
     ],
     "vibe_tags": [
       "birthday-party",
+      "dj-set",
       "large-groups",
       "lively",
-      "loud",
-      "rowdy",
-      "themed"
+      "music-loud"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -10053,7 +10060,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.7,
+    "novelty": 0.6,
     "description": "Karaoke bar",
     "good_for": [
       "middle",
@@ -10061,7 +10068,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.0,
@@ -10196,6 +10202,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -10319,10 +10326,10 @@
       "bar_with_food"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "polished",
-      "themed"
+      "retro",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -10538,9 +10545,10 @@
       "sports_bar"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "large-groups",
       "lively",
-      "loud",
+      "sports-watching",
       "unpretentious"
     ],
     "price_tier": "premium",
@@ -10641,7 +10649,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.0,
@@ -10666,10 +10673,10 @@
       "bar_with_food"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "intimate",
-      "polished"
+      "polished",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -10777,7 +10784,7 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "themed",
+      "tiki",
       "touristy",
       "unpretentious"
     ],
@@ -11105,6 +11112,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -11340,8 +11348,8 @@
     "vibe_tags": [
       "conversation",
       "historic",
-      "polished",
-      "themed"
+      "live-band",
+      "polished"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -11428,7 +11436,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.7,
+    "novelty": 0.6,
     "description": "Piano bar",
     "good_for": [
       "start",
@@ -11460,9 +11468,9 @@
       "beer_hall"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "large-groups",
       "lively",
-      "loud",
       "unpretentious"
     ],
     "price_tier": "premium",
@@ -11816,7 +11824,6 @@
       "bar_with_food"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "hipster",
       "lively",
@@ -11944,6 +11951,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -12412,11 +12420,10 @@
       "themed"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "cozy",
-      "hidden-gem",
-      "themed"
+      "games",
+      "hidden-gem"
     ],
     "price_tier": "cheap",
     "avg_drink_price": 3.7,
@@ -12751,10 +12758,10 @@
       "pub"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "local-institution",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 11.0,
@@ -12883,7 +12890,7 @@
       "conversation",
       "intimate",
       "polished",
-      "themed"
+      "retro"
     ],
     "price_tier": "premium",
     "avg_drink_price": 32.5,
@@ -12989,9 +12996,9 @@
       "wine_bar"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "intimate",
+      "natural-wine",
       "polished"
     ],
     "price_tier": "moderate",
@@ -13100,6 +13107,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -13333,6 +13341,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -13567,11 +13576,10 @@
     ],
     "vibe_tags": [
       "birthday-party",
+      "dj-set",
       "large-groups",
       "lively",
-      "loud",
-      "rowdy",
-      "themed"
+      "music-loud"
     ],
     "price_tier": "cheap",
     "avg_drink_price": 3.7,
@@ -13662,7 +13670,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.7,
+    "novelty": 0.6,
     "description": "Karaoke bar",
     "good_for": [
       "middle",
@@ -13670,7 +13678,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.3,
@@ -13695,10 +13702,10 @@
       "generic_bar"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "lively",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -13915,6 +13922,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -14148,6 +14156,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -14381,9 +14390,9 @@
     ],
     "vibe_tags": [
       "conversation",
+      "crowd-loud",
       "polished",
-      "rowdy",
-      "themed",
+      "theatrical",
       "touristy"
     ],
     "price_tier": "moderate",
@@ -14491,9 +14500,9 @@
     ],
     "vibe_tags": [
       "conversation",
+      "crowd-loud",
       "large-groups",
       "lively",
-      "loud",
       "sports-watching",
       "unpretentious"
     ],
@@ -14622,8 +14631,9 @@
       "birthday-party",
       "hipster",
       "large-groups",
+      "live-band",
       "lively",
-      "loud"
+      "music-loud"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -14705,8 +14715,7 @@
       "middle"
     ],
     "avoid_for": [
-      "conversation",
-      "first_meet"
+      "conversation"
     ],
     "google_rating": 4.1,
     "google_review_count": 1177,
@@ -14971,9 +14980,10 @@
     ],
     "vibe_tags": [
       "artsy",
-      "dancing",
-      "loud",
-      "themed"
+      "dance-floor",
+      "late-close",
+      "music-loud",
+      "theatrical"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -15071,10 +15081,10 @@
       "themed"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "large-groups",
       "lively",
-      "loud",
-      "themed"
+      "retro"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -15190,7 +15200,7 @@
       "airy",
       "large-groups",
       "lively",
-      "outdoor",
+      "patio",
       "unpretentious"
     ],
     "price_tier": "premium",
@@ -15304,10 +15314,11 @@
       "sports_bar"
     ],
     "vibe_tags": [
-      "chill",
+      "crowd-loud",
       "large-groups",
       "lively",
-      "loud",
+      "post-work",
+      "sports-watching",
       "unpretentious"
     ],
     "price_tier": "premium",
@@ -15408,7 +15419,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.2,
@@ -15542,10 +15552,11 @@
       "nightclub"
     ],
     "vibe_tags": [
-      "dancing",
+      "dance-floor",
+      "dj-set",
+      "late-close",
       "lively",
-      "loud",
-      "rowdy"
+      "music-loud"
     ],
     "price_tier": "splurge",
     "avg_drink_price": 50,
@@ -15618,7 +15629,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 3.5,
@@ -15643,10 +15653,11 @@
       "nightclub"
     ],
     "vibe_tags": [
-      "dancing",
+      "dance-floor",
+      "dj-set",
+      "late-close",
       "lively",
-      "loud",
-      "rowdy"
+      "music-loud"
     ],
     "price_tier": "premium",
     "avg_drink_price": 43.0,
@@ -15719,7 +15730,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.1,
@@ -16180,9 +16190,10 @@
       "sports_bar"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "large-groups",
       "lively",
-      "loud",
+      "sports-watching",
       "unpretentious"
     ],
     "price_tier": "premium",
@@ -16283,7 +16294,6 @@
     ],
     "avoid_for": [
       "date",
-      "first_meet",
       "conversation"
     ],
     "google_rating": 4.1,
@@ -16309,6 +16319,7 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "dim",
       "intimate",
       "polished"
@@ -16432,10 +16443,10 @@
       "pub"
     ],
     "vibe_tags": [
-      "chill",
       "conversation",
       "local-institution",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,

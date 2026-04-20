@@ -1,11 +1,11 @@
 # ============================================================================
-# Category → Default Attributes Mapping
+# Category → Default Attributes Mapping (v2 — retuned for 20s audience)
 # ============================================================================
 # Phase 1b enrichment applies this mapping as a starting point, then layers
-# user_note signals (stronger) on top.
+# primary_function_overrides, then user_note signals (strongest) on top.
 # ----------------------------------------------------------------------------
 
-_version: "1.0"
+_version: "2.0"
 
 Bar:
   bar_type: [generic_bar]
@@ -19,7 +19,7 @@ Bar:
 
 Cocktail bar:
   bar_type: [cocktail_bar]
-  default_vibes: [intimate, dim, polished, conversation]
+  default_vibes: [intimate, dim, polished, conversation, craft-cocktails]
   default_noise: conversation
   default_hours_key: cocktail_bar
   good_for: [start, middle]
@@ -29,11 +29,11 @@ Cocktail bar:
 
 Sports bar:
   bar_type: [sports_bar]
-  default_vibes: [lively, loud, unpretentious, large-groups]
+  default_vibes: [lively, crowd-loud, unpretentious, large-groups, sports-watching]
   default_noise: loud
   default_hours_key: sports_bar
   good_for: [middle]
-  avoid_for: [date, first-meet, conversation]
+  avoid_for: [date, conversation]
   drink_categories: [beer, cocktails, shots]
   price_skew: moderate
 
@@ -49,7 +49,7 @@ Irish pub:
 
 Pub:
   bar_type: [pub]
-  default_vibes: [unpretentious, chill, conversation, local-institution]
+  default_vibes: [unpretentious, conversation, local-institution, walk-in]
   default_noise: lively
   default_hours_key: pub
   good_for: [start, middle]
@@ -59,7 +59,7 @@ Pub:
 
 Gastropub:
   bar_type: [gastropub, pub]
-  default_vibes: [polished, conversation, chill]
+  default_vibes: [polished, conversation, unpretentious]
   default_noise: conversation
   default_hours_key: pub
   good_for: [start, middle]
@@ -69,7 +69,7 @@ Gastropub:
 
 Beer Garden:
   bar_type: [beer_garden, outdoor]
-  default_vibes: [lively, outdoor, airy, large-groups, unpretentious]
+  default_vibes: [lively, patio, airy, large-groups, unpretentious]
   default_noise: lively
   default_hours_key: beer_garden
   good_for: [start, middle]
@@ -79,7 +79,7 @@ Beer Garden:
 
 Beer hall:
   bar_type: [beer_hall]
-  default_vibes: [lively, large-groups, unpretentious, loud]
+  default_vibes: [lively, large-groups, unpretentious, crowd-loud]
   default_noise: loud
   default_hours_key: beer_garden
   good_for: [start, middle]
@@ -89,7 +89,7 @@ Beer hall:
 
 German:
   bar_type: [beer_hall, themed]
-  default_vibes: [lively, large-groups, themed, loud]
+  default_vibes: [lively, large-groups, retro, crowd-loud]
   default_noise: loud
   default_hours_key: beer_garden
   good_for: [start, middle]
@@ -99,17 +99,17 @@ German:
 
 Karaoke bar:
   bar_type: [karaoke, themed]
-  default_vibes: [loud, rowdy, lively, themed, large-groups, birthday-party]
+  default_vibes: [music-loud, lively, large-groups, birthday-party, dj-set]
   default_noise: loud
   default_hours_key: karaoke
   good_for: [middle, nightcap]
-  avoid_for: [date, first-meet, conversation]
+  avoid_for: [date, conversation]
   drink_categories: [beer, cocktails, shots]
   price_skew: moderate
 
 Piano bar:
   bar_type: [piano_bar, themed]
-  default_vibes: [polished, conversation, themed, historic]
+  default_vibes: [polished, conversation, live-band, historic]
   default_noise: conversation
   default_hours_key: cocktail_bar
   good_for: [start, middle, nightcap]
@@ -119,7 +119,7 @@ Piano bar:
 
 Lounge bar:
   bar_type: [lounge]
-  default_vibes: [polished, dim, chill, conversation]
+  default_vibes: [polished, dim, conversation]
   default_noise: conversation
   default_hours_key: lounge
   good_for: [start, middle, nightcap]
@@ -129,7 +129,7 @@ Lounge bar:
 
 Wine bar:
   bar_type: [wine_bar]
-  default_vibes: [intimate, polished, conversation, chill]
+  default_vibes: [intimate, polished, conversation, natural-wine]
   default_noise: conversation
   default_hours_key: wine_bar
   good_for: [start, middle]
@@ -139,37 +139,37 @@ Wine bar:
 
 Night club:
   bar_type: [nightclub]
-  default_vibes: [loud, rowdy, dancing, lively]
+  default_vibes: [music-loud, dance-floor, dj-set, lively, late-close]
   default_noise: deafening
   default_hours_key: nightclub
   good_for: [nightcap]
-  avoid_for: [date, first-meet, conversation, start]
+  avoid_for: [date, conversation]
   drink_categories: [cocktails, spirits, shots]
   price_skew: premium
 
 Dance club:
   bar_type: [nightclub, dance]
-  default_vibes: [loud, dancing, lively, themed]
+  default_vibes: [music-loud, dance-floor, dj-set, lively, late-close]
   default_noise: deafening
   default_hours_key: nightclub
   good_for: [nightcap]
-  avoid_for: [conversation, first-meet]
+  avoid_for: [conversation]
   drink_categories: [cocktails, spirits, shots]
   price_skew: premium
 
 Live Music:
   bar_type: [music_venue]
-  default_vibes: [artsy, loud, lively, hipster]
+  default_vibes: [artsy, live-band, lively, hipster, music-loud]
   default_noise: loud
   default_hours_key: music_venue
   good_for: [middle]
-  avoid_for: [conversation, first-meet]
+  avoid_for: [conversation]
   drink_categories: [beer, cocktails, spirits]
   price_skew: moderate
 
 Event venue:
   bar_type: [event_venue]
-  default_vibes: [themed, loud, dancing, artsy]
+  default_vibes: [theatrical, music-loud, dance-floor, artsy, late-close]
   default_noise: deafening
   default_hours_key: nightclub
   good_for: [nightcap]
@@ -179,7 +179,7 @@ Event venue:
 
 Performing arts theater:
   bar_type: [themed, cocktail_bar]
-  default_vibes: [themed, polished, intimate]
+  default_vibes: [theatrical, polished, intimate]
   default_noise: conversation
   default_hours_key: cocktail_bar
   good_for: [start, middle]
@@ -189,27 +189,29 @@ Performing arts theater:
 
 Pool hall:
   bar_type: [pool_hall, sports_bar]
-  default_vibes: [lively, unpretentious, large-groups]
+  default_vibes: [lively, unpretentious, large-groups, games]
   default_noise: lively
   default_hours_key: sports_bar
   good_for: [middle]
-  avoid_for: [date, first-meet, conversation]
+  avoid_for: [date, conversation]
   drink_categories: [beer, cocktails, shots]
   price_skew: moderate
 
 Board game club:
   bar_type: [board_game_bar, themed]
-  default_vibes: [chill, conversation, themed, cozy, hidden-gem]
+  default_vibes: [conversation, games, cozy, hidden-gem]
   default_noise: conversation
   default_hours_key: cocktail_bar
   good_for: [start]
-  avoid_for: [dancing, pregame, rowdy]
+  avoid_for: [dance-floor, pregame]
   drink_categories: [beer, cocktails, spirits]
   price_skew: moderate
 
+# ------- AMBIGUOUS / KEPT-AS-BAR CATEGORIES -------
+
 Restaurant:
   bar_type: [bar_with_food]
-  default_vibes: [polished, conversation, chill]
+  default_vibes: [polished, conversation, walk-in]
   default_noise: conversation
   default_hours_key: standard_bar
   good_for: [start]
@@ -249,7 +251,7 @@ New American:
 
 Southwestern American:
   bar_type: [bar_with_food, themed]
-  default_vibes: [lively, themed, large-groups]
+  default_vibes: [lively, retro, large-groups]
   default_noise: lively
   default_hours_key: standard_bar
   good_for: [start, middle]
@@ -258,40 +260,48 @@ Southwestern American:
   price_skew: moderate
 
 
+# ----------------------------------------------------------------------------
+# user_note → vibe overrides (strongest signal)
+# ----------------------------------------------------------------------------
+
 user_note_overrides:
   - pattern: "whispering"
     add_vibes: [quiet, cozy]
     force_noise: library
   - pattern: "piano"
-    add_vibes: [themed, polished]
+    add_vibes: [live-band, polished]
   - pattern: "laptop friendly"
-    add_vibes: [chill, quiet]
+    add_vibes: [quiet, walk-in]
   - pattern: "roof takeover"
-    add_vibes: [outdoor, airy, lively]
+    add_vibes: [rooftop, airy, lively]
   - pattern: "can book"
     add_vibes: [large-groups, birthday-party]
   - pattern: "aperol"
-    add_vibes: [chill, unpretentious]
+    add_vibes: [unpretentious, post-work]
   - pattern: "birthday"
     add_vibes: [birthday-party, lively, large-groups]
   - pattern: "never can say goodbye"
-    add_vibes: [touristy, themed, historic, loud]
+    add_vibes: [touristy, retro, historic, music-loud]
 
+
+# ----------------------------------------------------------------------------
+# primary_function → additional vibe tags
+# ----------------------------------------------------------------------------
 
 primary_function_overrides:
-  neighborhood_bar:              {add_vibes: [unpretentious, local-institution, chill]}
-  piano_bar:                     {add_vibes: [themed, polished, historic]}
-  music_cocktail_venue:          {add_vibes: [artsy, hipster]}
-  themed_cocktail_experience:    {add_vibes: [themed, polished, hidden-gem]}
-  themed_bar_restaurant:         {add_vibes: [themed, lively]}
-  themed_bar:                    {add_vibes: [themed]}
-  tiki_bar:                      {add_vibes: [themed, lively, touristy]}
+  neighborhood_bar:              {add_vibes: [unpretentious, local-institution]}
+  piano_bar:                     {add_vibes: [live-band, polished, historic]}
+  music_cocktail_venue:          {add_vibes: [artsy, hipster, craft-cocktails]}
+  themed_cocktail_experience:    {add_vibes: [theatrical, polished, hidden-gem]}
+  themed_bar_restaurant:         {add_vibes: [retro, lively]}
+  themed_bar:                    {add_vibes: [retro]}
+  tiki_bar:                      {add_vibes: [tiki, lively, touristy]}
   irish_pub:                     {add_vibes: [local-institution, unpretentious]}
-  craft_beer_bar:                {add_vibes: [hipster, chill]}
+  craft_beer_bar:                {add_vibes: [hipster, unpretentious]}
   dive_bar:                      {add_vibes: [divey, unpretentious]}
-  board_game_bar:                {add_vibes: [chill, hidden-gem, themed]}
+  board_game_bar:                {add_vibes: [games, hidden-gem]}
   whiskey_bar:                   {add_vibes: [polished, historic, intimate]}
-  themed_party_bar:              {add_vibes: [rowdy, themed, touristy]}
-  lounge_bar:                    {add_vibes: [polished, dim, chill]}
-  sports_bar:                    {add_vibes: [sports-watching, loud, large-groups]}
-  bar_with_food:                 {add_vibes: [conversation, chill]}
+  themed_party_bar:              {add_vibes: [crowd-loud, theatrical, touristy]}
+  lounge_bar:                    {add_vibes: [polished, dim]}
+  sports_bar:                    {add_vibes: [sports-watching, crowd-loud, large-groups]}
+  bar_with_food:                 {add_vibes: [conversation, walk-in]}

@@ -389,7 +389,8 @@ def build_specials(hours_profile: dict) -> list[dict]:
 def novelty_for(bar_types: list[str], vibes: set[str], primary_function: str | None) -> float:
     score = 0.4
     if "themed" in bar_types: score += 0.2
-    if "themed" in vibes: score += 0.1
+    theme_vibes = {"tiki", "retro", "literary-themed", "theatrical"}
+    if theme_vibes & vibes: score += 0.1
     if "hidden-gem" in vibes: score += 0.2
     if primary_function in ("themed_cocktail_experience", "themed_party_bar", "board_game_bar", "tiki_bar"):
         score += 0.2

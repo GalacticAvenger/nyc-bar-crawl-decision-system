@@ -27,12 +27,16 @@
       "items": {
         "type": "string",
         "enum": [
-          "intimate", "lively", "rowdy", "chill", "polished", "divey",
-          "artsy", "hipster", "touristy", "unpretentious",
-          "date", "first-meet", "pregame", "nightcap", "conversation",
-          "dancing", "sports-watching", "large-groups", "birthday-party",
-          "dim", "bright", "quiet", "loud", "cozy", "airy", "outdoor", "themed",
-          "lgbtq-friendly", "local-institution", "hidden-gem", "historic"
+          "intimate", "lively", "polished", "divey", "artsy", "hipster",
+          "touristy", "unpretentious", "instagrammable", "industry", "trending",
+          "date", "pregame", "nightcap", "conversation", "sports-watching",
+          "large-groups", "birthday-party", "dance-floor", "dj-set",
+          "live-band", "games", "post-work",
+          "dim", "quiet", "cozy", "airy", "patio", "rooftop", "sidewalk-seating",
+          "tiki", "retro", "literary-themed", "theatrical",
+          "craft-cocktails", "natural-wine", "music-loud", "crowd-loud",
+          "late-close", "no-cover", "walk-in",
+          "queer-centered", "local-institution", "hidden-gem", "historic"
         ]
       },
       "minItems": 3, "maxItems": 8, "uniqueItems": true

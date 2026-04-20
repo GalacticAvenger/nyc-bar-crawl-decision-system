@@ -51,11 +51,19 @@ def test_load_rules_structure():
 
 def test_load_vibe_vocab():
     vocab = load_vibe_vocab()
-    assert vocab["_total_vibes"] == 31
+    expected = vocab["_total_vibes"]
     all_vibes = set()
     for facet in vocab["facets"].values():
         all_vibes.update(facet)
-    assert len(all_vibes) == 31
+    assert len(all_vibes) == expected
+    # v2 — spot-check a few new vibes are present
+    assert "craft-cocktails" in all_vibes
+    assert "dance-floor" in all_vibes
+    assert "queer-centered" in all_vibes
+    # v2 — the deletions really are gone
+    assert "lgbtq-friendly" not in all_vibes
+    assert "dancing" not in all_vibes
+    assert "rowdy" not in all_vibes
 
 
 def test_load_all():

@@ -73,29 +73,39 @@
 |---|---|
 | conversation | 112 |
 | lively | 101 |
-| unpretentious | 89 |
+| unpretentious | 90 |
 | polished | 37 |
 | intimate | 27 |
-| loud | 27 |
 | dim | 25 |
+| craft-cocktails | 23 |
 | large-groups | 22 |
-| themed | 18 |
-| chill | 17 |
+| music-loud | 16 |
 | local-institution | 12 |
-| rowdy | 8 |
+| crowd-loud | 12 |
+| walk-in | 9 |
+| sports-watching | 9 |
+| live-band | 8 |
+| dj-set | 8 |
 | artsy | 8 |
 | hipster | 8 |
+| retro | 6 |
 | birthday-party | 6 |
-| dancing | 5 |
+| dance-floor | 5 |
+| late-close | 5 |
 | airy | 4 |
-| outdoor | 4 |
 | historic | 4 |
+| patio | 3 |
 | touristy | 3 |
+| theatrical | 3 |
 | hidden-gem | 2 |
 | cozy | 2 |
+| games | 2 |
+| rooftop | 1 |
 | quiet | 1 |
+| tiki | 1 |
 | divey | 1 |
-| sports-watching | 1 |
+| natural-wine | 1 |
+| post-work | 1 |
 
 ## User notes (6 preserved)
 

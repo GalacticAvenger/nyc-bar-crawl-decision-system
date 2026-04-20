@@ -31,11 +31,13 @@ def test_vibe_cosine_favors_matching_tags():
     bars = load_bars()
     rules = load_rules()
     intimate_bar = next(b for b in bars if "intimate" in b.vibe_tags)
-    rowdy_bar = next(b for b in bars if "rowdy" in b.vibe_tags and "intimate" not in b.vibe_tags)
+    # Opposing vibe in the v2 vocab: intimate ↔ crowd-loud
+    opposing_bar = next(b for b in bars
+                         if "crowd-loud" in b.vibe_tags and "intimate" not in b.vibe_tags)
     user = UserPreference(name="X", vibe_weights={"intimate": 1.0})
     intimate_score = score_vibe(intimate_bar, user, rules)
-    rowdy_score = score_vibe(rowdy_bar, user, rules)
-    assert intimate_score > rowdy_score
+    opposing_score = score_vibe(opposing_bar, user, rules)
+    assert intimate_score > opposing_score
 
 
 def test_budget_penalty_decays_above_cap():
