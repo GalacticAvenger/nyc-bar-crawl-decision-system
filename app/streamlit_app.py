@@ -220,19 +220,21 @@ def main():
     # ===========================================================
     # 2. The group — everything per-person EXCEPT vibes.
     # ===========================================================
+    # The group-size slider and "same page" checkbox live OUTSIDE the form.
+    # Widgets inside a Streamlit form only re-render on submit; these two
+    # control how many Person expanders are drawn, so they need to
+    # re-render IMMEDIATELY when the user moves them.
+    st.sidebar.subheader("2. Group")
+    num_users = st.sidebar.slider("How many of you?", 1, 8, 2, key="num_users")
+    same_prefs = False
+    if num_users >= 2:
+        same_prefs = st.sidebar.checkbox(
+            "Everyone's on the same page (copy Person 1 to everyone)",
+            value=False, key="same_prefs",
+            help="When the group is aligned on budget/drinks/noise, you only need to set Person 1.",
+        )
+
     with st.sidebar.form("plan_form", clear_on_submit=False):
-        st.subheader("2. Group")
-        num_users = st.slider("How many of you?", 1, 8, 2)
-
-        # "Everyone's on the same page" — only meaningful for 2+
-        same_prefs = False
-        if num_users >= 2:
-            same_prefs = st.checkbox(
-                "Everyone's on the same page (copy Person 1 to everyone)",
-                value=False,
-                help="When the group is aligned on budget/drinks/noise, you only need to set Person 1.",
-            )
-
         users = []
         for i in range(num_users):
             show_fields = (i == 0) or not same_prefs
