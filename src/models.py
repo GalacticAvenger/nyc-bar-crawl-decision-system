@@ -112,6 +112,11 @@ class GroupInput:
     walking_only: bool = True
     accessibility_needs: AccessibilityNeeds = field(default_factory=AccessibilityNeeds)
     want_food: bool = False
+    # Optional arc profile: one vibe_weights dict per stage of the night.
+    # If provided, the planner scores stop N against arc_profile[stage_for(N)]
+    # instead of a single flat user.vibe_weights, so a "warm-up" stop prefers
+    # different vibes than a "peak" stop.
+    arc_profile: Optional[tuple[dict[str, float], ...]] = None
 
 
 # ---------------------------------------------------------------------------

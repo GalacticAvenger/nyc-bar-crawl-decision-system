@@ -53,13 +53,54 @@ def walking_minutes(miles: float) -> float:
 # Walking penalty (used inside the routing objective)
 # ---------------------------------------------------------------------------
 
-def _walking_penalty(miles: float, rules: dict) -> float:
+def stage_for(stop_idx: int, total_stops: int, num_stages: int) -> int:
+    """Map a stop position to an arc stage.
+    With 3 stages and 3 stops: 0→0, 1→1, 2→2.
+    With 3 stages and 5 stops: 0→0, 1→0/1, 2→1, 3→1/2, 4→2.
+    Single-stage arc always returns 0.
+    """
+    if num_stages <= 1:
+        return 0
+    if total_stops <= 1:
+        return num_stages - 1
+    # Half-up rounding so the last stop reliably hits the last stage.
+    return min(num_stages - 1,
+               int(stop_idx * (num_stages - 1) / (total_stops - 1) + 0.5))
+
+
+def _scores_for_stage(
+    group_scores_by_stage: list[dict[str, float]] | dict[str, float],
+    stage_idx: int,
+) -> dict[str, float]:
+    """Retrieve the scores dict for a given stage. Accepts either a list of
+    dicts (per-stage) or a single dict (no staging)."""
+    if isinstance(group_scores_by_stage, dict):
+        return group_scores_by_stage
+    return group_scores_by_stage[stage_idx]
+
+
+def _walking_penalty(miles: float, rules: dict, walking_only: bool = True) -> float:
+    """Leg-distance penalty.
+    When `walking_only` is False, a leg longer than the comfortable walking
+    cap switches to a flat transit cost (Uber / subway) — the intuition is
+    that a crawl that was always going to involve transport shouldn't
+    penalize a 4-mile hop the same way it penalizes an aimless 4-mile walk.
+    """
     cfg = rules.get("walking_and_distance", {})
-    penalty = cfg.get("per_mile_penalty", 0.08) * miles
-    cap = cfg.get("comfortable_max_miles", 0.6)
-    if miles > cap:
-        penalty += cfg.get("amplified_per_mile_penalty_over_threshold", 0.20) * (miles - cap)
-    return penalty
+    cap_miles = cfg.get("comfortable_max_miles", 0.6)
+    per_mile = cfg.get("per_mile_penalty", 0.08)
+
+    # Short leg — always walk, always penalize lightly
+    if miles <= cap_miles:
+        return per_mile * miles
+
+    if walking_only:
+        # Long walk — amplified penalty (stamina + time cost)
+        return (per_mile * cap_miles
+                + cfg.get("amplified_per_mile_penalty_over_threshold", 0.20) * (miles - cap_miles))
+
+    # Long leg with transit allowed — flat transit fee replaces per-mile
+    return cfg.get("transit_override", {}).get("transit_fixed_penalty", 0.10)
 
 
 # ---------------------------------------------------------------------------
@@ -103,13 +144,15 @@ def _is_feasible(bar: Bar, arrival: datetime, group: GroupInput,
 
 def greedy_route(
     candidates: list[Bar],
-    group_scores: dict[str, float],
+    group_scores_by_stage: list[dict[str, float]] | dict[str, float],
     group: GroupInput,
     rules: dict,
     user_budget_weight: float = 0.0,
 ) -> tuple[list[Step], list[str]]:
     """Greedy: from start, always pick the highest (utility + bonus − walk)
-    bar that is still reachable and open. Returns (steps, log_messages)."""
+    bar that is still reachable and open. At step i, score against the
+    arc stage mapped from stage_for(i, max_stops, num_stages).
+    Returns (steps, log_messages)."""
     log: list[str] = []
     chosen: list[Step] = []
     used_ids: set[str] = set()
@@ -118,22 +161,27 @@ def greedy_route(
     current_time = group.start_time
     stop_minutes = rules.get("routing_config", {}).get("default_stop_duration_minutes", 45)
 
+    num_stages = (1 if isinstance(group_scores_by_stage, dict)
+                  else len(group_scores_by_stage))
+
     for step_idx in range(group.max_stops):
+        stage_idx = stage_for(step_idx, group.max_stops, num_stages)
+        scores = _scores_for_stage(group_scores_by_stage, stage_idx)
         best: Optional[tuple[float, Step]] = None
         for bar in candidates:
             if bar.id in used_ids:
                 continue
-            if bar.id not in group_scores:
+            if bar.id not in scores:
                 continue
             arrival = _arrival_after(current_loc, current_time, bar)
             if not _is_feasible(bar, arrival, group, stop_minutes):
                 continue
             miles = walking_miles(current_loc, (bar.lat, bar.lon))
-            penalty = _walking_penalty(miles, rules)
+            penalty = _walking_penalty(miles, rules, walking_only=group.walking_only)
             bonus, windows = temporal_bonus(bar, arrival, rules,
                                             user_budget_weight=user_budget_weight,
                                             user_wants_food=group.want_food)
-            util = group_scores[bar.id]
+            util = scores[bar.id]
             net = util + bonus - penalty
             if best is None or net > best[0]:
                 best = (net, Step(
@@ -149,7 +197,7 @@ def greedy_route(
         used_ids.add(step.bar.id)
         current_loc = (step.bar.lat, step.bar.lon)
         current_time = step.departure
-        log.append(f"step {step_idx + 1}: chose {step.bar.name} "
+        log.append(f"step {step_idx + 1} (stage {stage_idx}): chose {step.bar.name} "
                    f"(util {step.utility:.3f} + bonus {step.bonus:.3f}) at "
                    f"{step.arrival.strftime('%a %H:%M')}.")
     return chosen, log
@@ -161,28 +209,34 @@ def greedy_route(
 
 def _recompute_schedule(
     bar_order: list[Bar],
-    group_scores: dict[str, float],
+    group_scores_by_stage: list[dict[str, float]] | dict[str, float],
     group: GroupInput,
     rules: dict,
     user_budget_weight: float = 0.0,
 ) -> Optional[tuple[list[Step], float]]:
-    """Given a fixed order of bars, compute arrival/departure, feasibility, and total objective.
+    """Given a fixed order of bars, compute arrival/departure, feasibility,
+    and total objective. At position i, use the arc-stage-specific scores.
     Returns (steps, objective) or None if infeasible."""
     stop_minutes = rules.get("routing_config", {}).get("default_stop_duration_minutes", 45)
     current_loc = group.start_location
     current_time = group.start_time
     steps: list[Step] = []
     total = 0.0
-    for bar in bar_order:
+    num_stages = (1 if isinstance(group_scores_by_stage, dict)
+                  else len(group_scores_by_stage))
+    total_stops = len(bar_order)
+    for i, bar in enumerate(bar_order):
+        stage_idx = stage_for(i, total_stops, num_stages)
+        scores = _scores_for_stage(group_scores_by_stage, stage_idx)
         arrival = _arrival_after(current_loc, current_time, bar)
         if not _is_feasible(bar, arrival, group, stop_minutes):
             return None
         miles = walking_miles(current_loc, (bar.lat, bar.lon))
-        penalty = _walking_penalty(miles, rules)
+        penalty = _walking_penalty(miles, rules, walking_only=group.walking_only)
         bonus, windows = temporal_bonus(bar, arrival, rules,
                                         user_budget_weight=user_budget_weight,
                                         user_wants_food=group.want_food)
-        util = group_scores.get(bar.id, 0.0)
+        util = scores.get(bar.id, 0.0)
         total += util + bonus - penalty
         steps.append(Step(bar=bar, arrival=arrival,
                           departure=arrival + timedelta(minutes=stop_minutes),
@@ -198,7 +252,7 @@ def _recompute_schedule(
 
 def two_opt_improve(
     steps: list[Step],
-    group_scores: dict[str, float],
+    group_scores_by_stage: list[dict[str, float]] | dict[str, float],
     group: GroupInput,
     rules: dict,
     user_budget_weight: float = 0.0,
@@ -223,7 +277,7 @@ def two_opt_improve(
                 # Reverse the subpath [i..j]
                 new_order = [s.bar for s in current]
                 new_order[i:j + 1] = list(reversed(new_order[i:j + 1]))
-                result = _recompute_schedule(new_order, group_scores, group, rules,
+                result = _recompute_schedule(new_order, group_scores_by_stage, group, rules,
                                              user_budget_weight=user_budget_weight)
                 if result is None:
                     continue
@@ -249,7 +303,7 @@ def two_opt_improve(
 
 def enumerate_exact(
     candidates: list[Bar],
-    group_scores: dict[str, float],
+    group_scores_by_stage: list[dict[str, float]] | dict[str, float],
     group: GroupInput,
     rules: dict,
     user_budget_weight: float = 0.0,
@@ -261,12 +315,11 @@ def enumerate_exact(
     perms_tried = 0
     n = len(candidates)
     max_k = min(group.max_stops, n)
-    # Only try k up to max; this is the key step that enumerates 720 for n=6, k=6.
     for k in range(1, max_k + 1):
         for subset in itertools.combinations(candidates, k):
             for perm in itertools.permutations(subset):
                 perms_tried += 1
-                result = _recompute_schedule(list(perm), group_scores, group, rules,
+                result = _recompute_schedule(list(perm), group_scores_by_stage, group, rules,
                                              user_budget_weight=user_budget_weight)
                 if result is None:
                     continue
@@ -283,18 +336,21 @@ def enumerate_exact(
 
 def best_route(
     candidates: list[Bar],
-    group_scores: dict[str, float],
+    group_scores_by_stage: list[dict[str, float]] | dict[str, float],
     group: GroupInput,
     rules: dict,
     strategy_used: str = "",
     strategy_rationale: str = "",
     user_budget_weight: float = 0.0,
 ) -> Route:
-    """Orchestrate: greedy → 2-opt → (if small) exact check. Return Route."""
+    """Orchestrate: greedy → 2-opt → (if small) exact check. Return Route.
+    `group_scores_by_stage` can be a single dict (no arc) or a list of dicts
+    (one per arc stage)."""
     log: list[str] = []
-    # 1. Greedy
-    greedy_steps, greedy_log = greedy_route(candidates, group_scores, group, rules,
-                                            user_budget_weight=user_budget_weight)
+    greedy_steps, greedy_log = greedy_route(
+        candidates, group_scores_by_stage, group, rules,
+        user_budget_weight=user_budget_weight,
+    )
     log.extend(["GREEDY:"] + greedy_log)
 
     if not greedy_steps:
@@ -302,17 +358,18 @@ def best_route(
                      windows_captured=[], strategy_used=strategy_used,
                      strategy_rationale=strategy_rationale, search_log=log)
 
-    # 2. 2-opt
-    improved, opt_log = two_opt_improve(greedy_steps, group_scores, group, rules,
-                                        user_budget_weight=user_budget_weight)
+    improved, opt_log = two_opt_improve(
+        greedy_steps, group_scores_by_stage, group, rules,
+        user_budget_weight=user_budget_weight,
+    )
     log.extend(["2-OPT:"] + opt_log)
     chosen_steps = improved
 
-    # 3. Exact enumeration on the chosen set of bars (sanity check)
     chosen_bars = [s.bar for s in chosen_steps]
     if len(chosen_bars) <= rules.get("routing_config", {}).get("exact_enumeration_max_stops", 7):
         exact_steps, exact_total, perms = enumerate_exact(
-            chosen_bars, group_scores, group, rules, user_budget_weight=user_budget_weight
+            chosen_bars, group_scores_by_stage, group, rules,
+            user_budget_weight=user_budget_weight,
         )
         current_total = _total_of(chosen_steps)
         log.append(f"EXACT: enumerated {perms} permutations over {len(chosen_bars)} bars.")
@@ -320,7 +377,6 @@ def best_route(
             log.append(f"EXACT: exact ordering {exact_total:.3f} beats 2-opt {current_total:.3f}.")
             chosen_steps = exact_steps
 
-    # Build Route from steps
     return _route_from_steps(chosen_steps, strategy_used, strategy_rationale, log)
 
 

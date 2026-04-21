@@ -15,7 +15,9 @@
       "conversation",
       "lively",
       "local-institution",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -145,7 +147,10 @@
       "conversation",
       "lively",
       "local-institution",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -270,7 +275,10 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -379,10 +387,14 @@
     ],
     "vibe_tags": [
       "airy",
+      "historic",
       "large-groups",
       "lively",
+      "local-institution",
       "patio",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -496,8 +508,13 @@
     ],
     "vibe_tags": [
       "conversation",
+      "divey",
+      "games",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -606,7 +623,10 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "cheap",
     "avg_drink_price": 3.7,
@@ -714,8 +734,12 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
+      "hidden-gem",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 36.0,
@@ -793,7 +817,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Bar",
     "good_for": [
       "start",
@@ -823,8 +847,12 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
       "lively",
-      "unpretentious"
+      "post-work",
+      "trending",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 36.0,
@@ -935,6 +963,7 @@
       "historic",
       "live-band",
       "polished",
+      "post-work",
       "walk-in"
     ],
     "price_tier": "premium",
@@ -1044,9 +1073,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "hidden-gem",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "trending"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -1135,7 +1169,7 @@
     },
     "reservations": "accepted",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Cocktail bar",
     "good_for": [
       "start",
@@ -1169,9 +1203,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "hidden-gem",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "trending"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -1260,7 +1299,7 @@
     },
     "reservations": "accepted",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Cocktail bar",
     "good_for": [
       "start",
@@ -1294,7 +1333,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 36.0,
@@ -1403,9 +1444,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "hidden-gem",
+      "historic",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -1494,7 +1540,7 @@
     },
     "reservations": "accepted",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Cocktail bar",
     "good_for": [
       "start",
@@ -1528,9 +1574,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "hidden-gem",
+      "historic",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work"
     ],
     "price_tier": "premium",
     "avg_drink_price": 32.5,
@@ -1619,7 +1670,7 @@
     },
     "reservations": "accepted",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Cocktail bar",
     "good_for": [
       "start",
@@ -1651,11 +1702,15 @@
       "nightclub"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "dance-floor",
       "dj-set",
+      "instagrammable",
       "late-close",
       "lively",
-      "music-loud"
+      "music-loud",
+      "theatrical",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -1721,7 +1776,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.5,
     "description": "Night club",
     "good_for": [
       "nightcap"
@@ -1753,11 +1808,15 @@
       "dance"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "dance-floor",
       "dj-set",
       "late-close",
       "lively",
-      "music-loud"
+      "music-loud",
+      "queer-centered",
+      "trending",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -1854,8 +1913,13 @@
     ],
     "vibe_tags": [
       "conversation",
+      "games",
+      "hipster",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -1966,9 +2030,12 @@
       "historic",
       "lively",
       "music-loud",
+      "post-work",
+      "pregame",
       "retro",
       "touristy",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -2077,7 +2144,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -2187,9 +2256,12 @@
       "birthday-party",
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "instagrammable",
       "intimate",
       "large-groups",
+      "nightcap",
       "polished"
     ],
     "price_tier": "premium",
@@ -2313,9 +2385,11 @@
     "vibe_tags": [
       "artsy",
       "hipster",
+      "late-close",
       "live-band",
       "lively",
-      "music-loud"
+      "music-loud",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 32.5,
@@ -2423,7 +2497,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 36.0,
@@ -2532,7 +2608,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "splurge",
     "avg_drink_price": 50,
@@ -2640,8 +2718,13 @@
     ],
     "vibe_tags": [
       "conversation",
+      "divey",
+      "historic",
       "lively",
-      "unpretentious"
+      "local-institution",
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -2749,10 +2832,14 @@
     ],
     "vibe_tags": [
       "artsy",
+      "dance-floor",
       "hipster",
+      "late-close",
       "live-band",
       "lively",
-      "music-loud"
+      "music-loud",
+      "trending",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 11.0,
@@ -2859,10 +2946,14 @@
     ],
     "vibe_tags": [
       "artsy",
+      "dj-set",
       "hipster",
+      "late-close",
       "live-band",
       "lively",
-      "music-loud"
+      "music-loud",
+      "queer-centered",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 11.0,
@@ -2969,8 +3060,15 @@
     ],
     "vibe_tags": [
       "conversation",
+      "dance-floor",
+      "dj-set",
+      "late-close",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "queer-centered",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -3077,9 +3175,15 @@
       "generic_bar"
     ],
     "vibe_tags": [
+      "artsy",
       "conversation",
+      "dance-floor",
+      "hipster",
       "lively",
-      "unpretentious"
+      "post-work",
+      "queer-centered",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -3187,8 +3291,14 @@
     ],
     "vibe_tags": [
       "conversation",
+      "games",
+      "hipster",
+      "late-close",
       "lively",
-      "unpretentious"
+      "post-work",
+      "trending",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -3295,8 +3405,15 @@
       "generic_bar"
     ],
     "vibe_tags": [
+      "artsy",
       "conversation",
+      "dance-floor",
+      "dj-set",
+      "late-close",
       "lively",
+      "patio",
+      "post-work",
+      "trending",
       "unpretentious"
     ],
     "price_tier": "premium",
@@ -3322,7 +3439,7 @@
       "1": "dead",
       "2": "dead"
     },
-    "outdoor_seating": false,
+    "outdoor_seating": true,
     "food_quality": "snacks",
     "kitchen_open": null,
     "happy_hour_windows": [
@@ -3405,8 +3522,12 @@
     ],
     "vibe_tags": [
       "conversation",
+      "games",
+      "hipster",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -3513,9 +3634,15 @@
       "lounge"
     ],
     "vibe_tags": [
+      "airy",
       "conversation",
       "dim",
-      "polished"
+      "instagrammable",
+      "nightcap",
+      "polished",
+      "rooftop",
+      "touristy",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 32.5,
@@ -3539,7 +3666,7 @@
       "1": "dead",
       "2": "dead"
     },
-    "outdoor_seating": false,
+    "outdoor_seating": true,
     "food_quality": "snacks",
     "kitchen_open": null,
     "happy_hour_windows": [],
@@ -3613,8 +3740,12 @@
       "artsy",
       "conversation",
       "craft-cocktails",
+      "dj-set",
       "hipster",
+      "instagrammable",
       "polished",
+      "post-work",
+      "trending",
       "walk-in"
     ],
     "price_tier": "premium",
@@ -3723,8 +3854,13 @@
     ],
     "vibe_tags": [
       "conversation",
+      "dim",
+      "dj-set",
+      "hipster",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "splurge",
     "avg_drink_price": 50,
@@ -3834,7 +3970,9 @@
     "vibe_tags": [
       "conversation",
       "polished",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -3961,9 +4099,12 @@
     "vibe_tags": [
       "artsy",
       "hipster",
+      "late-close",
       "live-band",
       "lively",
-      "music-loud"
+      "local-institution",
+      "music-loud",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -4071,9 +4212,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "instagrammable",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "trending"
     ],
     "price_tier": "splurge",
     "avg_drink_price": 50,
@@ -4196,9 +4342,13 @@
     "vibe_tags": [
       "artsy",
       "hipster",
+      "historic",
+      "large-groups",
+      "late-close",
       "live-band",
       "lively",
-      "music-loud"
+      "music-loud",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 32.5,
@@ -4305,8 +4455,13 @@
     ],
     "vibe_tags": [
       "conversation",
+      "dim",
+      "live-band",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 11.0,
@@ -4415,9 +4570,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "hidden-gem",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -4506,7 +4666,7 @@
     },
     "reservations": "accepted",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Cocktail bar",
     "good_for": [
       "start",
@@ -4540,9 +4700,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "hidden-gem",
+      "instagrammable",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -4631,7 +4796,7 @@
     },
     "reservations": "accepted",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Cocktail bar",
     "good_for": [
       "start",
@@ -4665,9 +4830,14 @@
     "vibe_tags": [
       "airy",
       "conversation",
+      "craft-cocktails",
       "lively",
+      "post-work",
+      "pregame",
       "rooftop",
-      "unpretentious"
+      "tiki",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -4692,7 +4862,7 @@
       "1": "dead",
       "2": "dead"
     },
-    "outdoor_seating": false,
+    "outdoor_seating": true,
     "food_quality": "snacks",
     "kitchen_open": null,
     "happy_hour_windows": [
@@ -4745,7 +4915,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.5,
     "description": "Bar — note: bain top roof takeover",
     "good_for": [
       "start",
@@ -4775,8 +4945,12 @@
     ],
     "vibe_tags": [
       "conversation",
+      "games",
+      "hipster",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -4885,7 +5059,10 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -4993,8 +5170,14 @@
     ],
     "vibe_tags": [
       "conversation",
+      "hidden-gem",
+      "historic",
+      "live-band",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -5072,7 +5255,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Bar",
     "good_for": [
       "start",
@@ -5103,7 +5286,10 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 11.0,
@@ -5211,8 +5397,13 @@
     ],
     "vibe_tags": [
       "conversation",
+      "divey",
       "lively",
-      "unpretentious"
+      "local-institution",
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -5322,8 +5513,11 @@
     "vibe_tags": [
       "hidden-gem",
       "intimate",
+      "nightcap",
       "polished",
-      "theatrical"
+      "post-work",
+      "theatrical",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -5445,9 +5639,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "instagrammable",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "pregame"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -5571,8 +5770,13 @@
     ],
     "vibe_tags": [
       "conversation",
+      "divey",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "tiki",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "cheap",
     "avg_drink_price": 3.7,
@@ -5650,7 +5854,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.5,
     "description": "Bar",
     "good_for": [
       "start",
@@ -5682,7 +5886,9 @@
     "vibe_tags": [
       "large-groups",
       "lively",
-      "retro"
+      "post-work",
+      "retro",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -5792,9 +5998,14 @@
     "vibe_tags": [
       "conversation",
       "cozy",
+      "hidden-gem",
       "lively",
+      "nightcap",
+      "post-work",
+      "pregame",
       "quiet",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -5872,7 +6083,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Bar — note: Only whispering allowed lol",
     "good_for": [
       "start",
@@ -5903,7 +6114,9 @@
     "vibe_tags": [
       "conversation",
       "dim",
+      "nightcap",
       "polished",
+      "post-work",
       "walk-in"
     ],
     "price_tier": "splurge",
@@ -6013,7 +6226,11 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "theatrical",
+      "touristy",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "splurge",
     "avg_drink_price": 50,
@@ -6091,7 +6308,7 @@
     },
     "reservations": "none",
     "dress_code": "smart_casual",
-    "novelty": 0.4,
+    "novelty": 0.5,
     "description": "Bar",
     "good_for": [
       "start",
@@ -6122,9 +6339,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "hidden-gem",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -6213,7 +6435,7 @@
     },
     "reservations": "accepted",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Cocktail bar",
     "good_for": [
       "start",
@@ -6246,8 +6468,12 @@
     ],
     "vibe_tags": [
       "conversation",
+      "dim",
+      "hidden-gem",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -6327,7 +6553,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Bar",
     "good_for": [
       "start",
@@ -6357,8 +6583,14 @@
     ],
     "vibe_tags": [
       "conversation",
+      "dim",
+      "divey",
+      "late-close",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -6469,7 +6701,10 @@
       "games",
       "large-groups",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -6594,10 +6829,15 @@
     ],
     "vibe_tags": [
       "crowd-loud",
+      "games",
       "large-groups",
+      "late-close",
       "lively",
+      "post-work",
+      "pregame",
       "sports-watching",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 11.0,
@@ -6723,9 +6963,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "queer-centered",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -6848,8 +7093,10 @@
     "vibe_tags": [
       "conversation",
       "lively",
+      "post-work",
       "retro",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -6974,6 +7221,8 @@
     "vibe_tags": [
       "conversation",
       "local-institution",
+      "post-work",
+      "pregame",
       "unpretentious",
       "walk-in"
     ],
@@ -7106,7 +7355,10 @@
       "large-groups",
       "lively",
       "patio",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -7223,7 +7475,9 @@
       "conversation",
       "lively",
       "local-institution",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -7352,7 +7606,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -7463,7 +7719,10 @@
       "conversation",
       "lively",
       "local-institution",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 11.0,
@@ -7594,7 +7853,9 @@
       "conversation",
       "lively",
       "local-institution",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -7725,7 +7986,10 @@
       "conversation",
       "lively",
       "local-institution",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -7854,9 +8118,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "hidden-gem",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "tiki"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -7945,7 +8214,7 @@
     },
     "reservations": "accepted",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.7,
     "description": "Cocktail bar",
     "good_for": [
       "start",
@@ -7979,9 +8248,12 @@
     "vibe_tags": [
       "crowd-loud",
       "large-groups",
+      "late-close",
       "lively",
+      "post-work",
       "sports-watching",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -8107,9 +8379,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "hidden-gem",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -8198,7 +8475,7 @@
     },
     "reservations": "accepted",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Cocktail bar",
     "good_for": [
       "start",
@@ -8233,8 +8510,13 @@
       "conversation",
       "craft-cocktails",
       "dim",
+      "hidden-gem",
       "intimate",
-      "polished"
+      "literary-themed",
+      "nightcap",
+      "polished",
+      "post-work",
+      "pregame"
     ],
     "price_tier": "cheap",
     "avg_drink_price": 3.7,
@@ -8323,7 +8605,7 @@
     },
     "reservations": "accepted",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.7,
     "description": "Cocktail bar",
     "good_for": [
       "start",
@@ -8357,7 +8639,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -8466,7 +8750,10 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -8577,8 +8864,10 @@
       "birthday-party",
       "dj-set",
       "large-groups",
+      "late-close",
       "lively",
-      "music-loud"
+      "music-loud",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -8702,8 +8991,13 @@
     ],
     "vibe_tags": [
       "conversation",
+      "divey",
+      "late-close",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "cheap",
     "avg_drink_price": 3.7,
@@ -8814,8 +9108,10 @@
       "birthday-party",
       "dj-set",
       "large-groups",
+      "late-close",
       "lively",
-      "music-loud"
+      "music-loud",
+      "walk-in"
     ],
     "price_tier": "cheap",
     "avg_drink_price": 3.7,
@@ -8940,7 +9236,10 @@
     "vibe_tags": [
       "conversation",
       "dim",
-      "polished"
+      "nightcap",
+      "polished",
+      "pregame",
+      "walk-in"
     ],
     "price_tier": "cheap",
     "avg_drink_price": 3.7,
@@ -9037,7 +9336,10 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -9146,7 +9448,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -9254,8 +9558,13 @@
     ],
     "vibe_tags": [
       "conversation",
+      "divey",
+      "late-close",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -9364,7 +9673,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -9473,7 +9784,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -9582,9 +9895,13 @@
     "vibe_tags": [
       "crowd-loud",
       "large-groups",
+      "late-close",
       "lively",
+      "post-work",
+      "pregame",
       "sports-watching",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -9710,9 +10027,12 @@
     "vibe_tags": [
       "crowd-loud",
       "large-groups",
+      "late-close",
       "lively",
+      "post-work",
       "sports-watching",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -9838,9 +10158,13 @@
     "vibe_tags": [
       "crowd-loud",
       "large-groups",
+      "late-close",
       "lively",
+      "post-work",
+      "pregame",
       "sports-watching",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -9968,8 +10292,10 @@
       "birthday-party",
       "dj-set",
       "large-groups",
+      "late-close",
       "lively",
-      "music-loud"
+      "music-loud",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -10094,7 +10420,10 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -10203,9 +10532,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "hidden-gem",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -10294,7 +10628,7 @@
     },
     "reservations": "accepted",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Cocktail bar",
     "good_for": [
       "start",
@@ -10327,7 +10661,11 @@
     ],
     "vibe_tags": [
       "conversation",
+      "historic",
+      "instagrammable",
       "polished",
+      "post-work",
+      "pregame",
       "retro",
       "walk-in"
     ],
@@ -10438,7 +10776,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -10547,9 +10887,12 @@
     "vibe_tags": [
       "crowd-loud",
       "large-groups",
+      "late-close",
       "lively",
+      "post-work",
       "sports-watching",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -10674,8 +11017,12 @@
     ],
     "vibe_tags": [
       "conversation",
+      "date",
       "intimate",
+      "nightcap",
       "polished",
+      "post-work",
+      "pregame",
       "walk-in"
     ],
     "price_tier": "moderate",
@@ -10784,9 +11131,11 @@
     "vibe_tags": [
       "conversation",
       "lively",
+      "post-work",
       "tiki",
       "touristy",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -10895,7 +11244,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -11005,7 +11356,9 @@
       "conversation",
       "local-institution",
       "polished",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -11113,9 +11466,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "pregame",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -11237,8 +11595,14 @@
     ],
     "vibe_tags": [
       "conversation",
+      "dim",
+      "games",
+      "live-band",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -11349,7 +11713,9 @@
       "conversation",
       "historic",
       "live-band",
-      "polished"
+      "polished",
+      "post-work",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -11470,8 +11836,11 @@
     "vibe_tags": [
       "crowd-loud",
       "large-groups",
+      "late-close",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -11588,7 +11957,9 @@
       "conversation",
       "lively",
       "local-institution",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -11717,7 +12088,10 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -11827,7 +12201,9 @@
       "conversation",
       "hipster",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -11952,9 +12328,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "pregame",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -12077,7 +12458,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -12186,7 +12569,10 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -12295,8 +12681,13 @@
     "vibe_tags": [
       "conversation",
       "divey",
+      "historic",
+      "late-close",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -12423,7 +12814,10 @@
       "conversation",
       "cozy",
       "games",
-      "hidden-gem"
+      "hidden-gem",
+      "nightcap",
+      "post-work",
+      "walk-in"
     ],
     "price_tier": "cheap",
     "avg_drink_price": 3.7,
@@ -12541,8 +12935,12 @@
     ],
     "vibe_tags": [
       "conversation",
+      "instagrammable",
       "lively",
-      "unpretentious"
+      "post-work",
+      "trending",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -12649,9 +13047,16 @@
       "generic_bar"
     ],
     "vibe_tags": [
+      "airy",
       "conversation",
+      "instagrammable",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "rooftop",
+      "touristy",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -12676,7 +13081,7 @@
       "1": "dead",
       "2": "dead"
     },
-    "outdoor_seating": false,
+    "outdoor_seating": true,
     "food_quality": "snacks",
     "kitchen_open": null,
     "happy_hour_windows": [
@@ -12760,6 +13165,8 @@
     "vibe_tags": [
       "conversation",
       "local-institution",
+      "post-work",
+      "pregame",
       "unpretentious",
       "walk-in"
     ],
@@ -12888,9 +13295,15 @@
     ],
     "vibe_tags": [
       "conversation",
+      "date",
+      "historic",
       "intimate",
+      "literary-themed",
+      "nightcap",
       "polished",
-      "retro"
+      "post-work",
+      "retro",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 32.5,
@@ -12997,9 +13410,15 @@
     ],
     "vibe_tags": [
       "conversation",
+      "date",
       "intimate",
       "natural-wine",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "pregame",
+      "quiet",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 13.0,
@@ -13108,9 +13527,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "instagrammable",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "pregame"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -13199,7 +13623,7 @@
     },
     "reservations": "accepted",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.5,
     "description": "Cocktail bar",
     "good_for": [
       "start",
@@ -13231,9 +13655,14 @@
       "generic_bar"
     ],
     "vibe_tags": [
+      "airy",
       "conversation",
       "lively",
-      "unpretentious"
+      "polished",
+      "post-work",
+      "rooftop",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -13258,7 +13687,7 @@
       "1": "dead",
       "2": "dead"
     },
-    "outdoor_seating": false,
+    "outdoor_seating": true,
     "food_quality": "snacks",
     "kitchen_open": null,
     "happy_hour_windows": [
@@ -13340,11 +13769,16 @@
       "cocktail_bar"
     ],
     "vibe_tags": [
+      "airy",
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
+      "instagrammable",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -13370,7 +13804,7 @@
       "1": "dead",
       "2": "dead"
     },
-    "outdoor_seating": false,
+    "outdoor_seating": true,
     "food_quality": "snacks",
     "kitchen_open": null,
     "happy_hour_windows": [
@@ -13466,9 +13900,14 @@
     ],
     "vibe_tags": [
       "conversation",
+      "date",
       "historic",
       "intimate",
-      "polished"
+      "live-band",
+      "nightcap",
+      "polished",
+      "post-work",
+      "walk-in"
     ],
     "price_tier": "splurge",
     "avg_drink_price": 50,
@@ -13578,8 +14017,10 @@
       "birthday-party",
       "dj-set",
       "large-groups",
+      "late-close",
       "lively",
-      "music-loud"
+      "music-loud",
+      "walk-in"
     ],
     "price_tier": "cheap",
     "avg_drink_price": 3.7,
@@ -13704,6 +14145,7 @@
     "vibe_tags": [
       "conversation",
       "lively",
+      "post-work",
       "unpretentious",
       "walk-in"
     ],
@@ -13814,7 +14256,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -13923,9 +14367,13 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -14047,8 +14495,13 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
+      "hidden-gem",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -14126,7 +14579,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Bar",
     "good_for": [
       "start",
@@ -14157,9 +14610,14 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "trending",
+      "walk-in"
     ],
     "price_tier": "splurge",
     "avg_drink_price": 50,
@@ -14282,7 +14740,10 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 11.0,
@@ -14391,9 +14852,13 @@
     "vibe_tags": [
       "conversation",
       "crowd-loud",
+      "late-close",
       "polished",
+      "post-work",
+      "pregame",
       "theatrical",
-      "touristy"
+      "touristy",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -14503,8 +14968,10 @@
       "crowd-loud",
       "large-groups",
       "lively",
+      "post-work",
       "sports-watching",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -14629,11 +15096,14 @@
     "vibe_tags": [
       "artsy",
       "birthday-party",
+      "dj-set",
       "hipster",
       "large-groups",
+      "late-close",
       "live-band",
       "lively",
-      "music-loud"
+      "music-loud",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -14741,7 +15211,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -14852,7 +15324,10 @@
       "conversation",
       "lively",
       "local-institution",
-      "unpretentious"
+      "post-work",
+      "pregame",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -14980,10 +15455,15 @@
     ],
     "vibe_tags": [
       "artsy",
+      "crowd-loud",
       "dance-floor",
+      "dj-set",
+      "instagrammable",
       "late-close",
       "music-loud",
-      "theatrical"
+      "queer-centered",
+      "theatrical",
+      "trending"
     ],
     "price_tier": "premium",
     "avg_drink_price": 16.0,
@@ -15083,8 +15563,12 @@
     "vibe_tags": [
       "crowd-loud",
       "large-groups",
+      "late-close",
       "lively",
-      "retro"
+      "post-work",
+      "pregame",
+      "retro",
+      "walk-in"
     ],
     "price_tier": "moderate",
     "avg_drink_price": 14.5,
@@ -15201,7 +15685,9 @@
       "large-groups",
       "lively",
       "patio",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 33.0,
@@ -15316,10 +15802,12 @@
     "vibe_tags": [
       "crowd-loud",
       "large-groups",
+      "late-close",
       "lively",
       "post-work",
       "sports-watching",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -15444,8 +15932,13 @@
     ],
     "vibe_tags": [
       "conversation",
+      "craft-cocktails",
+      "hidden-gem",
       "lively",
-      "unpretentious"
+      "post-work",
+      "trending",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -15523,7 +16016,7 @@
     },
     "reservations": "none",
     "dress_code": "casual",
-    "novelty": 0.4,
+    "novelty": 0.6,
     "description": "Bar",
     "good_for": [
       "start",
@@ -15552,11 +16045,13 @@
       "nightclub"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "dance-floor",
       "dj-set",
       "late-close",
       "lively",
-      "music-loud"
+      "music-loud",
+      "walk-in"
     ],
     "price_tier": "splurge",
     "avg_drink_price": 50,
@@ -15653,11 +16148,14 @@
       "nightclub"
     ],
     "vibe_tags": [
+      "crowd-loud",
       "dance-floor",
       "dj-set",
       "late-close",
       "lively",
-      "music-loud"
+      "music-loud",
+      "queer-centered",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 43.0,
@@ -15754,9 +16252,14 @@
       "generic_bar"
     ],
     "vibe_tags": [
+      "airy",
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "rooftop",
+      "trending",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 32.5,
@@ -15781,7 +16284,7 @@
       "1": "dead",
       "2": "dead"
     },
-    "outdoor_seating": false,
+    "outdoor_seating": true,
     "food_quality": "snacks",
     "kitchen_open": null,
     "happy_hour_windows": [
@@ -15865,7 +16368,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -15974,7 +16479,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -16083,7 +16590,9 @@
     "vibe_tags": [
       "conversation",
       "lively",
-      "unpretentious"
+      "post-work",
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -16192,9 +16701,12 @@
     "vibe_tags": [
       "crowd-loud",
       "large-groups",
+      "late-close",
       "lively",
+      "post-work",
       "sports-watching",
-      "unpretentious"
+      "unpretentious",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -16320,9 +16832,13 @@
     "vibe_tags": [
       "conversation",
       "craft-cocktails",
+      "date",
       "dim",
       "intimate",
-      "polished"
+      "nightcap",
+      "polished",
+      "post-work",
+      "walk-in"
     ],
     "price_tier": "premium",
     "avg_drink_price": 23.0,
@@ -16445,6 +16961,8 @@
     "vibe_tags": [
       "conversation",
       "local-institution",
+      "post-work",
+      "pregame",
       "unpretentious",
       "walk-in"
     ],

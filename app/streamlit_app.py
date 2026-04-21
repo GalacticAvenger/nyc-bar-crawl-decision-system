@@ -33,90 +33,94 @@ from src.visualize import render_map, render_timeline  # noqa: E402
 # ---------------------------------------------------------------------------
 
 NIGHT_STYLES = {
+    # Each stage's weights emphasize DISTINGUISHING vibes (games, dance-floor,
+    # divey, rooftop, craft-cocktails, natural-wine, tiki...) over generic ones
+    # (lively, unpretentious) — since the generics match ~70% of the dataset and
+    # drown the differentiating signal in cosine similarity.
     "Chill bar hop": {
         "arc": [
-            ("Warm-up",  {"conversation": 1.0, "unpretentious": 1.0, "post-work": 0.6, "walk-in": 0.6}),
-            ("Middle",   {"lively": 1.0, "unpretentious": 0.8, "conversation": 0.6, "hidden-gem": 0.5}),
-            ("Nightcap", {"cozy": 1.0, "dim": 0.8, "intimate": 0.7, "nightcap": 0.9}),
+            ("Warm-up",  {"post-work": 1.2, "conversation": 0.8, "walk-in": 0.6}),
+            ("Middle",   {"hidden-gem": 1.0, "unpretentious": 0.7, "local-institution": 0.7}),
+            ("Nightcap", {"nightcap": 1.3, "cozy": 1.0, "intimate": 0.6}),
         ],
         "max_stops": 3, "start": time(20, 0), "end": time(1, 0),
-        "noise": "lively", "drinks": ["cocktails", "beer"],
+        "noise": "lively", "drinks": ["cocktails", "beer"], "walking_only": True,
         "tagline": "Walkable, unpretentious, no cover. Conversation over volume.",
     },
     "Pregame → clubs": {
         "arc": [
-            ("Warm-up",  {"pregame": 1.0, "lively": 1.0, "unpretentious": 0.8, "large-groups": 0.6}),
-            ("Energy",   {"music-loud": 1.0, "lively": 1.0, "dj-set": 0.8, "crowd-loud": 0.7}),
-            ("Peak",     {"dance-floor": 1.0, "dj-set": 1.0, "music-loud": 1.0, "late-close": 0.9}),
+            ("Warm-up",  {"pregame": 1.5, "unpretentious": 0.5, "large-groups": 0.5}),
+            ("Energy",   {"music-loud": 1.2, "crowd-loud": 1.0, "dj-set": 0.8}),
+            ("Peak",     {"dance-floor": 1.8, "dj-set": 1.2, "late-close": 1.0}),
         ],
         "max_stops": 3, "start": time(21, 0), "end": time(3, 30),
-        "noise": "loud", "drinks": ["cocktails", "shots", "beer"],
-        "tagline": "Ramp from chatty opener to dance floor. Closes at 3–4am.",
+        "noise": "loud", "drinks": ["cocktails", "shots", "beer"], "walking_only": False,
+        "tagline": "Ramp from chatty opener to dance floor. Closes at 3–4am. Uber to the club is assumed.",
     },
     "Dive bar tour": {
         "arc": [
-            ("Warm-up",  {"divey": 1.0, "unpretentious": 1.0, "local-institution": 0.7, "historic": 0.6}),
-            ("Middle",   {"divey": 1.0, "lively": 0.8, "games": 0.6, "crowd-loud": 0.5}),
-            ("Nightcap", {"divey": 1.0, "cozy": 0.6, "late-close": 0.7}),
+            ("Warm-up",  {"divey": 1.5, "local-institution": 1.0, "historic": 0.8}),
+            ("Middle",   {"divey": 1.5, "games": 0.8, "unpretentious": 0.6}),
+            ("Nightcap", {"divey": 1.3, "late-close": 1.0, "cozy": 0.5}),
         ],
         "max_stops": 4, "start": time(20, 0), "end": time(1, 30),
-        "noise": "lively", "drinks": ["beer", "shots"],
+        "noise": "lively", "drinks": ["beer", "shots"], "walking_only": True,
         "tagline": "Cheap, loud enough to be fun, old enough to have ghosts.",
     },
     "Date night": {
         "arc": [
-            ("Opener",   {"intimate": 1.0, "conversation": 1.0, "polished": 0.8, "natural-wine": 0.4}),
-            ("Main",     {"dim": 1.0, "intimate": 1.0, "craft-cocktails": 0.8, "cozy": 0.7}),
+            ("Opener",   {"date": 1.5, "intimate": 1.0, "natural-wine": 0.8, "craft-cocktails": 0.6}),
+            ("Main",     {"date": 1.3, "craft-cocktails": 1.2, "dim": 0.9, "intimate": 0.8}),
         ],
         "max_stops": 2, "start": time(19, 30), "end": time(23, 30),
-        "noise": "conversation", "drinks": ["cocktails", "wine"],
+        "noise": "conversation", "drinks": ["cocktails", "wine"], "walking_only": True,
         "tagline": "Two rooms that let you talk. No surprises, no ejections.",
     },
     "Birthday party": {
         "arc": [
-            ("Meetup",   {"large-groups": 1.0, "lively": 1.0, "pregame": 0.7, "birthday-party": 0.8}),
-            ("Main",     {"birthday-party": 1.0, "large-groups": 1.0, "lively": 1.0, "crowd-loud": 0.7}),
-            ("Peak",     {"dance-floor": 0.8, "music-loud": 0.9, "birthday-party": 1.0, "late-close": 0.7}),
+            ("Meetup",   {"large-groups": 1.5, "pregame": 0.8, "birthday-party": 0.8}),
+            ("Main",     {"birthday-party": 1.5, "large-groups": 1.0, "crowd-loud": 0.8}),
+            ("Peak",     {"dance-floor": 1.2, "birthday-party": 1.0, "music-loud": 0.9}),
         ],
         "max_stops": 3, "start": time(21, 0), "end": time(3, 0),
-        "noise": "loud", "drinks": ["cocktails", "shots", "beer"],
+        "noise": "loud", "drinks": ["cocktails", "shots", "beer"], "walking_only": False,
         "tagline": "Venues that take reservations. Ends somewhere you can dance.",
     },
     "Post-dinner drinks": {
         "arc": [
-            ("Main",     {"cozy": 1.0, "intimate": 0.8, "conversation": 0.9, "craft-cocktails": 0.7}),
-            ("Nightcap", {"nightcap": 1.0, "dim": 0.8, "quiet": 0.6, "intimate": 0.7}),
+            ("Main",     {"craft-cocktails": 1.3, "intimate": 1.0, "dim": 0.8}),
+            ("Nightcap", {"nightcap": 1.5, "cozy": 1.0, "quiet": 0.7}),
         ],
         "max_stops": 2, "start": time(21, 30), "end": time(0, 30),
-        "noise": "conversation", "drinks": ["cocktails", "wine", "whiskey"],
+        "noise": "conversation", "drinks": ["cocktails", "wine", "whiskey"], "walking_only": True,
         "tagline": "One proper cocktail and a nightcap. Short, honest, home by 1.",
     },
     "Late-night only": {
         "arc": [
-            ("Arrive",   {"dim": 1.0, "lively": 1.0, "late-close": 1.0}),
-            ("Peak",     {"dance-floor": 1.0, "music-loud": 1.0, "dj-set": 0.9, "late-close": 1.0}),
+            ("Arrive",   {"late-close": 1.5, "dim": 0.8, "divey": 0.6}),
+            ("Peak",     {"dance-floor": 1.5, "dj-set": 1.2, "late-close": 1.0, "music-loud": 0.8}),
         ],
         "max_stops": 2, "start": time(23, 0), "end": time(3, 30),
-        "noise": "loud", "drinks": ["cocktails", "shots"],
+        "noise": "loud", "drinks": ["cocktails", "shots"], "walking_only": False,
         "tagline": "For when the night starts where everyone else's ended.",
     },
     "Rooftop summer": {
         "arc": [
-            ("Sunset",   {"rooftop": 1.0, "airy": 1.0, "polished": 0.7, "instagrammable": 0.8}),
-            ("Main",     {"rooftop": 1.0, "polished": 0.8, "craft-cocktails": 0.7, "lively": 0.6}),
-            ("Nightcap", {"intimate": 0.8, "rooftop": 0.6, "dim": 0.7}),
+            ("Sunset",   {"rooftop": 2.0, "airy": 1.0, "instagrammable": 0.8}),
+            ("Main",     {"rooftop": 1.8, "craft-cocktails": 0.8, "polished": 0.6}),
+            ("Nightcap", {"craft-cocktails": 1.0, "dim": 0.8, "intimate": 0.7, "hidden-gem": 0.5}),
         ],
         "max_stops": 3, "start": time(19, 0), "end": time(0, 30),
-        "noise": "conversation", "drinks": ["cocktails", "wine"],
+        "noise": "conversation", "drinks": ["cocktails", "wine"], "walking_only": False,
         "tagline": "Golden hour → skyline → something quieter. Warm-weather only.",
     },
     "Games night": {
         "arc": [
-            ("Warm-up",  {"games": 1.0, "lively": 0.8, "unpretentious": 0.9, "large-groups": 0.6}),
-            ("Main",     {"games": 1.0, "crowd-loud": 0.6, "large-groups": 0.7}),
+            ("Warm-up",  {"games": 2.0, "unpretentious": 0.5, "large-groups": 0.4}),
+            ("Main",     {"games": 2.0, "crowd-loud": 0.5, "large-groups": 0.4}),
         ],
         "max_stops": 2, "start": time(19, 30), "end": time(1, 0),
-        "noise": "lively", "drinks": ["beer", "cocktails"],
+        "noise": "lively", "drinks": ["beer", "cocktails"], "walking_only": True,
         "tagline": "Pool, shuffleboard, darts, or board games. Less talking, more doing.",
     },
 }
@@ -242,10 +246,25 @@ def main():
 
         # Build UserPreference objects. Everyone gets the same night-style
         # vibe profile; individual prefs vary only on budget / drinks / noise.
+        # When the user explicitly picks a style, the vibe criterion should
+        # dominate scoring — overrides the 0.30 default with 0.50.
+        style_criterion_weights = {
+            "vibe": 0.50,
+            "budget": 0.15,
+            "drink_match": 0.08,
+            "noise": 0.05,
+            "distance": 0.05,
+            "happy_hour_active": 0.03,
+            "specials_match": 0.03,
+            "crowd_fit": 0.03,
+            "novelty": 0.03,
+            "quality_signal": 0.05,
+        }
         user_prefs = [
             UserPreference(
                 name=u["name"],
                 vibe_weights=dict(merged_vibes),
+                criterion_weights=dict(style_criterion_weights),
                 max_per_drink=float(u["budget"]),
                 preferred_drinks=tuple(u["drinks"]),
                 preferred_noise=u["noise"],
@@ -300,11 +319,17 @@ def main():
         f"{end_dt.strftime('%a %-I:%M%p')} ({duration_hours:.1f} hours)"
     )
 
+    # Build the arc profile — one vibe_weights dict per stage of the night.
+    # This is what tells the planner that "stop 1 = warm-up", "stop N = peak".
+    arc_profile = tuple(dict(weights) for _role, weights in style["arc"])
+
     group = GroupInput(
         users=user_prefs,
         start_time=start_dt, end_time=end_dt,
         max_stops=max_stops,
         neighborhoods=tuple(neighborhoods),
+        arc_profile=arc_profile,
+        walking_only=style.get("walking_only", True),
     )
 
     with st.spinner("Planning…"):

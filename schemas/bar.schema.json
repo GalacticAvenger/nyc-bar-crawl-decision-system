@@ -39,7 +39,7 @@
           "queer-centered", "local-institution", "hidden-gem", "historic"
         ]
       },
-      "minItems": 3, "maxItems": 8, "uniqueItems": true
+      "minItems": 3, "maxItems": 10, "uniqueItems": true
     },
     "price_tier": {"type": "string", "enum": ["cheap", "moderate", "premium", "splurge"]},
     "avg_drink_price": {"type": "number", "minimum": 1, "maximum": 50},

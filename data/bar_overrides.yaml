@@ -1,0 +1,275 @@
+# ============================================================================
+# Hand-curated per-bar vibe overrides
+# ============================================================================
+# Domain knowledge layer on top of the auto-inference in enrich_bars.py.
+# For bars where the category default + user_note + primary_function don't
+# capture the bar's real character in the NYC scene, add specific vibes here.
+#
+# Format:
+#   "Exact bar name (must match data/seed_bars.json)":
+#     add_vibes: [list]
+#     note: "why (optional)"
+#
+# Rule: every `add_vibes` entry must be a valid vibe from vibe_vocab.json v2.
+# ----------------------------------------------------------------------------
+
+_version: "1.0"
+
+overrides:
+
+  # ------- Brooklyn dance / club / queer -------
+  "Mood Ring":
+    add_vibes: [queer-centered, artsy, hipster, dance-floor]
+    note: "Bushwick queer-centered bar; Pisces-themed cocktails"
+  "House of Yes":
+    add_vibes: [queer-centered, dance-floor, trending, instagrammable]
+    note: "Bushwick queer performance/dance venue; iconic"
+  "Nowadays":
+    add_vibes: [dance-floor, dj-set, artsy, patio, late-close, trending]
+    note: "Ridgewood outdoor dance/DJ venue"
+  "Elsewhere":
+    add_vibes: [dance-floor, live-band, artsy, trending]
+    note: "Bushwick multi-room music venue"
+  "Public Records":
+    add_vibes: [dj-set, hipster, trending, instagrammable]
+    note: "Gowanus sound-system bar"
+  "Record Room":
+    add_vibes: [dj-set, hipster, dim]
+    note: "Bushwick DJ-focused hidden bar"
+  "Bossa Nova Civic Club":
+    add_vibes: [dance-floor, dj-set, queer-centered, late-close]
+    note: "Bushwick dance bar; iconic local institution"
+  "Good Room":
+    add_vibes: [dance-floor, dj-set, queer-centered]
+    note: "Greenpoint techno/house nightclub"
+  "H0L0":
+    add_vibes: [dj-set, queer-centered, artsy]
+    note: "Ridgewood alt-queer music venue"
+  "All Night Skate":
+    add_vibes: [games, late-close, trending, hipster]
+    note: "Bushwick roller-skating bar"
+  "SILO":
+    add_vibes: [queer-centered, trending]
+    note: "Bushwick queer dance night venue"
+  "DROM":
+    add_vibes: [live-band, dj-set, artsy]
+    note: "East Village world-music venue"
+
+  # ------- Games bars (the obvious ones) -------
+  "Barcade":
+    add_vibes: [games, hipster]
+    note: "Classic arcade + craft-beer bar (both EV + Williamsburg entries)"
+  "The Gutter":
+    add_vibes: [games, hipster, unpretentious]
+    note: "Williamsburg bowling alley + bar"
+  "Space Ping Pong Sports Bar & Lounge | Koreatown NYC":
+    add_vibes: [games]
+    note: "Ping pong + sports; games missing from default"
+  "The Uncommons":
+    add_vibes: [games]
+    note: "Board-game cafe (already via primary_function, ensuring)"
+
+  # ------- Dive bars (divey only tagged on one) -------
+  "169 Bar":
+    add_vibes: [divey, late-close]
+    note: "LES classic dive"
+  "Double Down Saloon":
+    add_vibes: [divey, late-close]
+    note: "EV dive; 24hr in Vegas, late here"
+  "Motel No Tell":
+    add_vibes: [divey, late-close, dim]
+    note: "EV small divey cocktail bar"
+  "Lucy's":
+    add_vibes: [divey, local-institution, historic]
+    note: "EV Polish dive institution"
+  "Blue & Gold Tavern":
+    add_vibes: [divey, local-institution]
+    note: "EV longtime Polish dive"
+  "Otto's Shrunken Head":
+    add_vibes: [tiki, divey]
+    note: "EV tiki dive bar — unique combo"
+  "Rudy's Bar & Grill":
+    add_vibes: [historic]
+    note: "Already tagged divey via dive_bar function; add historic"
+  "Coyote Ugly New York":
+    add_vibes: [retro, touristy]
+    note: "Movie-famous honky-tonk"
+  "Bushwick Country Club":
+    add_vibes: [divey, games]
+    note: "Dive with a mini-golf course"
+
+  # ------- Historic / institution bars -------
+  "McSorley's Old Ale House":
+    add_vibes: [historic]
+    note: "1854. NYC's oldest continuously operating Irish pub"
+  "Pete's Candy Store":
+    add_vibes: [live-band, historic, hidden-gem]
+    note: "Williamsburg hidden music/reading series"
+  "Carmelo's":
+    add_vibes: [local-institution]
+    note: "Astoria Bronx-accent dive"
+
+  # ------- Rooftops (only 1 tagged, should be ~6) -------
+  "230 Fifth Rooftop Bar":
+    add_vibes: [rooftop, airy, touristy, instagrammable]
+    note: "Iconic touristy rooftop"
+  "Magic Hour Rooftop Bar & Lounge":
+    add_vibes: [rooftop, airy, touristy, instagrammable]
+    note: "Moxy Hotel rooftop, carousel"
+  "msocial Rooftop":
+    add_vibes: [rooftop, airy, polished]
+    note: "Moxy Midtown rooftop"
+  "Lost in Paradise Rooftop":
+    add_vibes: [rooftop, airy, trending, instagrammable]
+    note: "LES boutique hotel rooftop"
+  "Mr. Purple":
+    add_vibes: [rooftop, airy, trending]
+    note: "Hotel Indigo LES rooftop; purple-lit instagram bait"
+  "Jungle Bird":
+    add_vibes: [tiki, craft-cocktails]
+    note: "Tropical/tiki Flatiron cocktail bar"
+
+  # ------- Speakeasies & hidden-gem cocktail bars -------
+  "Please Don't Tell":
+    add_vibes: [hidden-gem, historic, dim]
+    note: "PDT; phonebooth entrance; Speakeasy revival landmark"
+  "The Back Room":
+    add_vibes: [historic, dim, hidden-gem]
+    note: "LES Prohibition-era speakeasy; teacups"
+  "Banzarbar":
+    add_vibes: [hidden-gem, craft-cocktails]
+    note: "Upstairs at Freemans; tiny"
+  "Attaboy":
+    add_vibes: [craft-cocktails, hidden-gem]
+    note: "(not in dataset; placeholder)"
+  "BELTANE":
+    add_vibes: [queer-centered, craft-cocktails]
+    note: "LES women-owned cocktail bar"
+  "Mister Paradise":
+    add_vibes: [hidden-gem, instagrammable]
+    note: "EV cocktails"
+  "Bar Bonobo":
+    add_vibes: [hidden-gem, craft-cocktails]
+    note: "NoHo cocktail bar"
+  "Madame George":
+    add_vibes: [dim, hidden-gem]
+    note: "EV underground cocktails"
+  "Paradise Lost":
+    add_vibes: [craft-cocktails, hidden-gem]
+    note: "Bushwick cocktails"
+  "Sunken Harbor Club":
+    add_vibes: [tiki, hidden-gem, craft-cocktails]
+    note: "Brooklyn Heights upstairs tiki"
+  "Baby Grand LES":
+    add_vibes: [live-band, dim]
+    note: "LES piano bar"
+  "Bar Orai":
+    add_vibes: [trending, craft-cocktails]
+    note: "LES new-ish cocktail bar"
+  "56709":
+    add_vibes: [trending, craft-cocktails, hidden-gem]
+    note: "LES numeric-named new cocktail bar"
+  "929":
+    add_vibes: [trending, craft-cocktails, hidden-gem]
+    note: "LES new cocktail bar; numeric name"
+  "Fairweather":
+    add_vibes: [hidden-gem, craft-cocktails]
+    note: "Brooklyn Heights new cocktail bar"
+  "VICTORIA!":
+    add_vibes: [trending, craft-cocktails, hidden-gem]
+    note: "UES new craft cocktail bar"
+  "Sip&Guzzle":
+    add_vibes: [craft-cocktails, trending, instagrammable]
+    note: "West Village new cocktails"
+  "Dutch Fred's":
+    add_vibes: [craft-cocktails]
+    note: "Hell's Kitchen craft cocktails"
+  "Avoca":
+    add_vibes: [hidden-gem, craft-cocktails]
+    note: "Hell's Kitchen craft cocktails; often packed"
+  "Clemente Bar":
+    add_vibes: [trending]
+    note: "Flatiron new-opening splurge bar"
+  "The Rhymers' Club":
+    add_vibes: [hidden-gem, craft-cocktails, literary-themed]
+    note: "LES poetry-themed cocktails"
+
+  # ------- Themed (splitting the catch-all) -------
+  "Beetle House":
+    add_vibes: [theatrical, touristy]
+    note: "Tim Burton horror-themed bar"
+  "Speakeasy Magick":
+    add_vibes: [theatrical, hidden-gem]
+    note: "McKittrick cocktail magic show"
+  "Wicked Willy's":
+    add_vibes: [theatrical, touristy]
+    note: "Village pirate-themed party bar"
+  "Oscar Wilde":
+    add_vibes: [literary-themed, historic]
+    note: "Flatiron literary themed bar"
+  "Lillie's Victorian Establishment":
+    add_vibes: [historic, instagrammable]
+    note: "Victorian-themed NoHo bar"
+  "The Flatiron Room NoMad":
+    add_vibes: [live-band, historic]
+    note: "Whiskey + jazz"
+  "Ethyl's Bar & Restaurant":
+    add_vibes: [retro]
+    note: "UES 70s-themed bar"
+  "Cowgirl":
+    add_vibes: [retro]
+    note: "West Village honky-tonk"
+
+  # ------- Date-night specific (intimate wine/cocktail) -------
+  "Bar Pisellino":
+    add_vibes: [trending, instagrammable]
+    note: "West Village aperitivo bar; extremely trendy"
+  "Bibliotheque":
+    add_vibes: [quiet]
+    note: "UES wine bar; actually quiet/literary"
+  "Cellar Dog":
+    add_vibes: [games, dim, live-band]
+    note: "West Village basement: pool + jazz"
+  "Brandy's Piano Bar":
+    add_vibes: [historic]
+    note: "UWS piano bar institution"
+
+  # ------- Large-group / beer gardens / birthday -------
+  "Bohemian Hall & Beer Garden":
+    add_vibes: [historic, local-institution]
+    note: "Astoria 100+yr beer garden"
+  "The Standard Biergarten":
+    add_vibes: [patio]
+    note: "Meatpacking outdoor hotel bar"
+  "Reichenbach Hall":
+    add_vibes: [large-groups]
+    note: "Midtown beer hall"
+  "VALERIE":
+    add_vibes: [large-groups, instagrammable]
+    note: "UES bookable cocktail bar"
+
+  # ------- Misc -------
+  "Pineapple Club":
+    add_vibes: [tiki, craft-cocktails, instagrammable]
+    note: "LES tropical cocktail bar"
+  "Vida Verde - Tequila Bar":
+    add_vibes: [instagrammable]
+    note: "Popular margarita spot"
+  "Sake Bar Decibel":
+    add_vibes: [dim, hidden-gem]
+    note: "EV below-grade sake institution"
+  "The Sultan Room":
+    add_vibes: [theatrical, instagrammable]
+    note: "Bushwick themed nightclub"
+  "Burp Castle":
+    add_vibes: [hidden-gem]
+    note: "Already quiet+cozy from user_note; also truly hidden"
+  "Webster Hall":
+    add_vibes: [live-band, historic, large-groups]
+    note: "EV legendary concert hall"
+  "LPR":
+    add_vibes: [live-band]
+    note: "Le Poisson Rouge — Village venue"
+  "Arlene's Grocery":
+    add_vibes: [live-band, local-institution]
+    note: "LES rock dive with live shows"

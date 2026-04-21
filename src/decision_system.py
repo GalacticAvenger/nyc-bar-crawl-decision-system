@@ -137,6 +137,47 @@ def _score_all_users(
     return out
 
 
+def _score_all_users_arc(
+    bars: list[Bar], group: GroupInput, rules: dict,
+) -> list[dict[str, dict[str, Score]]]:
+    """Score every bar for every user ONCE PER ARC STAGE.
+
+    Returns a list[stage_idx] of dict[user_name][bar_id] → Score.
+    At each stage, each user's vibe_weights are replaced with that stage's
+    profile so a bar scores high for "warm-up" only if its vibe_tags match
+    the warm-up stage's vibes, not the peak stage's.
+    """
+    assert group.arc_profile is not None
+    mid_time = group.start_time + (group.end_time - group.start_time) / 2
+    hour = mid_time.hour
+    day = day_name(mid_time)
+    out: list[dict[str, dict[str, Score]]] = []
+    for stage_weights in group.arc_profile:
+        stage_out: dict[str, dict[str, Score]] = {}
+        for u in group.users:
+            # Temporarily override the user's vibe_weights with the stage's.
+            # All other preference fields (budget, drinks, noise, vetoes) stay.
+            u_stage = UserPreference(
+                name=u.name,
+                vibe_weights=dict(stage_weights),
+                criterion_weights=u.criterion_weights,
+                max_per_drink=u.max_per_drink,
+                preferred_drinks=u.preferred_drinks,
+                preferred_noise=u.preferred_noise,
+                vetoes=u.vetoes,
+                age=u.age,
+            )
+            stage_out[u.name] = {}
+            for b in bars:
+                stage_out[u.name][b.id] = score_bar_for_user(
+                    b, u_stage, rules,
+                    arrival_hour=hour, day=day,
+                    prev_location=group.start_location,
+                )
+        out.append(stage_out)
+    return out
+
+
 # ---------------------------------------------------------------------------
 # Main pipeline
 # ---------------------------------------------------------------------------
@@ -192,28 +233,56 @@ def plan_crawl(
     traces["per_user_scores"] = per_user
 
     # 3. (Strategy was selected in step 0, before filtering.)
-    # 4. Aggregate
-    group_scores_full = aggregate(strat_name, per_user, group.users)
-    # For routing, drop -inf entries (approval_veto exclusions) and turn into floats
-    group_scores: dict[str, float] = {
-        bid: g.total for bid, g in group_scores_full.items()
-        if g.total != float("-inf")
-    }
-    # Add the veto-driven exclusions to excluded_bars
-    if strat_name == "approval_veto":
-        for bid, g in group_scores_full.items():
-            if g.total == float("-inf"):
-                bar = next(b for b in survivors if b.id == bid)
-                if not any(e["bar"].id == bid for e in excluded):
-                    vetoers = g.rank_context.get("vetoers", ["someone"])
-                    excluded.append({
-                        "bar": bar, "rule_id": "user_veto",
-                        "reason": explain_exclusion(bar, "", "user_veto",
-                                                    extra={"vetoer": ", ".join(vetoers)}),
-                    })
-
-    # Candidates for routing: only those with finite scores
-    routable = [b for b in survivors if b.id in group_scores]
+    # 4. Aggregate. If the group has an arc_profile, aggregate ONCE PER STAGE
+    # so different stops can be scored against different stage weights.
+    group_scores_by_stage: list[dict[str, float]]
+    if group.arc_profile:
+        group_scores_by_stage = []
+        per_user_by_stage = _score_all_users_arc(survivors, group, rules)
+        for stage_pu in per_user_by_stage:
+            gs = aggregate(strat_name, stage_pu, group.users)
+            stage_scores = {
+                bid: g.total for bid, g in gs.items()
+                if g.total != float("-inf")
+            }
+            group_scores_by_stage.append(stage_scores)
+            # Veto-driven exclusions (consistent across stages — same vetoes everywhere)
+            if strat_name == "approval_veto":
+                for bid, g in gs.items():
+                    if g.total == float("-inf"):
+                        if not any(e["bar"].id == bid for e in excluded):
+                            bar = next(b for b in survivors if b.id == bid)
+                            vetoers = g.rank_context.get("vetoers", ["someone"])
+                            excluded.append({
+                                "bar": bar, "rule_id": "user_veto",
+                                "reason": explain_exclusion(bar, "", "user_veto",
+                                                            extra={"vetoer": ", ".join(vetoers)}),
+                            })
+        # For reporting / per-user served-ness, use the stage-0 per_user.
+        per_user = per_user_by_stage[0]
+        traces["per_user_scores"] = per_user
+        # Use the UNION of all stage-feasible bars as routable
+        union_ids = set().union(*(s.keys() for s in group_scores_by_stage))
+        routable = [b for b in survivors if b.id in union_ids]
+    else:
+        group_scores_full = aggregate(strat_name, per_user, group.users)
+        group_scores: dict[str, float] = {
+            bid: g.total for bid, g in group_scores_full.items()
+            if g.total != float("-inf")
+        }
+        if strat_name == "approval_veto":
+            for bid, g in group_scores_full.items():
+                if g.total == float("-inf"):
+                    bar = next(b for b in survivors if b.id == bid)
+                    if not any(e["bar"].id == bid for e in excluded):
+                        vetoers = g.rank_context.get("vetoers", ["someone"])
+                        excluded.append({
+                            "bar": bar, "rule_id": "user_veto",
+                            "reason": explain_exclusion(bar, "", "user_veto",
+                                                        extra={"vetoer": ", ".join(vetoers)}),
+                        })
+        group_scores_by_stage = [group_scores]
+        routable = [b for b in survivors if b.id in group_scores]
 
     # 5. CBR retrieval (advisory; used for explanation narrative)
     case_matches = retrieve(group, cases, top_k=3) if cases else []
@@ -222,14 +291,24 @@ def plan_crawl(
     # 6. Routing
     avg_budget_weight = _avg_budget_weight(group, rules)
     route = best_route(
-        routable, group_scores, group, rules,
+        routable, group_scores_by_stage, group, rules,
         strategy_used=strat_name, strategy_rationale=rationale,
         user_budget_weight=avg_budget_weight,
     )
     traces["search_log_length"] = len(route.search_log)
 
-    # 7. Option generation
-    runner_ups = find_runner_ups(route, group_scores, per_user, routable)
+    # 7. Option generation — uses the UNION of all stage scores as the
+    #    "overall" utility for runner-up comparisons. Runner-up for stop N
+    #    is a bar that could have filled slot N; use stop-N's stage scores.
+    #    Union for simplicity; could be refined per-stop.
+    if len(group_scores_by_stage) == 1:
+        union_scores = dict(group_scores_by_stage[0])
+    else:
+        union_scores = {}
+        for stage_scores in group_scores_by_stage:
+            for bid, s in stage_scores.items():
+                union_scores[bid] = max(union_scores.get(bid, float("-inf")), s)
+    runner_ups = find_runner_ups(route, union_scores, per_user, routable)
     runner_ups = unlock_analysis(route, runner_ups, per_user)
     traces["runner_ups"] = {idx: (ru.bar.name, ru.gap) for idx, ru in runner_ups.items()}
 

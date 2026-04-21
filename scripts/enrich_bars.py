@@ -386,6 +386,128 @@ def build_specials(hours_profile: dict) -> list[dict]:
     return out
 
 
+def apply_auto_inference(vibes: set[str],
+                          bar_types: list[str],
+                          open_hours: dict,
+                          reservations: str,
+                          happy_hour_windows: list[dict],
+                          price_tier: str,
+                          name: str,
+                          primary_function: str | None,
+                          noise_level: str) -> None:
+    """Rule-based auto-inference for under-represented vibes. Mutates `vibes`.
+
+    This closes the gap between the category defaults (which are coarse) and
+    what the planner actually needs to distinguish 'Pregame → clubs' from
+    'Date night'. Every rule below is evidence-based: bar_type, name pattern,
+    open hours, happy-hour windows, price tier.
+    """
+    name_lc = name.lower()
+
+    # --- Dance-floor + DJ + late-close from bar_type ---
+    if any(t in bar_types for t in ("nightclub", "dance", "event_venue")):
+        vibes.update({"dance-floor", "dj-set", "late-close", "music-loud", "crowd-loud"})
+
+    # --- Karaoke bars: they're DJ-style + always late ---
+    if "karaoke" in bar_types:
+        vibes.update({"dj-set", "late-close", "music-loud"})
+
+    # --- Music venues: late-close, usually live-band, loud ---
+    if "music_venue" in bar_types:
+        vibes.update({"late-close", "music-loud"})
+
+    # --- Games from bar_type + name patterns ---
+    if any(t in bar_types for t in ("board_game_bar", "pool_hall")):
+        vibes.add("games")
+    games_patterns = (
+        "barcade", "ping pong", "billiard", "pool hall", "bowl",
+        "gutter", "skate", "uncommons", "arcade",
+    )
+    if any(p in name_lc for p in games_patterns):
+        vibes.add("games")
+
+    # --- Rooftop from name ---
+    if "rooftop" in name_lc or ("roof" in name_lc and "roofless" not in name_lc):
+        vibes.update({"rooftop", "airy"})
+
+    # --- Late-close: signals "this bar is a LATE-NIGHT destination", not just
+    #     "technically open at 2am" (most NYC bars are). Restrict to bars
+    #     whose character IS the late-night experience.
+    fri = open_hours.get("fri")
+    closes_past_2am = False
+    if fri and isinstance(fri, list) and len(fri) == 2:
+        try:
+            close_h = int(fri[1].split(":")[0])
+            closes_past_2am = close_h >= 26
+        except (ValueError, IndexError):
+            pass
+    if closes_past_2am and (
+        any(t in bar_types for t in ("nightclub", "dance", "event_venue",
+                                      "music_venue", "karaoke"))
+        or noise_level in ("loud", "deafening")
+        or vibes & {"dance-floor", "dj-set"}
+        or primary_function in ("dive_bar", "themed_party_bar")
+    ):
+        vibes.add("late-close")
+
+    # --- Walk-in from reservations policy ---
+    if reservations in ("none", "accepted"):
+        vibes.add("walk-in")
+
+    # --- Post-work from a happy hour ending by 8pm ---
+    for hh in happy_hour_windows:
+        try:
+            end_h = int(hh["end"].split(":")[0])
+            if end_h <= 20:
+                vibes.add("post-work")
+                break
+        except (ValueError, KeyError):
+            pass
+
+    # --- Divey from primary_function OR cheap-late pattern ---
+    if primary_function == "dive_bar":
+        vibes.add("divey")
+    if (price_tier == "cheap" and "generic_bar" in bar_types and
+            "late-close" in vibes and noise_level in ("lively", "loud")):
+        vibes.add("divey")
+
+    # --- Pregame: affordable opener, opens by 6pm, and NOT a destination type.
+    #     Karaoke, music venues, piano bars are destinations, not pregame spots.
+    destination_types = {
+        "nightclub", "dance", "event_venue", "music_venue",
+        "karaoke", "piano_bar", "board_game_bar",
+    }
+    is_destination = any(t in bar_types for t in destination_types)
+    if price_tier in ("cheap", "moderate") and not is_destination:
+        opens_early = any(
+            h and len(h) == 2 and int(h[0].split(":")[0]) <= 18
+            for h in open_hours.values() if h
+        )
+        if opens_early:
+            vibes.add("pregame")
+
+    # --- Nightcap: open past midnight + any of the "wind-down" vibes.
+    #     Doesn't require late-close (which is now restricted to loud venues);
+    #     it only needs to be open late enough to be a nightcap option.
+    open_past_midnight = False
+    for day_h in open_hours.values():
+        if day_h and len(day_h) == 2:
+            try:
+                if int(day_h[1].split(":")[0]) >= 25:
+                    open_past_midnight = True
+                    break
+            except (ValueError, IndexError):
+                pass
+    if open_past_midnight and (vibes & {"intimate", "cozy", "dim", "quiet"}):
+        vibes.add("nightcap")
+
+    # --- Date: intimate + conversation + not cheap + not too loud ---
+    if ("intimate" in vibes and "conversation" in vibes and
+            price_tier != "cheap" and
+            noise_level in ("library", "conversation", "lively")):
+        vibes.add("date")
+
+
 def novelty_for(bar_types: list[str], vibes: set[str], primary_function: str | None) -> float:
     score = 0.4
     if "themed" in bar_types: score += 0.2
@@ -421,7 +543,8 @@ def good_avoid_for(bar_types: list[str], cat_vibes_entry: dict) -> tuple[list[st
     return good, avoid
 
 
-def enrich_one(seed, cat_vibes, hours_yaml, vibe_vocab, note_overrides, pf_overrides, bar_idx):
+def enrich_one(seed, cat_vibes, hours_yaml, vibe_vocab, note_overrides, pf_overrides,
+               bar_overrides: dict, bar_idx):
     # --- Location ---
     loc = BAR_LOCATIONS.get(seed["id"])
     if loc is None:
@@ -447,21 +570,14 @@ def enrich_one(seed, cat_vibes, hours_yaml, vibe_vocab, note_overrides, pf_overr
         cat_entry = cat_vibes["Bar"]
     bar_types = list(cat_entry["bar_type"])
 
-    # --- Vibes: defaults → primary_function override → user_note override ---
+    # --- Vibes (layer 1): category defaults → primary_function override → user_note override ---
     vibes = set(cat_entry["default_vibes"])
     apply_primary_function_overrides(vibes, pf_overrides, seed.get("primary_function"))
+    # User-note vibes get protected status — they survive the max-cap trim
+    # because the user's own annotation is the strongest available signal.
+    vibes_before_note = set(vibes)
     forced_noise = apply_user_note_overrides(vibes, note_overrides, seed.get("user_note"))
-
-    # Sanity: vibes must be a subset of vocab
-    all_vocab = set()
-    for facet in vibe_vocab["facets"].values():
-        all_vocab.update(facet)
-    vibes = {v for v in vibes if v in all_vocab}
-    # Ensure at least 3 vibes (pad with defaults if needed)
-    if len(vibes) < 3:
-        vibes.update(["lively", "conversation", "unpretentious"])
-    # Cap at 8 — stable deterministic order (sorted)
-    vibes_list = sorted(vibes)[:8]
+    protected_vibes: set[str] = vibes - vibes_before_note  # user-note additions
 
     # --- Noise ---
     noise = forced_noise or cat_entry["default_noise"]
@@ -479,12 +595,53 @@ def enrich_one(seed, cat_vibes, hours_yaml, vibe_vocab, note_overrides, pf_overr
         price_tier = cat_entry.get("price_skew", "moderate")
     avg_drink = avg_drink_price_for(price_tier, seed.get("estimated_price_range_usd"))
 
+    # --- Reservations policy (needed for walk-in inference below) ---
+    is_reservation_likely = "cocktail_bar" in bar_types or "lounge" in bar_types
+    reservations_val = "accepted" if is_reservation_likely else "none"
+
+    # --- Vibes (layer 2): auto-inference from bar_type + hours + price + name ---
+    apply_auto_inference(
+        vibes=vibes,
+        bar_types=bar_types,
+        open_hours=open_hours,
+        reservations=reservations_val,
+        happy_hour_windows=happy_hour_windows,
+        price_tier=price_tier,
+        name=seed["name"],
+        primary_function=seed.get("primary_function"),
+        noise_level=noise,
+    )
+
+    # --- Vibes (layer 3): hand-curated per-bar overrides (domain knowledge) ---
+    if seed["name"] in bar_overrides:
+        for v in bar_overrides[seed["name"]].get("add_vibes", []):
+            vibes.add(v)
+
+    # --- Filter to vocabulary, ensure minimum/maximum counts ---
+    all_vocab = set()
+    for facet in vibe_vocab["facets"].values():
+        all_vocab.update(facet)
+    vibes = {v for v in vibes if v in all_vocab}
+    protected_vibes &= vibes  # protect only those still in vocab
+    if len(vibes) < 3:
+        vibes.update(["lively", "conversation", "unpretentious"])
+    # Cap at 10, BUT user-note-added vibes always make the cut.
+    # Protected first, then sorted-alphabetic fill for the rest.
+    rest = sorted(vibes - protected_vibes)
+    vibes_list = sorted(protected_vibes) + rest
+    vibes_list = vibes_list[:10]
+    # Re-sort for deterministic final order
+    vibes_list = sorted(set(vibes_list))
+
     # --- Other attributes ---
     drink_specs = drink_specialties_for(bar_types, seed["name"])
     drink_cats = drink_categories_for(cat_entry)
     capacity = pick_capacity(bar_types)
     crowd_map = crowd_template(bar_types)
-    outdoor = "beer_garden" in bar_types or "outdoor" in vibes
+    outdoor = (
+        "beer_garden" in bar_types
+        or bool(vibes & {"patio", "rooftop", "sidewalk-seating", "airy"})
+    )
     food_q = food_quality_for(bar_types, cat)
     good, avoid = good_avoid_for(bar_types, cat_entry)
 
@@ -556,6 +713,9 @@ def main():
     cat_vibes = yaml.safe_load((DATA / "category_to_vibes.yaml").read_text())
     hours_yaml = yaml.safe_load((DATA / "default_hours.yaml").read_text())
     vibe_vocab = json.loads((DATA / "vibe_vocab.json").read_text())
+    # Hand-curated per-bar vibe additions (domain knowledge layer)
+    overrides_raw = yaml.safe_load((DATA / "bar_overrides.yaml").read_text())
+    bar_overrides = overrides_raw.get("overrides", {})
 
     note_overrides = cat_vibes.pop("user_note_overrides", [])
     pf_overrides = cat_vibes.pop("primary_function_overrides", {})
@@ -566,7 +726,8 @@ def main():
 
     bars = []
     for i, s in enumerate(included_seeds, start=1):
-        bar = enrich_one(s, cat_vibes, hours_yaml, vibe_vocab, note_overrides, pf_overrides, i)
+        bar = enrich_one(s, cat_vibes, hours_yaml, vibe_vocab,
+                         note_overrides, pf_overrides, bar_overrides, i)
         bars.append(bar)
 
     compute_quality_signals(bars)
