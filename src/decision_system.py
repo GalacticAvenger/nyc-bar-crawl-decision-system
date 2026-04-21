@@ -155,11 +155,18 @@ def _score_all_users_arc(
     for stage_weights in group.arc_profile:
         stage_out: dict[str, dict[str, Score]] = {}
         for u in group.users:
-            # Temporarily override the user's vibe_weights with the stage's.
-            # All other preference fields (budget, drinks, noise, vetoes) stay.
+            # Stage weights define the night's shape at THIS stop; the user's
+            # personal vibe_weights (already merged with the baseline arc + their
+            # must-haves by the UI) are combined in via MAX so personal prefs
+            # don't get wiped when we apply the stage-specific profile. Personal
+            # must-haves that land in a stage where they weren't "supposed" to
+            # matter still get to express themselves.
+            merged = dict(stage_weights)
+            for v, w in (u.vibe_weights or {}).items():
+                merged[v] = max(merged.get(v, 0.0), w)
             u_stage = UserPreference(
                 name=u.name,
-                vibe_weights=dict(stage_weights),
+                vibe_weights=merged,
                 criterion_weights=u.criterion_weights,
                 max_per_drink=u.max_per_drink,
                 preferred_drinks=u.preferred_drinks,

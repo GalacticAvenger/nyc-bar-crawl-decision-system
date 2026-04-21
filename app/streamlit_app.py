@@ -138,6 +138,33 @@ def _merge_arc_weights(arc: list[tuple[str, dict[str, float]]]) -> dict[str, flo
     return merged
 
 
+# Curated per-person "must-haves" — 10 high-signal options that layer on top
+# of the night style. Each UI label maps to one or more vibe_vocab entries.
+# Chosen because they're (a) commonly understood by a 20s audience and
+# (b) strongly differentiating in the dataset.
+PERSONAL_MUST_HAVES = {
+    "🍸 Craft cocktails":    ["craft-cocktails"],
+    "💃 Dance floor":        ["dance-floor", "dj-set"],
+    "🎸 Live music":         ["live-band"],
+    "🌇 Rooftop":            ["rooftop", "airy"],
+    "🎱 Games / pool":       ["games"],
+    "🍺 Divey":              ["divey", "unpretentious"],
+    "🕯️ Intimate & dim":     ["intimate", "dim", "cozy"],
+    "🏳️‍🌈 Queer-centered":   ["queer-centered"],
+    "💎 Hidden gem":         ["hidden-gem"],
+    "📜 Historic / local":   ["local-institution", "historic"],
+}
+
+
+def _personal_vibe_weights(selected_labels: list[str]) -> dict[str, float]:
+    """Convert UI labels into a flat vibe_weights dict (weight 1.0 per vibe)."""
+    out: dict[str, float] = {}
+    for label in selected_labels:
+        for v in PERSONAL_MUST_HAVES.get(label, []):
+            out[v] = max(out.get(v, 0.0), 1.0)
+    return out
+
+
 def _next_friday() -> date:
     today = date.today()
     days_ahead = (4 - today.weekday()) % 7
@@ -224,16 +251,28 @@ def main():
                         options=["library", "conversation", "lively", "loud", "deafening"],
                         value=style["noise"], key=f"noise{i}",
                     )
+                    must_haves = st.multiselect(
+                        "Personal must-haves (optional — layers on top of the night style)",
+                        options=list(PERSONAL_MUST_HAVES.keys()),
+                        default=[], key=f"mh{i}",
+                        help=(
+                            "These add to the night style for just you. If you pick "
+                            "'Dance floor', bars with a dance floor get a boost in your "
+                            "personal utility — even on a Chill bar hop night."
+                        ),
+                    )
                 else:
                     st.caption(
-                        f"Inheriting Person 1's budget / drinks / noise. "
+                        f"Inheriting Person 1's budget / drinks / noise / must-haves. "
                         f"Uncheck the box above to customize."
                     )
                     budget = None
                     drinks = None
                     noise = None
+                    must_haves = None
                 users.append({
                     "name": name, "budget": budget, "drinks": drinks, "noise": noise,
+                    "must_haves": must_haves,
                 })
 
         # If "same_prefs," fill downstream users from person 0
@@ -243,11 +282,13 @@ def main():
                 u["budget"] = p0["budget"]
                 u["drinks"] = p0["drinks"]
                 u["noise"] = p0["noise"]
+                u["must_haves"] = p0["must_haves"]
 
-        # Build UserPreference objects. Everyone gets the same night-style
-        # vibe profile; individual prefs vary only on budget / drinks / noise.
-        # When the user explicitly picks a style, the vibe criterion should
-        # dominate scoring — overrides the 0.30 default with 0.50.
+        # Build UserPreference objects. Everyone shares the night-style arc
+        # (set via GroupInput.arc_profile); individuals layer their own
+        # "must-haves" on top via user.vibe_weights. When a style is picked,
+        # the vibe CRITERION weight jumps from 0.30 → 0.50 so vibes actually
+        # drive the decision.
         style_criterion_weights = {
             "vibe": 0.50,
             "budget": 0.15,
@@ -260,17 +301,23 @@ def main():
             "novelty": 0.03,
             "quality_signal": 0.05,
         }
-        user_prefs = [
-            UserPreference(
+        user_prefs = []
+        for u in users:
+            personal = _personal_vibe_weights(u["must_haves"] or [])
+            # Start from the merged arc as a baseline (so when arc_profile is
+            # ignored — e.g., by a caller without arc support — the user's
+            # weights still reflect the night style). Then layer personal.
+            base = dict(merged_vibes)
+            for v, w in personal.items():
+                base[v] = max(base.get(v, 0.0), w * 1.5)
+            user_prefs.append(UserPreference(
                 name=u["name"],
-                vibe_weights=dict(merged_vibes),
+                vibe_weights=base,
                 criterion_weights=dict(style_criterion_weights),
                 max_per_drink=float(u["budget"]),
                 preferred_drinks=tuple(u["drinks"]),
                 preferred_noise=u["noise"],
-            )
-            for u in users
-        ]
+            ))
 
         # ===========================================================
         # 3. When & where.
