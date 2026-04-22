@@ -24,7 +24,8 @@ sys.path.insert(0, str(ROOT))
 
 from src.data_loader import load_all  # noqa: E402
 from src.decision_system import plan_crawl  # noqa: E402
-from src.models import GroupInput, UserPreference  # noqa: E402
+from src.dialogic import replan_with_reactions  # noqa: E402
+from src.models import GroupInput, Reaction, UserPreference  # noqa: E402
 from src.visualize import render_map, render_timeline  # noqa: E402
 
 
@@ -381,8 +382,16 @@ def main():
         walking_only=style.get("walking_only", True),
     )
 
+    # Stash inputs so a replan click (which doesn't go through the form)
+    # can use the same group + data without re-submitting the form.
+    st.session_state["group"] = group
+    st.session_state["bars"] = bars
+    st.session_state["cases"] = cases
+    st.session_state["rules"] = rules
+
     with st.spinner("Planning…"):
         result = plan_crawl(group, bars=bars, cases=cases, rules=rules)
+    st.session_state["result"] = result
 
     if not result.route.stops:
         st.error("No feasible crawl under these constraints.")
@@ -427,6 +436,86 @@ def main():
     with st.expander(f"{len(result.excluded_bars)} bars excluded"):
         for ex in result.excluded_bars[:30]:
             st.write("•", ex["reason"])
+
+    # -------- Dialogic replan (Phase 4) --------
+    _render_reaction_ui(result)
+
+
+def _render_reaction_ui(result):
+    """Per-stop accept/reject/swap + lock checkboxes + Replan button.
+
+    Each stop's reaction state is stored under st.session_state so a
+    Replan click can rebuild the Reaction list without a form submit.
+    """
+    st.subheader("React to stops")
+    st.caption(
+        "For each stop, pick a verdict (and optionally lock it). "
+        "Clicking **Replan** applies your reactions, updates preferences, "
+        "and re-plans the crawl — preserving any locked stops."
+    )
+
+    group = st.session_state.get("group")
+    if group is None:
+        return
+
+    reaction_rows = []
+    for i, stop in enumerate(result.route.stops):
+        col_info, col_verdict, col_user, col_lock = st.columns([3, 2, 2, 1])
+        with col_info:
+            st.markdown(f"**Stop {i + 1}:** {stop.bar.name}")
+        with col_verdict:
+            verdict = st.selectbox(
+                "Verdict", options=["no-op", "accept", "reject", "swap"],
+                key=f"verdict_{i}", label_visibility="collapsed",
+            )
+        with col_user:
+            reacting = st.selectbox(
+                "From", options=[u.name for u in group.users],
+                key=f"user_{i}", label_visibility="collapsed",
+            )
+        with col_lock:
+            lock = st.checkbox("Lock", key=f"lock_{i}")
+        if verdict != "no-op":
+            reaction_rows.append(Reaction(
+                user_id=reacting, stop_index=i, verdict=verdict, lock=lock,
+            ))
+        elif lock:  # lock without a verdict — preserve in place
+            reaction_rows.append(Reaction(
+                user_id=group.users[0].name, stop_index=i,
+                verdict="accept", lock=True,
+            ))
+
+    if st.button("Replan", type="primary"):
+        if not reaction_rows:
+            st.warning("No reactions set — pick at least one verdict.")
+            return
+        with st.spinner("Replanning…"):
+            new_result = replan_with_reactions(
+                result, reaction_rows, group,
+                bars=st.session_state["bars"],
+                cases=st.session_state["cases"],
+                rules=st.session_state["rules"],
+            )
+        st.session_state["result"] = new_result
+
+        st.markdown("### Updated plan")
+        pref_child = next((c for c in new_result.explanations.children
+                            if c.evidence.get("kind") == "preference_updates"),
+                           None)
+        delta_child = next((c for c in new_result.explanations.children
+                             if c.evidence.get("kind") == "delta"), None)
+        if pref_child:
+            st.info(pref_child.summary)
+        if delta_child:
+            st.markdown(delta_child.summary)
+        if not new_result.route.stops:
+            st.error("Replan produced no feasible route (locked stop infeasible?).")
+            return
+        st.markdown(new_result.explanations.summary)
+        for i, stop in enumerate(new_result.route.stops):
+            st.markdown(f"**Stop {i + 1}:** {stop.bar.name} "
+                         f"({stop.bar.neighborhood}, "
+                         f"arrive {stop.arrival.strftime('%-I:%M%p').lower()})")
 
 
 if __name__ == "__main__":

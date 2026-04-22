@@ -229,6 +229,7 @@ def plan_crawl(
     cases: Optional[list[Case]] = None,
     rules: Optional[dict] = None,
     compute_counterfactuals: bool = True,
+    locked_bars: Optional[dict[int, Bar]] = None,
 ) -> PlanResult:
     """Run the full pipeline. If `bars`, `cases`, or `rules` are None,
     load them from the canonical data dir."""
@@ -363,6 +364,7 @@ def plan_crawl(
         strategy_used=strat_name, strategy_rationale=rationale,
         user_budget_weight=avg_budget_weight,
         seed_sequence=adapted,
+        locked_bars=locked_bars,
     )
     traces["search_log_length"] = len(route.search_log)
 

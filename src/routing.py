@@ -377,6 +377,106 @@ def enumerate_exact(
 # Orchestrator
 # ---------------------------------------------------------------------------
 
+def _greedy_fill_with_locks(
+    candidates: list[Bar],
+    locked_bars: dict[int, Bar],
+    group_scores_by_stage: list[dict[str, float]] | dict[str, float],
+    group: GroupInput,
+    rules: dict,
+    user_budget_weight: float,
+    seed_sequence: Optional[AdaptedCase],
+) -> tuple[list[Step], list[str]]:
+    """Route builder for the Phase 4 replan path. Positions in
+    `locked_bars` are fixed; remaining positions are greedy-filled from
+    candidates. Feasibility (arrival in-window, bar open, departure
+    before end_time) is checked per position; an infeasible lock yields
+    an empty return + a log entry.
+
+    This is a simpler algorithm than the unconstrained greedy→2-opt
+    orchestrator — we do NOT 2-opt across locked positions because the
+    user has pinned them. The router never moves a lock."""
+    log: list[str] = []
+    stop_minutes = rules.get("routing_config", {}).get("default_stop_duration_minutes", 45)
+    num_stages = (1 if isinstance(group_scores_by_stage, dict)
+                  else len(group_scores_by_stage))
+
+    max_positions = group.max_stops
+    chosen: list[Optional[Step]] = [None] * max_positions
+    used_ids: set[str] = set()
+
+    current_loc = group.start_location
+    current_time = group.start_time
+
+    for idx in range(max_positions):
+        stage_idx = stage_for(idx, max_positions, num_stages)
+        scores = _scores_for_stage(group_scores_by_stage, stage_idx)
+
+        if idx in locked_bars:
+            bar = locked_bars[idx]
+            arrival = _arrival_after(current_loc, current_time, bar)
+            if not _is_feasible(bar, arrival, group, stop_minutes):
+                log.append(f"locked stop {idx + 1} ({bar.name}) "
+                           f"is infeasible at {arrival}; abandoning replan.")
+                return [], log
+            miles = walking_miles(current_loc, (bar.lat, bar.lon))
+            penalty = _walking_penalty(miles, rules, walking_only=group.walking_only)
+            bonus, windows = temporal_bonus(bar, arrival, rules,
+                                            user_budget_weight=user_budget_weight,
+                                            user_wants_food=group.want_food)
+            seed = _seed_bonus(bar, stage_idx, seed_sequence, rules)
+            util = scores.get(bar.id, 0.0)
+            _ = util + bonus + seed - penalty  # net not used; locked
+            step = Step(bar=bar, arrival=arrival,
+                        departure=arrival + timedelta(minutes=stop_minutes),
+                        utility=util, bonus=bonus + seed, windows=windows)
+            chosen[idx] = step
+            used_ids.add(bar.id)
+            current_loc = (bar.lat, bar.lon)
+            current_time = step.departure
+            log.append(f"LOCK: stop {idx + 1} = {bar.name} "
+                       f"(arrival {arrival.strftime('%H:%M')}).")
+            continue
+
+        # Greedy-fill this position
+        best: Optional[tuple[float, Step]] = None
+        for bar in candidates:
+            if bar.id in used_ids:
+                continue
+            if bar.id not in scores:
+                continue
+            arrival = _arrival_after(current_loc, current_time, bar)
+            if not _is_feasible(bar, arrival, group, stop_minutes):
+                continue
+            miles = walking_miles(current_loc, (bar.lat, bar.lon))
+            penalty = _walking_penalty(miles, rules, walking_only=group.walking_only)
+            bonus, windows = temporal_bonus(bar, arrival, rules,
+                                            user_budget_weight=user_budget_weight,
+                                            user_wants_food=group.want_food)
+            seed = _seed_bonus(bar, stage_idx, seed_sequence, rules)
+            util = scores[bar.id]
+            net = util + bonus + seed - penalty
+            if best is None or net > best[0]:
+                best = (net, Step(
+                    bar=bar, arrival=arrival,
+                    departure=arrival + timedelta(minutes=stop_minutes),
+                    utility=util, bonus=bonus + seed, windows=windows,
+                ))
+        if best is None:
+            log.append(f"greedy-fill stop {idx + 1}: no feasible bar; stopping.")
+            break
+        _, step = best
+        chosen[idx] = step
+        used_ids.add(step.bar.id)
+        current_loc = (step.bar.lat, step.bar.lon)
+        current_time = step.departure
+        log.append(f"FILL: stop {idx + 1} = {step.bar.name} "
+                   f"(arrival {step.arrival.strftime('%H:%M')}).")
+
+    # Truncate trailing Nones
+    steps = [s for s in chosen if s is not None]
+    return steps, log
+
+
 def best_route(
     candidates: list[Bar],
     group_scores_by_stage: list[dict[str, float]] | dict[str, float],
@@ -386,6 +486,7 @@ def best_route(
     strategy_rationale: str = "",
     user_budget_weight: float = 0.0,
     seed_sequence: Optional[AdaptedCase] = None,
+    locked_bars: Optional[dict[int, Bar]] = None,
 ) -> Route:
     """Orchestrate: greedy → 2-opt → (if small) exact check. Return Route.
     `group_scores_by_stage` can be a single dict (no arc) or a list of dicts
@@ -393,7 +494,25 @@ def best_route(
 
     When `seed_sequence` is supplied (Phase 3), each candidate gets an
     additive CBR-seed bonus based on how well its vibe_tags overlap with
-    the seed's stage profile. The bonus is a PRIOR, not a constraint."""
+    the seed's stage profile. The bonus is a PRIOR, not a constraint.
+
+    When `locked_bars` is supplied (Phase 4), the named positions are
+    fixed — greedy-fill + no 2-opt across them, so the user's locks
+    survive the replan even when re-scoring would move them."""
+    # Phase 4: locked-stop path bypasses 2-opt and exact enumeration.
+    if locked_bars:
+        steps, log = _greedy_fill_with_locks(
+            candidates, locked_bars, group_scores_by_stage, group, rules,
+            user_budget_weight, seed_sequence,
+        )
+        if not steps:
+            return Route(stops=[], total_utility=0.0, total_walking_miles=0.0,
+                         windows_captured=[], strategy_used=strategy_used,
+                         strategy_rationale=strategy_rationale,
+                         search_log=["LOCKED:"] + log)
+        return _route_from_steps(steps, strategy_used, strategy_rationale,
+                                  ["LOCKED:"] + log)
+
     log: list[str] = []
     greedy_steps, greedy_log = greedy_route(
         candidates, group_scores_by_stage, group, rules,

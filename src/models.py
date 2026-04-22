@@ -302,3 +302,63 @@ class PlanResult:
     traces: dict[str, Any] = field(default_factory=dict)
     excluded_bars: list[dict[str, Any]] = field(default_factory=list)  # {bar, reason, rule_id}
     per_user_report: dict[str, dict[str, Any]] = field(default_factory=dict)  # stakeholder table
+
+
+# ---------------------------------------------------------------------------
+# Dialogic replan — Phase 4
+# ---------------------------------------------------------------------------
+
+@dataclass
+class Reaction:
+    """A single reaction from one user to one stop in a plan.
+
+    `verdict` is "accept", "reject", or "swap". `lock=True` means the stop
+    must be preserved exactly in the replan even if re-scoring would move
+    it. `optional_reason` is preserved in traces but not used by the
+    preference-update logic (the rule reads the scored criteria instead).
+    `swap_target_bar_id`, when present on a "swap" verdict, identifies a
+    specific bar to treat as the implicit accept.
+    """
+    user_id: str
+    stop_index: int
+    verdict: str
+    optional_reason: str = ""
+    lock: bool = False
+    swap_target_bar_id: Optional[str] = None
+
+
+@dataclass
+class PreferenceUpdate:
+    """One multiplicative (or additive, for budget) change applied to a
+    user's preferences. Kept as an explicit record so (a) the explanation
+    engine can narrate it and (b) revert_user can undo just one user's
+    updates without re-running the whole reaction sequence.
+    """
+    user_id: str
+    field: str       # e.g. "criterion_weights.noise" | "max_per_drink"
+    from_value: float
+    to_value: float
+    reason: str
+    triggered_by_reaction: int  # index into the reactions list
+
+
+@dataclass
+class StopChange:
+    """One per-stop diff between two plans."""
+    stop_index: int
+    change_type: str       # unchanged | replaced | added | removed | reordered
+    before: Optional[str]  # bar name (None when added)
+    after: Optional[str]   # bar name (None when removed)
+    attributed_to: str     # "reaction N" | "ripple: <reason>" | "unattributed"
+
+
+@dataclass
+class DeltaArgument:
+    """Compares two plans, stop-by-stop, with each change attributed back
+    to either an explicit reaction or a preference-update ripple. A change
+    that cannot be attributed is surfaced in `unattributed` so tests
+    (and the explanation engine) can flag it as a bug."""
+    conclusion: str
+    per_stop_changes: list[StopChange] = field(default_factory=list)
+    unattributed: list[StopChange] = field(default_factory=list)
+    pref_updates: list[PreferenceUpdate] = field(default_factory=list)
