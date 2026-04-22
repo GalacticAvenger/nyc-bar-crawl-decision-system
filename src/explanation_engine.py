@@ -23,8 +23,10 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Optional
 
+from .argument import Argument, Premise, render_argument
 from .models import (
-    Bar, Explanation, GroupInput, Route, RouteStop, RunnerUp, Score, UserPreference,
+    Bar, Explanation, GroupInput, Route, RouteStop, RunnerUp, Score,
+    StrategyDecision, UserPreference,
 )
 from .qualitative import phrase_for, quality_bucket
 
@@ -103,9 +105,19 @@ def _lead_verb(idx: int, total: int) -> str:
 
 def explain_strategy(strategy_name: str, rule_fired: str,
                      profile: dict, users: list[UserPreference],
-                     rules: dict) -> str:
+                     rules: dict,
+                     decision: Optional[StrategyDecision] = None) -> str:
     """One paragraph: which aggregation strategy was used and why.
-    Always names the strategy, the rule that fired, and one profile signal."""
+    Always names the strategy, the rule that fired, and one profile signal.
+
+    Phase 2: when a `decision` is supplied, build + render a structured
+    Argument (same shape as per-stop Arguments). The old branch-per-rule
+    templates remain as a fallback for callers that don't have the
+    decision object handy (older tests, etc.)."""
+    if decision is not None:
+        return render_argument(
+            build_strategy_argument(decision, profile, users, rules)
+        )
     # Friendly names
     names = {
         "utilitarian_sum":    "utilitarian (sum of individual scores)",
@@ -161,10 +173,375 @@ def explain_strategy(strategy_name: str, rule_fired: str,
 
 
 # ---------------------------------------------------------------------------
-# Per-stop explanation
+# Structured Argument builders (Phase 2) — assemble the reasoning produced
+# upstream into an Argument dataclass; render_argument turns it into prose.
+# These are the preferred entry points; explain_stop_legacy (below) stays
+# as a fallback until the Argument renderer has been eyeballed in enough
+# scenarios.
+# ---------------------------------------------------------------------------
+
+def _averaged_weighted_contributions(
+    bar_id: str,
+    per_user_scores: dict[str, dict[str, "Score"]],
+) -> dict[str, float]:
+    """Average the per-criterion weighted contribution across users who
+    scored this bar. Returns an empty dict when no user scored it."""
+    agg: dict[str, float] = {}
+    n = 0
+    for u_scores in per_user_scores.values():
+        if bar_id in u_scores:
+            n += 1
+            for c, v in u_scores[bar_id].weighted_contributions.items():
+                agg[c] = agg.get(c, 0.0) + v
+    if n == 0:
+        return {}
+    return {c: v / n for c, v in agg.items()}
+
+
+def _bar_evidence(bar, criterion: str) -> str:
+    """Concrete evidence string for each criterion — the data point the
+    premise is citing, not just the score."""
+    if criterion == "budget":
+        return f"~${bar.avg_drink_price:.0f}/drink, {bar.price_tier} tier"
+    if criterion == "vibe":
+        tags = ", ".join(bar.vibe_tags[:3]) if bar.vibe_tags else "no tags"
+        return f"tags: {tags}"
+    if criterion == "noise":
+        return f"{phrase_for(bar.noise_level, 'noise')}"
+    if criterion == "distance":
+        return "close walk from the previous stop"
+    if criterion == "drink_match":
+        drinks = ", ".join(bar.drink_categories_served[:3])
+        return f"serves {drinks}"
+    if criterion == "happy_hour_active":
+        if bar.happy_hour_windows:
+            return f"HH: {bar.happy_hour_windows[0].details or 'active at arrival'}"
+        return "happy hour active"
+    if criterion == "specials_match":
+        if bar.specials:
+            return f"special: {bar.specials[0].kind.replace('_', ' ')}"
+        return "event active at arrival"
+    if criterion == "crowd_fit":
+        return "the right crowd energy at arrival"
+    if criterion == "novelty":
+        return "a distinctive, less-obvious pick"
+    if criterion == "quality_signal":
+        return (f"{bar.google_rating}★ over "
+                f"{bar.google_review_count:,} reviews")
+    return criterion.replace("_", " ")
+
+
+def build_stop_argument(
+    idx: int,
+    stop: RouteStop,
+    route: Route,
+    per_user_scores: dict[str, dict[str, Score]],
+    runner_up: Optional[RunnerUp],
+    rules: dict,
+    users: Optional[list[UserPreference]] = None,
+) -> Argument:
+    """Assemble a structured Argument for why `stop.bar` was chosen.
+
+    Pulls directly from the already-computed traces (per_user_scores,
+    runner_up, weighted_contributions) — nothing is re-derived. The
+    returned Argument has:
+      * conclusion — "We chose <bar> for stop N."
+      * supporting — top-3 averaged weighted contributions as premises
+      * decisive_premise — the highest-magnitude supporting premise
+      * opposing — budget-dishonesty premises (one per over-budget user)
+        plus a premise when the runner-up would beat the winner on a
+        single criterion
+      * sacrifice — named when an over-budget user exists or a runner-up
+        would have served one user better
+      * runner_up — name only when relative_gap ≤ 0.10
+    """
+    bar = stop.bar
+
+    # --- supporting premises from averaged weighted contributions ------------
+    avg_contribs = _averaged_weighted_contributions(bar.id, per_user_scores)
+    # Skip criteria with zero or trivial contribution.
+    ranked = sorted(
+        ((c, v) for c, v in avg_contribs.items() if v > 1e-6),
+        key=lambda kv: -kv[1],
+    )
+    top_contribs = ranked[:3]
+
+    # Over-budget users surfaced as opposing premises — kept honest
+    # regardless of the weighted-contribution ranking.
+    over_budget: list[UserPreference] = []
+    if users:
+        for u in users:
+            if u.max_per_drink and bar.avg_drink_price > u.max_per_drink + 1e-6:
+                over_budget.append(u)
+
+    # Build supporting premises.
+    supporting: list[Premise] = []
+    for c, v in top_contribs:
+        # If 'budget' headlines but someone's over cap, demote — it's not
+        # actually supportive for the group (that premise lives in
+        # `opposing` below).
+        if c == "budget" and over_budget:
+            continue
+        supporting.append(Premise(
+            subject="the group",
+            criterion=c,
+            direction="supports",
+            magnitude=min(1.0, max(0.0, v)),
+            evidence=_bar_evidence(bar, c),
+        ))
+
+    # Build opposing premises.
+    opposing: list[Premise] = []
+    sacrifice: Optional[str] = None
+    for u in over_budget:
+        opposing.append(Premise(
+            subject=u.name,
+            criterion="budget",
+            direction="opposes",
+            magnitude=0.5,  # prominent but not dominating
+            evidence=(f"~${bar.avg_drink_price:.0f}/drink over "
+                      f"{u.name}'s ${u.max_per_drink:.0f} cap"),
+        ))
+    if over_budget:
+        if len(over_budget) == 1:
+            sacrifice = (f"{over_budget[0].name} is paying over their cap at "
+                         f"this stop")
+        else:
+            named = ", ".join(u.name for u in over_budget[:-1])
+            named += f" and {over_budget[-1].name}"
+            sacrifice = f"{named} are paying over their caps at this stop"
+
+    # If the runner-up is close, surface a single-criterion
+    # where-it-would-have-won as a soft opposing premise (the
+    # counterfactual honesty move).
+    runner_up_name: Optional[str] = None
+    if runner_up is not None and runner_up.bar.id != bar.id:
+        rel_gap = getattr(runner_up, "relative_gap", None)
+        is_close = (rel_gap is not None and rel_gap <= 0.10)
+        if rel_gap is None and 0 <= runner_up.gap < 0.20:
+            is_close = True
+        if is_close:
+            runner_up_name = runner_up.bar.name
+            # Cite the single criterion where the runner-up beats the winner
+            # most (unlock_hint is already computed; here we add the premise
+            # for the Argument structure).
+            if runner_up.gap_criteria:
+                best_c = max(runner_up.gap_criteria,
+                             key=lambda c: runner_up.gap_criteria[c])
+                if runner_up.gap_criteria[best_c] > 0:
+                    opposing.append(Premise(
+                        subject=runner_up.bar.name,
+                        criterion=best_c,
+                        direction="opposes",
+                        magnitude=min(0.4, float(rel_gap or 0.0) + 0.2),
+                        evidence=(f"runner-up wins on {best_c.replace('_', ' ')}"
+                                  f" by {runner_up.gap_criteria[best_c]:.2f}"),
+                    ))
+                    if sacrifice is None and runner_up.unlock_hint:
+                        hint = runner_up.unlock_hint
+                        if hint.startswith("("):
+                            sacrifice = f"{runner_up.bar.name} {hint.strip('()')}"
+                        else:
+                            sacrifice = (f"would have edged ahead if you'd "
+                                         f"{hint}")
+
+    # Decisive premise = the top-scored criterion premise, computed BEFORE
+    # we inject editorial/personal premises. Upstream criteria reflect the
+    # actual MCDA decision; the additions below are auxiliary colour that
+    # should not overwrite the causal reason.
+    decisive: Optional[Premise] = supporting[0] if supporting else None
+
+    # Bar-level editorial signals that the legacy explanation surfaced —
+    # ported into the Argument shape as auxiliary supporting premises with
+    # magnitudes high enough to reliably land in render_argument's top-N,
+    # but never so high they unseat `decisive`.
+    if bar.user_note:
+        supporting.insert(
+            min(1, len(supporting)),
+            Premise(
+                subject="you",
+                criterion="user_note",
+                direction="supports",
+                magnitude=0.35,
+                evidence=bar.user_note,
+            ),
+        )
+    if stop.temporal_bonuses_captured:
+        w = stop.temporal_bonuses_captured[0]
+        details = w.details or w.kind.replace("_", " ")
+        supporting.append(Premise(
+            subject="the group",
+            criterion="temporal_window",
+            direction="supports",
+            magnitude=0.25,
+            evidence=f"{w.kind.replace('_', ' ')} ({details})",
+        ))
+    if bar.quality_signal > 0.75:
+        supporting.append(Premise(
+            subject="the group",
+            criterion="quality_consensus",
+            direction="supports",
+            magnitude=0.2,
+            evidence=(f"{bar.google_rating}★ over "
+                      f"{bar.google_review_count:,} reviews"),
+        ))
+
+    # Dominant-user framing (legacy parity). We want the specific user
+    # named in prose whenever 2+ users are present — this is substantive
+    # evidence a real person was pulled here. Placed late in the list so
+    # it appears after the main reason + user_note but still within the
+    # renderer's top-N.
+    dom_user = _dominant_user_for_bar(bar.id, per_user_scores)
+    n_users = len(per_user_scores)
+    if dom_user and n_users > 1:
+        if n_users == 2:
+            other = next((u for u in per_user_scores if u != dom_user), None)
+            phrasing = f"higher than {other}" if other else "highest here"
+        else:
+            phrasing = f"highest of the {n_users}"
+        supporting.append(Premise(
+            subject=dom_user,
+            criterion="dominant_user",
+            direction="supports",
+            magnitude=0.3,
+            evidence=phrasing,
+        ))
+
+    # Stop-opener rewrites the conclusion for natural reading order.
+    at_time = _format_time(stop.arrival)
+    price = phrase_for(bar.price_tier, "price")
+    noise = phrase_for(bar.noise_level, "noise")
+    if idx == 0:
+        conclusion = (f"We open at **{bar.name}** at {at_time}, a {price}, "
+                      f"{noise} spot in {bar.neighborhood}")
+    elif idx == len(route.stops) - 1 and len(route.stops) > 1:
+        conclusion = (f"Closing at **{bar.name}** at {at_time}, a {price}, "
+                      f"{noise} spot in {bar.neighborhood}")
+    else:
+        conclusion = (f"Then **{bar.name}** at {at_time}, a {price}, "
+                      f"{noise} spot in {bar.neighborhood}")
+
+    return Argument(
+        conclusion=conclusion,
+        supporting=supporting,
+        opposing=opposing,
+        decisive_premise=decisive,
+        sacrifice=sacrifice,
+        runner_up=runner_up_name,
+    )
+
+
+def build_strategy_argument(
+    decision: StrategyDecision,
+    profile: dict,
+    users: list[UserPreference],
+    rules: dict,
+) -> Argument:
+    """Assemble an Argument for the meta-selector's choice.
+
+    Pulls directly from the StrategyDecision's `triggering_profile_signal`
+    and `considered_alternatives` (populated in Phase 1). The decisive
+    premise is the triggering signal; opposing premises are the nearest
+    losing alternatives.
+    """
+    narrative = decision.narrative_name
+    conclusion = f"We used **{narrative}** to aggregate {len(users)} preferences"
+
+    supporting: list[Premise] = [
+        Premise(
+            subject="the group",
+            criterion=_metric_for_rule(decision.triggering_rule_id),
+            direction="supports",
+            magnitude=0.7,  # triggering signal is load-bearing
+            evidence=decision.triggering_profile_signal,
+        ),
+    ]
+    # applies_when is a broader English framing — include as a second
+    # supporting premise so the rendered prose can echo it when the
+    # decisive signal alone reads too numeric.
+    if decision.applies_when:
+        supporting.append(Premise(
+            subject="the group",
+            criterion="aligned_preferences"
+                      if decision.strategy_id == "utilitarian_sum"
+                      else _metric_for_rule(decision.triggering_rule_id),
+            direction="supports",
+            magnitude=0.4,
+            evidence=decision.applies_when,
+        ))
+
+    # Opposing premises from considered_alternatives: the two strongest
+    # near-misses. Use the dedicated "losing_alternative" criterion so the
+    # rendered text names the strategy that didn't fire (the generic
+    # strategy-metric renderers ignore the subject).
+    opposing: list[Premise] = []
+    for sid, rank, why in decision.considered_alternatives[:2]:
+        opposing.append(Premise(
+            subject=sid.replace("_", " "),
+            criterion="losing_alternative",
+            direction="opposes",
+            magnitude=0.2,
+            evidence=f"rank {rank}; {why}",
+        ))
+
+    return Argument(
+        conclusion=conclusion,
+        supporting=supporting,
+        opposing=opposing,
+        decisive_premise=supporting[0],
+        sacrifice=None,
+        runner_up=None,
+    )
+
+
+def _metric_for_rule(rule_id: str) -> str:
+    """Map a triggering rule_id to the profile metric it reads. Used to
+    label the decisive premise in a strategy Argument."""
+    return {
+        "strategy_veto":         "dealbreaker_density",
+        "strategy_egalitarian":  "budget_spread_ratio",
+        "strategy_copeland":     "vibe_variance",
+        "strategy_borda":        "max_preference_intensity",
+        "strategy_utilitarian":  "aligned_preferences",
+    }.get(rule_id, "aligned_preferences")
+
+
+def _metric_for_strategy(strategy_id: str) -> str:
+    return {
+        "approval_veto":     "dealbreaker_density",
+        "egalitarian_min":   "budget_spread_ratio",
+        "copeland_pairwise": "vibe_variance",
+        "borda_count":       "max_preference_intensity",
+        "utilitarian_sum":   "aligned_preferences",
+    }.get(strategy_id, "aligned_preferences")
+
+
+# ---------------------------------------------------------------------------
+# Per-stop explanation (new — Argument-driven; legacy preserved below)
 # ---------------------------------------------------------------------------
 
 def explain_stop(
+    idx: int,
+    stop: RouteStop,
+    route: Route,
+    per_user_scores: dict[str, dict[str, Score]],
+    runner_up: Optional[RunnerUp],
+    rules: dict,
+    users: Optional[list[UserPreference]] = None,
+) -> str:
+    """Argument-driven per-stop explanation. Builds an Argument then
+    linearizes it. The OLD implementation is preserved as
+    `explain_stop_legacy` for side-by-side comparison.
+
+    Signature is unchanged so existing callers (decision_system.plan_crawl,
+    tests) don't break.
+    """
+    arg = build_stop_argument(idx, stop, route, per_user_scores,
+                              runner_up, rules, users=users)
+    return render_argument(arg)
+
+
+def explain_stop_legacy(
     idx: int,
     stop: RouteStop,
     route: Route,
@@ -181,6 +558,10 @@ def explain_stop(
       * never assert "fits the budget" without checking each user's cap
       * never hardcode group size in the dominant-user line
       * never quote a runner-up gap that's not in a comparable unit
+
+    Phase 2: superseded by build_stop_argument + render_argument. Kept
+    for side-by-side comparison + as a fallback while the new generator
+    is validated. A/B spot-checks live in tests/test_argument.py.
     """
     bar = stop.bar
     total_stops = len(route.stops)

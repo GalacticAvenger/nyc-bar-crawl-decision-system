@@ -1,7 +1,7 @@
 [
   {
     "name": "aligned_two_friends",
-    "time_ms": 5.87,
+    "time_ms": 6.32,
     "n_users": 2,
     "max_stops": 3,
     "n_stops": 3,
@@ -52,9 +52,9 @@
     ],
     "summary_words": 64,
     "stop_word_counts": [
-      52,
-      43,
-      48
+      89,
+      73,
+      75
     ],
     "ru_gaps": [
       0.02,
@@ -77,7 +77,7 @@
   },
   {
     "name": "budget_gap_three",
-    "time_ms": 3.83,
+    "time_ms": 3.94,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -128,9 +128,9 @@
     ],
     "summary_words": 64,
     "stop_word_counts": [
-      46,
-      24,
-      64
+      73,
+      43,
+      87
     ],
     "ru_gaps": [
       0.048,
@@ -154,7 +154,7 @@
   },
   {
     "name": "many_vetoes_three",
-    "time_ms": 22.69,
+    "time_ms": 22.82,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -206,9 +206,9 @@
     ],
     "summary_words": 70,
     "stop_word_counts": [
-      55,
-      52,
-      51
+      73,
+      77,
+      71
     ],
     "ru_gaps": [
       0.0,
@@ -232,7 +232,7 @@
   },
   {
     "name": "vibe_split_three",
-    "time_ms": 43.41,
+    "time_ms": 43.92,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -247,8 +247,8 @@
       "2025-05-02T23:09:02.143046"
     ],
     "neighborhoods_in_route": [
-      "East Village",
-      "West Village"
+      "West Village",
+      "East Village"
     ],
     "strategy": "copeland_pairwise",
     "rule_fired": "strategy_copeland",
@@ -283,9 +283,9 @@
     ],
     "summary_words": 64,
     "stop_word_counts": [
-      54,
-      58,
-      50
+      93,
+      88,
+      87
     ],
     "ru_gaps": [
       3.0,
@@ -309,7 +309,7 @@
   },
   {
     "name": "intense_user_three",
-    "time_ms": 22.49,
+    "time_ms": 22.23,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -324,8 +324,8 @@
       "2025-05-02T22:12:46.373452"
     ],
     "neighborhoods_in_route": [
-      "NoMad",
       "Midtown",
+      "NoMad",
       "East Village"
     ],
     "strategy": "borda_count",
@@ -361,9 +361,9 @@
     ],
     "summary_words": 77,
     "stop_word_counts": [
-      49,
-      42,
-      51
+      79,
+      75,
+      83
     ],
     "ru_gaps": [
       32.0,
@@ -387,7 +387,7 @@
   },
   {
     "name": "solo",
-    "time_ms": 11.36,
+    "time_ms": 11.61,
     "n_users": 1,
     "max_stops": 2,
     "n_stops": 2,
@@ -435,8 +435,8 @@
     ],
     "summary_words": 59,
     "stop_word_counts": [
-      47,
-      44
+      76,
+      85
     ],
     "ru_gaps": [
       -0.007,
@@ -457,7 +457,7 @@
   },
   {
     "name": "eight_friends",
-    "time_ms": 45.51,
+    "time_ms": 45.82,
     "n_users": 8,
     "max_stops": 4,
     "n_stops": 4,
@@ -509,10 +509,10 @@
     ],
     "summary_words": 71,
     "stop_word_counts": [
-      69,
-      38,
-      50,
-      59
+      89,
+      73,
+      89,
+      87
     ],
     "ru_gaps": [
       -0.035,
@@ -542,7 +542,7 @@
   },
   {
     "name": "infeasible_window",
-    "time_ms": 1.24,
+    "time_ms": 1.26,
     "n_users": 1,
     "max_stops": 3,
     "n_stops": 0,
@@ -597,7 +597,7 @@
   },
   {
     "name": "morning_window",
-    "time_ms": 1.1,
+    "time_ms": 1.05,
     "n_users": 1,
     "max_stops": 2,
     "n_stops": 0,
@@ -676,7 +676,7 @@
   },
   {
     "name": "all_cheap",
-    "time_ms": 8.82,
+    "time_ms": 9.12,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -727,9 +727,9 @@
     ],
     "summary_words": 64,
     "stop_word_counts": [
-      33,
-      25,
-      51
+      45,
+      43,
+      92
     ],
     "ru_gaps": [
       0.355,
@@ -753,7 +753,7 @@
   },
   {
     "name": "all_splurge",
-    "time_ms": 24.98,
+    "time_ms": 25.0,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -802,9 +802,9 @@
     ],
     "summary_words": 69,
     "stop_word_counts": [
-      52,
-      39,
-      49
+      82,
+      75,
+      81
     ],
     "ru_gaps": [
       0.037,
@@ -828,7 +828,7 @@
   },
   {
     "name": "step_free_required",
-    "time_ms": 0.11,
+    "time_ms": 0.12,
     "n_users": 1,
     "max_stops": 2,
     "n_stops": 0,
@@ -868,7 +868,7 @@
   },
   {
     "name": "empty_user_prefs",
-    "time_ms": 10.68,
+    "time_ms": 10.85,
     "n_users": 1,
     "max_stops": 2,
     "n_stops": 2,
@@ -917,8 +917,8 @@
     ],
     "summary_words": 57,
     "stop_word_counts": [
-      51,
-      44
+      90,
+      84
     ],
     "ru_gaps": [
       -0.008,
@@ -939,7 +939,7 @@
   },
   {
     "name": "max_one_stop",
-    "time_ms": 9.35,
+    "time_ms": 9.47,
     "n_users": 1,
     "max_stops": 1,
     "n_stops": 1,
@@ -985,7 +985,7 @@
     ],
     "summary_words": 55,
     "stop_word_counts": [
-      46
+      83
     ],
     "ru_gaps": [
       -0.083
@@ -1005,7 +1005,7 @@
   },
   {
     "name": "six_stops_long_window",
-    "time_ms": 160.96,
+    "time_ms": 159.28,
     "n_users": 2,
     "max_stops": 6,
     "n_stops": 6,
@@ -1061,12 +1061,12 @@
     ],
     "summary_words": 74,
     "stop_word_counts": [
-      45,
-      41,
-      65,
-      42,
-      44,
-      58
+      74,
+      70,
+      85,
+      85,
+      69,
+      87
     ],
     "ru_gaps": [
       0.023,
@@ -1092,7 +1092,7 @@
   },
   {
     "name": "arc_chill_two",
-    "time_ms": 32.85,
+    "time_ms": 32.58,
     "n_users": 2,
     "max_stops": 3,
     "n_stops": 3,
@@ -1107,8 +1107,8 @@
       "2025-05-02T22:37:57.744960"
     ],
     "neighborhoods_in_route": [
-      "East Village",
-      "Greenwich Village"
+      "Greenwich Village",
+      "East Village"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1143,9 +1143,9 @@
     ],
     "summary_words": 67,
     "stop_word_counts": [
-      44,
-      41,
-      48
+      77,
+      74,
+      78
     ],
     "ru_gaps": [
       6.0,
@@ -1168,7 +1168,7 @@
   },
   {
     "name": "arc_pregame_clubs_four",
-    "time_ms": 58.21,
+    "time_ms": 58.0,
     "n_users": 4,
     "max_stops": 3,
     "n_stops": 3,
@@ -1183,8 +1183,8 @@
       "2025-05-02T23:06:43.087755"
     ],
     "neighborhoods_in_route": [
-      "East Village",
-      "West Village"
+      "West Village",
+      "East Village"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1219,9 +1219,9 @@
     ],
     "summary_words": 68,
     "stop_word_counts": [
-      57,
-      47,
-      51
+      85,
+      81,
+      81
     ],
     "ru_gaps": [
       12.0,
@@ -1246,7 +1246,7 @@
   },
   {
     "name": "arc_rooftop_summer_three",
-    "time_ms": 46.47,
+    "time_ms": 46.36,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -1297,9 +1297,9 @@
     ],
     "summary_words": 72,
     "stop_word_counts": [
-      58,
-      43,
-      55
+      90,
+      78,
+      89
     ],
     "ru_gaps": [
       9.0,
@@ -1323,7 +1323,7 @@
   },
   {
     "name": "arc_games_night_three",
-    "time_ms": 32.88,
+    "time_ms": 32.83,
     "n_users": 3,
     "max_stops": 2,
     "n_stops": 2,
@@ -1371,8 +1371,8 @@
     ],
     "summary_words": 77,
     "stop_word_counts": [
-      65,
-      45
+      83,
+      82
     ],
     "ru_gaps": [
       6.0,
@@ -1395,7 +1395,7 @@
   },
   {
     "name": "arc_late_night_two",
-    "time_ms": 26.64,
+    "time_ms": 26.71,
     "n_users": 2,
     "max_stops": 2,
     "n_stops": 2,
@@ -1443,8 +1443,8 @@
     ],
     "summary_words": 60,
     "stop_word_counts": [
-      62,
-      44
+      91,
+      86
     ],
     "ru_gaps": [
       4.0,
@@ -1466,7 +1466,7 @@
   },
   {
     "name": "arc_date_night_two",
-    "time_ms": 27.23,
+    "time_ms": 27.38,
     "n_users": 2,
     "max_stops": 2,
     "n_stops": 2,
@@ -1515,8 +1515,8 @@
     ],
     "summary_words": 68,
     "stop_word_counts": [
-      53,
-      44
+      81,
+      80
     ],
     "ru_gaps": [
       4.0,
@@ -1538,7 +1538,7 @@
   },
   {
     "name": "arc_birthday_six",
-    "time_ms": 80.08,
+    "time_ms": 81.57,
     "n_users": 6,
     "max_stops": 3,
     "n_stops": 3,
@@ -1553,8 +1553,8 @@
       "2025-05-02T23:06:43.087755"
     ],
     "neighborhoods_in_route": [
-      "East Village",
-      "West Village"
+      "West Village",
+      "East Village"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1589,9 +1589,9 @@
     ],
     "summary_words": 70,
     "stop_word_counts": [
-      56,
-      46,
-      50
+      90,
+      86,
+      86
     ],
     "ru_gaps": [
       18.0,
@@ -1618,7 +1618,7 @@
   },
   {
     "name": "arc_dive_tour_three",
-    "time_ms": 32.39,
+    "time_ms": 33.77,
     "n_users": 3,
     "max_stops": 4,
     "n_stops": 4,
@@ -1635,9 +1635,9 @@
       "2025-05-03T00:27:57.012903"
     ],
     "neighborhoods_in_route": [
+      "Hell's Kitchen",
       "Lower East Side",
-      "East Village",
-      "Hell's Kitchen"
+      "East Village"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1672,10 +1672,10 @@
     ],
     "summary_words": 77,
     "stop_word_counts": [
-      48,
-      61,
-      56,
-      51
+      76,
+      82,
+      74,
+      76
     ],
     "ru_gaps": [
       12.0,
@@ -1700,7 +1700,7 @@
   },
   {
     "name": "arc_post_dinner_two",
-    "time_ms": 27.41,
+    "time_ms": 27.45,
     "n_users": 2,
     "max_stops": 2,
     "n_stops": 2,
@@ -1749,8 +1749,8 @@
     ],
     "summary_words": 68,
     "stop_word_counts": [
-      53,
-      44
+      81,
+      80
     ],
     "ru_gaps": [
       4.0,
@@ -1772,7 +1772,7 @@
   },
   {
     "name": "random_seed_0",
-    "time_ms": 28.85,
+    "time_ms": 28.91,
     "n_users": 4,
     "max_stops": 1,
     "n_stops": 1,
@@ -1818,7 +1818,7 @@
     ],
     "summary_words": 57,
     "stop_word_counts": [
-      49
+      72
     ],
     "ru_gaps": [
       2.0
@@ -1841,7 +1841,7 @@
   },
   {
     "name": "random_seed_1",
-    "time_ms": 36.36,
+    "time_ms": 36.02,
     "n_users": 2,
     "max_stops": 1,
     "n_stops": 1,
@@ -1887,7 +1887,7 @@
     ],
     "summary_words": 58,
     "stop_word_counts": [
-      56
+      83
     ],
     "ru_gaps": [
       4.0
@@ -1908,7 +1908,7 @@
   },
   {
     "name": "random_seed_2",
-    "time_ms": 13.24,
+    "time_ms": 13.12,
     "n_users": 1,
     "max_stops": 5,
     "n_stops": 2,
@@ -1956,8 +1956,8 @@
     ],
     "summary_words": 58,
     "stop_word_counts": [
-      51,
-      44
+      90,
+      85
     ],
     "ru_gaps": [
       -0.083,
@@ -1978,7 +1978,7 @@
   },
   {
     "name": "random_seed_3",
-    "time_ms": 14.71,
+    "time_ms": 14.89,
     "n_users": 2,
     "max_stops": 4,
     "n_stops": 4,
@@ -2030,10 +2030,10 @@
     ],
     "summary_words": 67,
     "stop_word_counts": [
-      45,
-      37,
-      60,
-      53
+      67,
+      74,
+      84,
+      84
     ],
     "ru_gaps": [
       -0.082,
@@ -2057,7 +2057,7 @@
   },
   {
     "name": "random_seed_4",
-    "time_ms": 10.64,
+    "time_ms": 11.16,
     "n_users": 2,
     "max_stops": 3,
     "n_stops": 3,
@@ -2108,9 +2108,9 @@
     ],
     "summary_words": 64,
     "stop_word_counts": [
-      48,
-      48,
-      57
+      70,
+      72,
+      78
     ],
     "ru_gaps": [
       -0.019,
@@ -2133,7 +2133,7 @@
   },
   {
     "name": "random_seed_5",
-    "time_ms": 34.31,
+    "time_ms": 35.28,
     "n_users": 5,
     "max_stops": 2,
     "n_stops": 2,
@@ -2146,8 +2146,8 @@
       "2025-05-02T21:40:10.434297"
     ],
     "neighborhoods_in_route": [
-      "East Village",
-      "Greenwich Village"
+      "Greenwich Village",
+      "East Village"
     ],
     "strategy": "copeland_pairwise",
     "rule_fired": "strategy_copeland",
@@ -2182,8 +2182,8 @@
     ],
     "summary_words": 64,
     "stop_word_counts": [
-      48,
-      40
+      70,
+      73
     ],
     "ru_gaps": [
       2.0,
@@ -2208,7 +2208,7 @@
   },
   {
     "name": "random_seed_6",
-    "time_ms": 28.65,
+    "time_ms": 29.13,
     "n_users": 5,
     "max_stops": 5,
     "n_stops": 1,
@@ -2255,7 +2255,7 @@
     ],
     "summary_words": 63,
     "stop_word_counts": [
-      61
+      89
     ],
     "ru_gaps": [
       8.0
@@ -2279,7 +2279,7 @@
   },
   {
     "name": "random_seed_7",
-    "time_ms": 11.82,
+    "time_ms": 12.03,
     "n_users": 3,
     "max_stops": 5,
     "n_stops": 2,
@@ -2292,8 +2292,8 @@
       "2025-05-02T23:13:58.964368"
     ],
     "neighborhoods_in_route": [
-      "East Village",
-      "West Village"
+      "West Village",
+      "East Village"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -2328,8 +2328,8 @@
     ],
     "summary_words": 62,
     "stop_word_counts": [
-      54,
-      43
+      90,
+      88
     ],
     "ru_gaps": [
       6.0,
@@ -2352,7 +2352,7 @@
   },
   {
     "name": "random_seed_8",
-    "time_ms": 15.12,
+    "time_ms": 15.08,
     "n_users": 2,
     "max_stops": 4,
     "n_stops": 4,
@@ -2405,10 +2405,10 @@
     ],
     "summary_words": 68,
     "stop_word_counts": [
-      64,
-      57,
-      45,
-      41
+      79,
+      83,
+      71,
+      79
     ],
     "ru_gaps": [
       -0.12,
@@ -2432,7 +2432,7 @@
   },
   {
     "name": "random_seed_9",
-    "time_ms": 25.26,
+    "time_ms": 25.68,
     "n_users": 4,
     "max_stops": 2,
     "n_stops": 2,
@@ -2480,8 +2480,8 @@
     ],
     "summary_words": 67,
     "stop_word_counts": [
-      57,
-      42
+      84,
+      76
     ],
     "ru_gaps": [
       13.0,
@@ -2505,7 +2505,7 @@
   },
   {
     "name": "random_seed_10",
-    "time_ms": 36.11,
+    "time_ms": 37.3,
     "n_users": 5,
     "max_stops": 1,
     "n_stops": 1,
@@ -2551,7 +2551,7 @@
     ],
     "summary_words": 62,
     "stop_word_counts": [
-      63
+      88
     ],
     "ru_gaps": [
       -0.034
@@ -2575,7 +2575,7 @@
   },
   {
     "name": "random_seed_11",
-    "time_ms": 12.74,
+    "time_ms": 13.29,
     "n_users": 4,
     "max_stops": 1,
     "n_stops": 1,
@@ -2621,7 +2621,7 @@
     ],
     "summary_words": 59,
     "stop_word_counts": [
-      46
+      68
     ],
     "ru_gaps": [
       -0.009
@@ -2644,7 +2644,7 @@
   },
   {
     "name": "random_seed_12",
-    "time_ms": 38.57,
+    "time_ms": 38.8,
     "n_users": 4,
     "max_stops": 5,
     "n_stops": 4,
@@ -2697,10 +2697,10 @@
     ],
     "summary_words": 73,
     "stop_word_counts": [
-      51,
-      43,
-      44,
-      37
+      77,
+      76,
+      70,
+      70
     ],
     "ru_gaps": [
       -0.018,
@@ -2726,7 +2726,7 @@
   },
   {
     "name": "random_seed_13",
-    "time_ms": 25.49,
+    "time_ms": 25.79,
     "n_users": 3,
     "max_stops": 4,
     "n_stops": 4,
@@ -2779,10 +2779,10 @@
     ],
     "summary_words": 72,
     "stop_word_counts": [
-      51,
-      49,
-      45,
-      54
+      88,
+      76,
+      76,
+      81
     ],
     "ru_gaps": [
       -0.075,
@@ -2807,7 +2807,7 @@
   },
   {
     "name": "random_seed_14",
-    "time_ms": 18.96,
+    "time_ms": 19.11,
     "n_users": 1,
     "max_stops": 4,
     "n_stops": 4,
@@ -2859,10 +2859,10 @@
     ],
     "summary_words": 66,
     "stop_word_counts": [
-      51,
-      48,
-      44,
-      41
+      85,
+      81,
+      81,
+      69
     ],
     "ru_gaps": [
       -0.098,
@@ -2885,7 +2885,7 @@
   },
   {
     "name": "random_seed_15",
-    "time_ms": 27.97,
+    "time_ms": 27.85,
     "n_users": 2,
     "max_stops": 5,
     "n_stops": 4,
@@ -2937,10 +2937,10 @@
     ],
     "summary_words": 71,
     "stop_word_counts": [
-      56,
-      50,
-      56,
-      39
+      75,
+      73,
+      77,
+      72
     ],
     "ru_gaps": [
       9.0,
@@ -2964,7 +2964,7 @@
   },
   {
     "name": "random_seed_16",
-    "time_ms": 19.0,
+    "time_ms": 18.79,
     "n_users": 3,
     "max_stops": 1,
     "n_stops": 1,
@@ -3010,7 +3010,7 @@
     ],
     "summary_words": 56,
     "stop_word_counts": [
-      65
+      87
     ],
     "ru_gaps": [
       -0.123
@@ -3032,7 +3032,7 @@
   },
   {
     "name": "random_seed_17",
-    "time_ms": 28.28,
+    "time_ms": 28.46,
     "n_users": 5,
     "max_stops": 5,
     "n_stops": 4,
@@ -3085,10 +3085,10 @@
     ],
     "summary_words": 75,
     "stop_word_counts": [
-      54,
-      58,
-      57,
-      51
+      91,
+      86,
+      78,
+      79
     ],
     "ru_gaps": [
       -0.041,
@@ -3115,7 +3115,7 @@
   },
   {
     "name": "random_seed_18",
-    "time_ms": 32.92,
+    "time_ms": 33.67,
     "n_users": 2,
     "max_stops": 5,
     "n_stops": 5,
@@ -3169,11 +3169,11 @@
     ],
     "summary_words": 73,
     "stop_word_counts": [
-      66,
-      57,
-      63,
-      44,
-      46
+      80,
+      79,
+      86,
+      90,
+      72
     ],
     "ru_gaps": [
       -0.008,
@@ -3198,7 +3198,7 @@
   },
   {
     "name": "random_seed_19",
-    "time_ms": 42.61,
+    "time_ms": 43.45,
     "n_users": 6,
     "max_stops": 5,
     "n_stops": 5,
@@ -3252,11 +3252,11 @@
     ],
     "summary_words": 76,
     "stop_word_counts": [
-      51,
-      55,
-      49,
-      53,
-      46
+      82,
+      83,
+      66,
+      75,
+      70
     ],
     "ru_gaps": [
       0.001,

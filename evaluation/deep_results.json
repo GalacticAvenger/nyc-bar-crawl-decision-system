@@ -124,7 +124,7 @@
     "by_users": [
       {
         "n_users": 1,
-        "median_ms": 4.5
+        "median_ms": 4.6
       },
       {
         "n_users": 2,
@@ -132,11 +132,11 @@
       },
       {
         "n_users": 4,
-        "median_ms": 6.3
+        "median_ms": 6.2
       },
       {
         "n_users": 6,
-        "median_ms": 9.3
+        "median_ms": 9.5
       },
       {
         "n_users": 8,
@@ -144,17 +144,17 @@
       },
       {
         "n_users": 10,
-        "median_ms": 7.4
+        "median_ms": 7.5
       }
     ],
     "by_max_stops": [
       {
         "max_stops": 1,
-        "median_ms": 13.2
+        "median_ms": 13.5
       },
       {
         "max_stops": 2,
-        "median_ms": 15.0
+        "median_ms": 15.2
       },
       {
         "max_stops": 3,
@@ -162,23 +162,23 @@
       },
       {
         "max_stops": 4,
-        "median_ms": 20.9
+        "median_ms": 21.4
       },
       {
         "max_stops": 5,
-        "median_ms": 39.3
+        "median_ms": 39.5
       },
       {
         "max_stops": 6,
-        "median_ms": 163.4
+        "median_ms": 164.2
       }
     ]
   },
   "explanation": {
     "summary_words_median": 65.5,
-    "stop_words_median": 51,
-    "stop_words_max": 67,
-    "stop_over_80": 0,
+    "stop_words_median": 79,
+    "stop_words_max": 95,
+    "stop_over_80": 35,
     "summary_over_200": 0,
     "duplicate_stop_openings_routes": 0
   },

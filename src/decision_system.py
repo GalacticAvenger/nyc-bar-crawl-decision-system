@@ -413,7 +413,8 @@ def plan_crawl(
 
     # 8. Explanations
     route_text = explain_route(route, group, rules)
-    strat_text = explain_strategy(strat_name, rule_id, profile, group.users, rules)
+    strat_text = explain_strategy(strat_name, rule_id, profile, group.users,
+                                   rules, decision=decision)
     stop_exps = []
     for idx, stop in enumerate(route.stops):
         ru = runner_ups.get(idx)
