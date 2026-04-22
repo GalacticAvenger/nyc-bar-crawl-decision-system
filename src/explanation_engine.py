@@ -25,8 +25,8 @@ from typing import Optional
 
 from .argument import Argument, Premise, render_argument
 from .models import (
-    Bar, Explanation, GroupInput, Route, RouteStop, RunnerUp, Score,
-    StrategyDecision, UserPreference,
+    AdaptedCase, Adaptation, Bar, Explanation, GroupInput, Route, RouteStop,
+    RunnerUp, Score, StrategyDecision, UserPreference,
 )
 from .qualitative import phrase_for, quality_bucket
 
@@ -504,6 +504,77 @@ def _metric_for_rule(rule_id: str) -> str:
         "strategy_borda":        "max_preference_intensity",
         "strategy_utilitarian":  "aligned_preferences",
     }.get(rule_id, "aligned_preferences")
+
+
+def build_cbr_argument(adapted: AdaptedCase,
+                       rules: dict) -> Argument:
+    """Argument for the CBR retrieve+adapt step.
+
+    Conclusion: "This resembles the {case} archetype, adapted for your group."
+    Supporting: one premise per Adaptation (the audit log from adapt_case)
+                + a decisive premise that cites the strongest similarity
+                feature from the breakdown.
+    Opposing:   a single soft premise when the similarity is below the
+                weak-match threshold — the honesty move that flags a
+                retrieval the caller shouldn't over-trust.
+
+    Numbers are read from `rules.cbr_explanation` (with safe defaults) so
+    the weak-match threshold is tunable without touching code.
+    """
+    # Decisive: the strongest similarity feature in the breakdown.
+    if adapted.similarity_breakdown:
+        best_feature = max(adapted.similarity_breakdown,
+                           key=lambda k: adapted.similarity_breakdown[k])
+        best_value = adapted.similarity_breakdown[best_feature]
+        decisive = Premise(
+            subject="the group",
+            criterion="cbr_similarity",
+            direction="supports",
+            magnitude=min(1.0, max(0.0, best_value)),
+            evidence=(f"{best_feature} (score {best_value:.2f}, "
+                      f"overall similarity {adapted.similarity:.2f})"),
+        )
+    else:
+        decisive = Premise(
+            subject="the group",
+            criterion="cbr_similarity",
+            direction="supports",
+            magnitude=adapted.similarity,
+            evidence=f"overall similarity {adapted.similarity:.2f}",
+        )
+
+    supporting: list[Premise] = [decisive]
+    for ad in adapted.adaptations[:4]:  # cap so the prose stays compact
+        supporting.append(Premise(
+            subject="the planner",
+            criterion="cbr_adaptation",
+            direction="supports",
+            magnitude=0.3,
+            evidence=ad.reason,
+        ))
+
+    weak_threshold = (rules.get("cbr_explanation", {})
+                           .get("weak_match_threshold", 0.55))
+    opposing: list[Premise] = []
+    if adapted.similarity < weak_threshold:
+        opposing.append(Premise(
+            subject="the archetype",
+            criterion="cbr_weak_match",
+            direction="opposes",
+            magnitude=0.3,
+            evidence=(f"overall similarity {adapted.similarity:.2f} "
+                      f"below {weak_threshold:.2f} — take the framing loosely"),
+        ))
+
+    return Argument(
+        conclusion=(f"This plan resembles our **{adapted.source_case_name}** "
+                    f"archetype, adapted for your group"),
+        supporting=supporting,
+        opposing=opposing,
+        decisive_premise=decisive,
+        sacrifice=None,
+        runner_up=None,
+    )
 
 
 def _metric_for_strategy(strategy_id: str) -> str:

@@ -338,3 +338,10 @@ routing_config:
   min_stop_duration_minutes: 30
   max_stop_duration_minutes: 90
   default_stop_duration_minutes: 45
+
+  # Phase 3: when the planner is given an AdaptedCase as a seed sequence,
+  # each candidate bar at stage i receives an additive utility bonus equal
+  # to cbr_seed_bonus * vibe_overlap(bar, seed_sequence[i].vibe_profile).
+  # The bonus nudges the router toward archetype-consistent picks without
+  # hard-constraining; a strongly-scoring off-seed bar can still win.
+  cbr_seed_bonus: 0.15

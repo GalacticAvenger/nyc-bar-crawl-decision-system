@@ -169,6 +169,48 @@ class Case:
 
 
 # ---------------------------------------------------------------------------
+# CBR adaptation — the Revise step
+# ---------------------------------------------------------------------------
+
+@dataclass
+class Adaptation:
+    """A single, named modification applied to a retrieved case.
+
+    `field_changed` describes the slot that was touched (e.g.
+    "solution_sequence.length", "solution_sequence[1].vibe_profile",
+    "context.start_neighborhoods"). `reason` is the English justification
+    the explanation engine will quote back.
+    """
+    field_changed: str
+    from_value: Any
+    to_value: Any
+    reason: str
+
+
+@dataclass
+class AdaptedCase:
+    """A retrieved case, transformed to fit the current group's constraints.
+
+    `adapted_sequence` has the same shape as `Case.solution_sequence` so
+    downstream consumers can treat it interchangeably. `adaptations`
+    carries the audit log — what changed and why — so the explanation
+    engine can narrate the adaptations instead of pretending the case
+    came out of the library already fitted.
+
+    `unadapted_stages` records indices of stages that couldn't be adapted
+    against the current bar dataset (no feasible candidates); the router
+    treats those stages as soft priors rather than hard waypoints.
+    """
+    source_case_id: str
+    source_case_name: str
+    adapted_sequence: list[dict[str, Any]]
+    adaptations: list[Adaptation] = field(default_factory=list)
+    similarity: float = 0.0
+    similarity_breakdown: dict[str, float] = field(default_factory=dict)
+    unadapted_stages: list[int] = field(default_factory=list)
+
+
+# ---------------------------------------------------------------------------
 # Scoring
 # ---------------------------------------------------------------------------
 

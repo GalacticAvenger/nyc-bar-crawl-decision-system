@@ -21,16 +21,17 @@ import copy
 from datetime import datetime, timedelta
 from typing import Optional
 
-from .case_based import retrieve
+from .case_based import adapt_case, retrieve
 from .data_loader import load_all
+from .argument import render_argument
 from .explanation_engine import (
-    explain_counterfactual, explain_exclusion, explain_route, explain_stop,
-    explain_strategy, per_user_served_report,
+    build_cbr_argument, explain_counterfactual, explain_exclusion,
+    explain_route, explain_stop, explain_strategy, per_user_served_report,
 )
 from .group_aggregation import aggregate, disagreement_profile, select_strategy
 from .models import (
-    Bar, Case, Explanation, GroupInput, GroupScore, PlanResult, Route, RouteStop, Score,
-    StrategyDecision, UserPreference,
+    AdaptedCase, Bar, Case, Explanation, GroupInput, GroupScore, PlanResult,
+    Route, RouteStop, Score, StrategyDecision, UserPreference,
 )
 from .option_generation import (
     all_structural_counterfactuals, find_runner_ups, strategy_counterfactuals,
@@ -344,16 +345,24 @@ def plan_crawl(
         group_scores_by_stage = [group_scores]
         routable = [b for b in survivors if b.id in group_scores]
 
-    # 5. CBR retrieval (advisory; used for explanation narrative)
+    # 5. CBR retrieve → adapt (Phase 3: close the R-loop)
     case_matches = retrieve(group, cases, top_k=3) if cases else []
     traces["case_matches"] = [(c.id, round(sim, 3)) for c, sim, _ in case_matches]
+    adapted: Optional[AdaptedCase] = None
+    if case_matches:
+        top_case, top_sim, breakdown = case_matches[0]
+        adapted = adapt_case(top_case, group, bars, rules,
+                             similarity_value=top_sim,
+                             similarity_breakdown=breakdown)
+        traces["adapted_case"] = adapted
 
-    # 6. Routing
+    # 6. Routing (seeded by the adapted case when available)
     avg_budget_weight = _avg_budget_weight(group, rules)
     route = best_route(
         routable, group_scores_by_stage, group, rules,
         strategy_used=strat_name, strategy_rationale=rationale,
         user_budget_weight=avg_budget_weight,
+        seed_sequence=adapted,
     )
     traces["search_log_length"] = len(route.search_log)
 
@@ -431,7 +440,22 @@ def plan_crawl(
             summary="Counterfactuals",
             children=[Explanation(summary=t) for t in cf_texts],
         ))
-    if case_matches:
+    if adapted is not None:
+        # Phase 3: render the CBR step as a structured Argument so
+        # adaptations are cited, not hidden. Keep the archetype's
+        # success_narrative as a trailing second sentence — it's the
+        # one-liner that gives the archetype colour.
+        cbr_arg_text = render_argument(build_cbr_argument(adapted, rules))
+        top_case = next(c for c, _s, _b in case_matches
+                        if c.id == adapted.source_case_id)
+        if top_case.success_narrative:
+            cbr_arg_text = f"{cbr_arg_text} ({top_case.success_narrative})"
+        children.append(Explanation(summary=cbr_arg_text,
+                                     evidence={"kind": "case_match"}))
+    elif case_matches:
+        # Fallback: retrieval worked but no adaptation (e.g. cases=None
+        # supplied to a downstream caller). Preserve the legacy sentence
+        # so the children list stays non-empty.
         top_case, sim, _ = case_matches[0]
         case_text = (f"This plan resembles our **{top_case.name}** archetype "
                      f"(similarity {sim:.2f}): {top_case.success_narrative}")

@@ -143,6 +143,13 @@ _CRITERION_RENDERERS = {
         f"preferences are aligned enough to just sum utilities ({ev})",
     "losing_alternative": lambda subj, ev, d:
         f"{subj} was not chosen ({ev})",
+    # CBR / adaptation criteria (Phase 3)
+    "cbr_similarity": lambda subj, ev, d:
+        f"strongest archetype match on {ev}",
+    "cbr_adaptation": lambda subj, ev, d:
+        f"we adapted the archetype: {ev}",
+    "cbr_weak_match": lambda subj, ev, d:
+        f"the nearest archetype is a weaker-than-usual match ({ev})",
     # plan-level framing criteria
     "overall_fit": lambda subj, ev, d:
         f"overall it's the best fit for {subj} ({ev})",

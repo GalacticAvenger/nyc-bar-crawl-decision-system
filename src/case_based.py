@@ -15,7 +15,9 @@ from __future__ import annotations
 import math
 from typing import Optional
 
-from .models import Bar, Case, GroupInput, UserPreference
+import copy
+
+from .models import AdaptedCase, Adaptation, Bar, Case, GroupInput, UserPreference
 
 
 # ---------------------------------------------------------------------------
@@ -217,6 +219,239 @@ def adapt(case: Case, bars: list[Bar], max_per_step: int = 5
         adapted.append([b for b, _ in scored[:max_per_step]])
     return adapted
 
+
+# ---------------------------------------------------------------------------
+# Adaptation — the Revise step of CBR's R-loop
+# ---------------------------------------------------------------------------
+
+def _stage_priority(stage: dict) -> float:
+    """Heuristic: a stage's "priority" is the L1 sum of its vibe_profile
+    weights. Stages with richer profiles are harder to drop; anaemic stages
+    get dropped first when the group's time window forces us to shorten."""
+    vp = stage.get("vibe_profile", {}) or {}
+    return sum(vp.values())
+
+
+def _neighborhood_centroid(neighborhood: str, bars: list[Bar]
+                           ) -> Optional[tuple[float, float]]:
+    """Return (lat, lon) mean over bars in this neighborhood, or None."""
+    pts = [(b.lat, b.lon) for b in bars if b.neighborhood == neighborhood]
+    if not pts:
+        return None
+    return (sum(p[0] for p in pts) / len(pts),
+            sum(p[1] for p in pts) / len(pts))
+
+
+def _nearest_allowed_neighborhood(
+    target_hoods: list[str],
+    allowed_hoods: tuple[str, ...],
+    bars: list[Bar],
+) -> Optional[str]:
+    """Given a case's preferred start_neighborhoods and the group's allowed
+    list, pick the allowed neighborhood closest to the case's centroid.
+    Uses centroids of bars in each neighborhood — no external geodata."""
+    import math
+
+    target_centroids = [
+        c for c in (_neighborhood_centroid(h, bars) for h in target_hoods)
+        if c is not None
+    ]
+    if not target_centroids:
+        return None
+    tgt = (sum(c[0] for c in target_centroids) / len(target_centroids),
+           sum(c[1] for c in target_centroids) / len(target_centroids))
+
+    best: Optional[tuple[float, str]] = None
+    for hood in allowed_hoods:
+        c = _neighborhood_centroid(hood, bars)
+        if c is None:
+            continue
+        dist = math.hypot(c[0] - tgt[0], c[1] - tgt[1])
+        if best is None or dist < best[0]:
+            best = (dist, hood)
+    return best[1] if best else None
+
+
+def _user_must_have_vibes(users: list[UserPreference], min_weight: float = 0.8
+                          ) -> list[str]:
+    """Vibes any user weights strongly. Used to detect 'must-have' vibes
+    the archetype should adapt toward. Threshold is a floor — anything
+    above it is treated as load-bearing for that user."""
+    out: set[str] = set()
+    for u in users:
+        for v, w in (u.vibe_weights or {}).items():
+            if w >= min_weight:
+                out.add(v)
+    return sorted(out)
+
+
+def _stage_best_fit_index(seq: list[dict], candidate_vibes: list[str]
+                          ) -> int:
+    """Return the index of the stage whose existing vibe_profile has the
+    most overlap with a strong correlate of the candidate vibes. Used to
+    decide where to inject a group must-have that's absent from the case."""
+    if not seq:
+        return 0
+    best_i, best_score = 0, -1.0
+    for i, stage in enumerate(seq):
+        vp = stage.get("vibe_profile", {}) or {}
+        # Score: how many distinct vibes the stage already carries. A
+        # richer stage tolerates a new addition better than a sparse one.
+        score = sum(vp.values())
+        if score > best_score:
+            best_score = score
+            best_i = i
+    return best_i
+
+
+def adapt_case(
+    case: Case,
+    group: GroupInput,
+    bars: list[Bar],
+    rules: dict,
+    similarity_value: float = 0.0,
+    similarity_breakdown: Optional[dict[str, float]] = None,
+) -> AdaptedCase:
+    """Adapt `case` to fit the current group.
+
+    Applies three adaptation kinds in order:
+
+      1. LENGTH     — pad or trim the solution_sequence so its length
+                      matches `group.max_stops`. Trimming drops the
+                      lowest-priority stage (smallest vibe_profile
+                      magnitude); padding repeats the final stage's
+                      vibe_profile with role="extended".
+      2. VIBE       — if any user has a strong must-have vibe (>= 0.8)
+                      that doesn't appear in ANY stage, inject it into
+                      the richest stage's vibe_profile.
+      3. CONSTRAINT — if the case targets a neighborhood the group
+                      excluded, re-target to the nearest allowed
+                      neighborhood (centroid distance), recorded on the
+                      first stage that referenced it.
+
+    Every change is logged as an Adaptation record so the explanation
+    engine can cite it.
+    """
+    adapted_sequence: list[dict] = copy.deepcopy(case.solution_sequence)
+    adaptations: list[Adaptation] = []
+
+    # 1. LENGTH --------------------------------------------------------------
+    target_len = max(1, group.max_stops)
+    current_len = len(adapted_sequence)
+    if current_len > target_len:
+        # Drop lowest-priority stages until length matches.
+        while len(adapted_sequence) > target_len:
+            drop_idx = min(
+                range(len(adapted_sequence)),
+                key=lambda i: _stage_priority(adapted_sequence[i]),
+            )
+            removed = adapted_sequence.pop(drop_idx)
+            adaptations.append(Adaptation(
+                field_changed="solution_sequence.length",
+                from_value=current_len,
+                to_value=len(adapted_sequence),
+                reason=(f"group's max_stops={target_len} is below "
+                        f"archetype's {current_len}; dropped stage "
+                        f"'{removed.get('role', '?')}' "
+                        f"(lowest-priority)"),
+            ))
+    elif current_len < target_len and adapted_sequence:
+        last = adapted_sequence[-1]
+        while len(adapted_sequence) < target_len:
+            extra = copy.deepcopy(last)
+            extra["role"] = "extended"
+            adapted_sequence.append(extra)
+            adaptations.append(Adaptation(
+                field_changed="solution_sequence.length",
+                from_value=current_len,
+                to_value=len(adapted_sequence),
+                reason=(f"group's max_stops={target_len} exceeds "
+                        f"archetype's {current_len}; extended by "
+                        f"repeating the final stage's vibe_profile"),
+            ))
+
+    # 2. VIBE ----------------------------------------------------------------
+    must_haves = _user_must_have_vibes(group.users)
+    archetype_vibes: set[str] = set()
+    for stage in adapted_sequence:
+        archetype_vibes.update((stage.get("vibe_profile") or {}).keys())
+    for vibe in must_haves:
+        if vibe in archetype_vibes:
+            continue
+        target_i = _stage_best_fit_index(adapted_sequence, [vibe])
+        stage = adapted_sequence[target_i]
+        vp = dict(stage.get("vibe_profile") or {})
+        old_vp = dict(vp)
+        vp[vibe] = max(vp.get(vibe, 0.0), 0.7)  # strong but not dominant
+        stage["vibe_profile"] = vp
+        adaptations.append(Adaptation(
+            field_changed=f"solution_sequence[{target_i}].vibe_profile",
+            from_value=old_vp,
+            to_value=vp,
+            reason=(f"group has a must-have vibe '{vibe}' that the "
+                    f"archetype didn't include; injected into the "
+                    f"'{stage.get('role', f'stage {target_i}')}' stage"),
+        ))
+
+    # 3. CONSTRAINT ----------------------------------------------------------
+    case_hoods = list(case.context.get("start_neighborhoods") or [])
+    if case_hoods and group.neighborhoods:
+        allowed = set(group.neighborhoods)
+        if not any(h in allowed for h in case_hoods):
+            target = _nearest_allowed_neighborhood(
+                case_hoods, group.neighborhoods, bars,
+            )
+            if target is not None:
+                adaptations.append(Adaptation(
+                    field_changed="context.start_neighborhoods",
+                    from_value=case_hoods,
+                    to_value=[target],
+                    reason=(f"archetype targets {case_hoods} but group "
+                            f"restricted to {list(allowed)}; "
+                            f"retargeted to nearest allowed "
+                            f"neighborhood '{target}'"),
+                ))
+
+    # 4. FEASIBILITY CHECK ---------------------------------------------------
+    # For each stage, see whether at least one bar in the dataset matches
+    # both the bar_type AND doesn't violate a hard dealbreaker already
+    # encoded on the group. Stages with no candidates get marked
+    # unadapted so the router treats them as a soft prior rather than a
+    # required stop.
+    unadapted_stages: list[int] = []
+    allowed_set = set(group.neighborhoods) if group.neighborhoods else None
+    # Use a permissive cap — the router still re-checks every hard rule.
+    for i, stage in enumerate(adapted_sequence):
+        wanted_types = stage.get("bar_type") or []
+        candidates = [b for b in bars
+                      if _matches_bar_type(b, wanted_types)
+                      and (allowed_set is None or b.neighborhood in allowed_set)]
+        if not candidates:
+            unadapted_stages.append(i)
+            adaptations.append(Adaptation(
+                field_changed=f"solution_sequence[{i}].feasibility",
+                from_value="feasible",
+                to_value="unadapted",
+                reason=(f"no bars in the current dataset match stage "
+                        f"{i}'s bar_type {wanted_types} under the "
+                        f"group's neighborhood constraint; router will "
+                        f"treat this stage as a soft prior only"),
+            ))
+
+    return AdaptedCase(
+        source_case_id=case.id,
+        source_case_name=case.name,
+        adapted_sequence=adapted_sequence,
+        adaptations=adaptations,
+        similarity=similarity_value,
+        similarity_breakdown=dict(similarity_breakdown or {}),
+        unadapted_stages=unadapted_stages,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Warm-start (legacy — kept for callers that want concrete bars)
+# ---------------------------------------------------------------------------
 
 def warm_start_from_case(
     case: Case,

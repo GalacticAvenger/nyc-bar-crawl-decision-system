@@ -1,19 +1,19 @@
 [
   {
     "name": "aligned_two_friends",
-    "time_ms": 6.32,
+    "time_ms": 7.3,
     "n_users": 2,
     "max_stops": 3,
     "n_stops": 3,
     "stop_names": [
-      "Lost in Paradise Rooftop",
       "Pineapple Club",
+      "Lost in Paradise Rooftop",
       "The Back Room"
     ],
     "stop_arrivals": [
-      "2025-05-02T20:08:50.273613",
-      "2025-05-02T20:57:02.349945",
-      "2025-05-02T21:44:45.834602"
+      "2025-05-02T20:05:39.594348",
+      "2025-05-02T20:53:51.670680",
+      "2025-05-02T21:43:16.264680"
     ],
     "neighborhoods_in_route": [
       "Lower East Side"
@@ -27,8 +27,8 @@
       "max_preference_intensity": 0.133,
       "group_size": 2
     },
-    "total_utility": 3.862,
-    "walking_miles": 0.296,
+    "total_utility": 4.312,
+    "walking_miles": 0.381,
     "windows_captured": 0,
     "excluded_count": 105,
     "exclusion_breakdown": {
@@ -52,13 +52,13 @@
     ],
     "summary_words": 64,
     "stop_word_counts": [
-      89,
-      73,
+      75,
+      87,
       75
     ],
     "ru_gaps": [
-      0.02,
       -0.023,
+      0.02,
       -0.021
     ],
     "cf_count": 2,
@@ -77,19 +77,19 @@
   },
   {
     "name": "budget_gap_three",
-    "time_ms": 3.94,
+    "time_ms": 4.78,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
     "stop_names": [
+      "Blue & Gold Tavern",
       "McSorley\u2019s Old Ale House",
-      "Planet Rose",
       "DROM"
     ],
     "stop_arrivals": [
-      "2025-05-02T19:02:33.962605",
-      "2025-05-02T19:53:43.947536",
-      "2025-05-02T20:41:42.883670"
+      "2025-05-02T19:01:14.513109",
+      "2025-05-02T19:49:37.963112",
+      "2025-05-02T20:41:02.631259"
     ],
     "neighborhoods_in_route": [
       "East Village"
@@ -103,8 +103,8 @@
       "max_preference_intensity": 0.1,
       "group_size": 3
     },
-    "total_utility": 1.41,
-    "walking_miles": 0.457,
+    "total_utility": 1.5,
+    "walking_miles": 0.49,
     "windows_captured": 1,
     "excluded_count": 128,
     "exclusion_breakdown": {
@@ -126,26 +126,26 @@
         0.49
       ]
     ],
-    "summary_words": 64,
+    "summary_words": 66,
     "stop_word_counts": [
-      73,
-      43,
-      87
+      74,
+      77,
+      86
     ],
     "ru_gaps": [
-      0.048,
-      0.028,
-      -0.067
+      -0.049,
+      0.02,
+      -0.095
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.464,
       0.448,
-      0.584
+      0.437,
+      0.585
     ],
-    "served_gini": 0.061,
-    "min_per_user_mean": 0.448,
-    "max_per_user_mean": 0.584,
+    "served_gini": 0.067,
+    "min_per_user_mean": 0.437,
+    "max_per_user_mean": 0.585,
     "top_criterion_per_stop": {
       "budget": 3
     },
@@ -154,23 +154,23 @@
   },
   {
     "name": "many_vetoes_three",
-    "time_ms": 22.82,
+    "time_ms": 24.7,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
     "stop_names": [
-      "Mister Paradise",
       "Vida Verde - Tequila Bar",
+      "Mister Paradise",
       "Bar Bonobo"
     ],
     "stop_arrivals": [
-      "2025-05-02T20:03:03.797788",
-      "2025-05-02T20:50:31.905800",
-      "2025-05-02T21:48:09.599480"
+      "2025-05-02T20:04:34.506240",
+      "2025-05-02T20:52:02.614252",
+      "2025-05-02T21:47:27.176037"
     ],
     "neighborhoods_in_route": [
-      "NoHo",
-      "East Village"
+      "East Village",
+      "NoHo"
     ],
     "strategy": "approval_veto",
     "rule_fired": "strategy_veto",
@@ -181,8 +181,8 @@
       "max_preference_intensity": 0.1,
       "group_size": 3
     },
-    "total_utility": 6.0,
-    "walking_miles": 0.755,
+    "total_utility": 6.362,
+    "walking_miles": 0.644,
     "windows_captured": 0,
     "excluded_count": 51,
     "exclusion_breakdown": {
@@ -206,8 +206,8 @@
     ],
     "summary_words": 70,
     "stop_word_counts": [
-      73,
-      77,
+      79,
+      71,
       71
     ],
     "ru_gaps": [
@@ -232,23 +232,23 @@
   },
   {
     "name": "vibe_split_three",
-    "time_ms": 43.92,
+    "time_ms": 45.27,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
     "stop_names": [
-      "Planet Rose",
       "Sing Sing Ave A.",
+      "Planet Rose",
       "Iggy's"
     ],
     "stop_arrivals": [
-      "2025-05-02T21:04:23.657830",
-      "2025-05-02T21:56:02.717682",
-      "2025-05-02T23:09:02.143046"
+      "2025-05-02T21:05:28.721365",
+      "2025-05-02T21:57:07.781217",
+      "2025-05-02T23:06:43.087755"
     ],
     "neighborhoods_in_route": [
-      "West Village",
-      "East Village"
+      "East Village",
+      "West Village"
     ],
     "strategy": "copeland_pairwise",
     "rule_fired": "strategy_copeland",
@@ -259,8 +259,8 @@
       "max_preference_intensity": 0.133,
       "group_size": 3
     },
-    "total_utility": 358.36,
-    "walking_miles": 1.732,
+    "total_utility": 358.66,
+    "walking_miles": 1.562,
     "windows_captured": 3,
     "excluded_count": 21,
     "exclusion_breakdown": {
@@ -283,8 +283,8 @@
     ],
     "summary_words": 64,
     "stop_word_counts": [
-      93,
-      88,
+      90,
+      91,
       87
     ],
     "ru_gaps": [
@@ -309,7 +309,7 @@
   },
   {
     "name": "intense_user_three",
-    "time_ms": 22.23,
+    "time_ms": 24.03,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -324,9 +324,9 @@
       "2025-05-02T22:12:46.373452"
     ],
     "neighborhoods_in_route": [
-      "Midtown",
+      "East Village",
       "NoMad",
-      "East Village"
+      "Midtown"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -387,17 +387,17 @@
   },
   {
     "name": "solo",
-    "time_ms": 11.61,
+    "time_ms": 12.76,
     "n_users": 1,
     "max_stops": 2,
     "n_stops": 2,
     "stop_names": [
-      "Vida Verde - Tequila Bar",
-      "Planet Rose"
+      "Mister Paradise",
+      "Vida Verde - Tequila Bar"
     ],
     "stop_arrivals": [
-      "2025-05-02T22:04:34.506240",
-      "2025-05-02T22:54:02.940355"
+      "2025-05-02T22:03:03.797788",
+      "2025-05-02T22:50:31.905800"
     ],
     "neighborhoods_in_route": [
       "East Village"
@@ -411,9 +411,9 @@
       "max_preference_intensity": 0.067,
       "group_size": 1
     },
-    "total_utility": 1.198,
-    "walking_miles": 0.224,
-    "windows_captured": 1,
+    "total_utility": 1.312,
+    "walking_miles": 0.123,
+    "windows_captured": 0,
     "excluded_count": 21,
     "exclusion_breakdown": {
       "budget_gross_mismatch": 21
@@ -435,20 +435,20 @@
     ],
     "summary_words": 59,
     "stop_word_counts": [
-      76,
-      85
+      65,
+      75
     ],
     "ru_gaps": [
-      -0.007,
-      -0.134
+      -0.05,
+      -0.007
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.539
+      0.581
     ],
     "served_gini": 0.0,
-    "min_per_user_mean": 0.539,
-    "max_per_user_mean": 0.539,
+    "min_per_user_mean": 0.581,
+    "max_per_user_mean": 0.581,
     "top_criterion_per_stop": {
       "budget": 2
     },
@@ -457,7 +457,7 @@
   },
   {
     "name": "eight_friends",
-    "time_ms": 45.82,
+    "time_ms": 49.14,
     "n_users": 8,
     "max_stops": 4,
     "n_stops": 4,
@@ -542,7 +542,7 @@
   },
   {
     "name": "infeasible_window",
-    "time_ms": 1.26,
+    "time_ms": 1.39,
     "n_users": 1,
     "max_stops": 3,
     "n_stops": 0,
@@ -597,7 +597,7 @@
   },
   {
     "name": "morning_window",
-    "time_ms": 1.05,
+    "time_ms": 1.11,
     "n_users": 1,
     "max_stops": 2,
     "n_stops": 0,
@@ -637,7 +637,7 @@
   },
   {
     "name": "nonexistent_neighborhood",
-    "time_ms": 0.1,
+    "time_ms": 0.11,
     "n_users": 1,
     "max_stops": 3,
     "n_stops": 0,
@@ -676,23 +676,23 @@
   },
   {
     "name": "all_cheap",
-    "time_ms": 9.12,
+    "time_ms": 9.9,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
     "stop_names": [
-      "Otto's Shrunken Head",
       "169 Bar",
+      "Otto's Shrunken Head",
       "Planet Rose"
     ],
     "stop_arrivals": [
-      "2025-05-02T20:03:33.063019",
-      "2025-05-02T20:59:42.149706",
-      "2025-05-02T21:57:14.948904"
+      "2025-05-02T20:12:09.334588",
+      "2025-05-02T21:08:18.421275",
+      "2025-05-02T21:54:52.421090"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "utilitarian_sum",
     "rule_fired": "strategy_utilitarian",
@@ -703,8 +703,8 @@
       "max_preference_intensity": 0.1,
       "group_size": 3
     },
-    "total_utility": 5.073,
-    "walking_miles": 1.185,
+    "total_utility": 5.181,
+    "walking_miles": 0.636,
     "windows_captured": 1,
     "excluded_count": 106,
     "exclusion_breakdown": {
@@ -732,8 +732,8 @@
       92
     ],
     "ru_gaps": [
-      0.355,
       0.321,
+      0.355,
       0.002
     ],
     "cf_count": 2,
@@ -753,23 +753,23 @@
   },
   {
     "name": "all_splurge",
-    "time_ms": 25.0,
+    "time_ms": 26.81,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
     "stop_names": [
-      "Vida Verde - Tequila Bar",
       "Please Don't Tell",
-      "Lost in Paradise Rooftop"
+      "Lost in Paradise Rooftop",
+      "The Back Room"
     ],
     "stop_arrivals": [
-      "2025-05-02T20:04:34.506240",
-      "2025-05-02T20:59:29.476889",
-      "2025-05-02T21:54:13.171817"
+      "2025-05-02T20:05:27.467629",
+      "2025-05-02T21:00:11.162557",
+      "2025-05-02T21:49:35.756557"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "utilitarian_sum",
     "rule_fired": "strategy_utilitarian",
@@ -780,8 +780,8 @@
       "max_preference_intensity": 0.05,
       "group_size": 3
     },
-    "total_utility": 5.39,
-    "walking_miles": 0.982,
+    "total_utility": 5.767,
+    "walking_miles": 0.707,
     "windows_captured": 0,
     "excluded_count": 0,
     "exclusion_breakdown": {},
@@ -800,26 +800,26 @@
         0.615
       ]
     ],
-    "summary_words": 69,
+    "summary_words": 67,
     "stop_word_counts": [
-      82,
-      75,
-      81
+      76,
+      85,
+      76
     ],
     "ru_gaps": [
-      0.037,
-      0.019,
-      0.058
+      -0.019,
+      0.021,
+      -0.037
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.599,
-      0.599,
-      0.599
+      0.595,
+      0.595,
+      0.595
     ],
     "served_gini": 0.0,
-    "min_per_user_mean": 0.599,
-    "max_per_user_mean": 0.599,
+    "min_per_user_mean": 0.595,
+    "max_per_user_mean": 0.595,
     "top_criterion_per_stop": {
       "budget": 3
     },
@@ -868,7 +868,7 @@
   },
   {
     "name": "empty_user_prefs",
-    "time_ms": 10.85,
+    "time_ms": 11.91,
     "n_users": 1,
     "max_stops": 2,
     "n_stops": 2,
@@ -881,8 +881,8 @@
       "2025-05-02T21:05:04.640488"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "utilitarian_sum",
     "rule_fired": "strategy_utilitarian",
@@ -939,15 +939,15 @@
   },
   {
     "name": "max_one_stop",
-    "time_ms": 9.47,
+    "time_ms": 10.13,
     "n_users": 1,
     "max_stops": 1,
     "n_stops": 1,
     "stop_names": [
-      "Sing Sing Ave A."
+      "Burp Castle"
     ],
     "stop_arrivals": [
-      "2025-05-02T23:05:28.721365"
+      "2025-05-02T23:05:34.112449"
     ],
     "neighborhoods_in_route": [
       "East Village"
@@ -961,9 +961,9 @@
       "max_preference_intensity": 0.0,
       "group_size": 1
     },
-    "total_utility": 0.617,
+    "total_utility": 0.643,
     "walking_miles": 0.0,
-    "windows_captured": 1,
+    "windows_captured": 0,
     "excluded_count": 21,
     "exclusion_breakdown": {
       "budget_gross_mismatch": 21
@@ -983,20 +983,20 @@
         0.405
       ]
     ],
-    "summary_words": 55,
+    "summary_words": 53,
     "stop_word_counts": [
-      83
+      70
     ],
     "ru_gaps": [
-      -0.083
+      -0.05
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.497
+      0.53
     ],
     "served_gini": 0.0,
-    "min_per_user_mean": 0.497,
-    "max_per_user_mean": 0.497,
+    "min_per_user_mean": 0.53,
+    "max_per_user_mean": 0.53,
     "top_criterion_per_stop": {
       "budget": 1
     },
@@ -1005,7 +1005,7 @@
   },
   {
     "name": "six_stops_long_window",
-    "time_ms": 159.28,
+    "time_ms": 190.29,
     "n_users": 2,
     "max_stops": 6,
     "n_stops": 6,
@@ -1092,7 +1092,7 @@
   },
   {
     "name": "arc_chill_two",
-    "time_ms": 32.58,
+    "time_ms": 34.93,
     "n_users": 2,
     "max_stops": 3,
     "n_stops": 3,
@@ -1107,8 +1107,8 @@
       "2025-05-02T22:37:57.744960"
     ],
     "neighborhoods_in_route": [
-      "Greenwich Village",
-      "East Village"
+      "East Village",
+      "Greenwich Village"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1168,7 +1168,7 @@
   },
   {
     "name": "arc_pregame_clubs_four",
-    "time_ms": 58.0,
+    "time_ms": 60.7,
     "n_users": 4,
     "max_stops": 3,
     "n_stops": 3,
@@ -1183,8 +1183,8 @@
       "2025-05-02T23:06:43.087755"
     ],
     "neighborhoods_in_route": [
-      "West Village",
-      "East Village"
+      "East Village",
+      "West Village"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1246,23 +1246,23 @@
   },
   {
     "name": "arc_rooftop_summer_three",
-    "time_ms": 46.36,
+    "time_ms": 49.01,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
     "stop_names": [
-      "Lost in Paradise Rooftop",
+      "Vida Verde - Tequila Bar",
       "Mister Paradise",
-      "Vida Verde - Tequila Bar"
+      "Lost in Paradise Rooftop"
     ],
     "stop_arrivals": [
-      "2025-05-02T19:13:49.667727",
-      "2025-05-02T20:14:49.015914",
-      "2025-05-02T21:02:17.123926"
+      "2025-05-02T19:04:34.506240",
+      "2025-05-02T19:52:02.614252",
+      "2025-05-02T20:53:01.962439"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1273,7 +1273,7 @@
       "max_preference_intensity": 1.075,
       "group_size": 3
     },
-    "total_utility": 1197.0,
+    "total_utility": 1197.255,
     "walking_miles": 0.923,
     "windows_captured": 0,
     "excluded_count": 9,
@@ -1302,9 +1302,9 @@
       89
     ],
     "ru_gaps": [
-      9.0,
+      3.0,
       6.0,
-      3.0
+      9.0
     ],
     "cf_count": 2,
     "per_user_means": [
@@ -1323,7 +1323,7 @@
   },
   {
     "name": "arc_games_night_three",
-    "time_ms": 32.83,
+    "time_ms": 33.94,
     "n_users": 3,
     "max_stops": 2,
     "n_stops": 2,
@@ -1395,17 +1395,17 @@
   },
   {
     "name": "arc_late_night_two",
-    "time_ms": 26.71,
+    "time_ms": 28.39,
     "n_users": 2,
     "max_stops": 2,
     "n_stops": 2,
     "stop_names": [
-      "House of Yes",
-      "SILO"
+      "SILO",
+      "House of Yes"
     ],
     "stop_arrivals": [
-      "2025-05-03T00:19:44.309654",
-      "2025-05-03T01:10:35.222749"
+      "2025-05-03T00:25:20.915410",
+      "2025-05-03T01:16:11.828505"
     ],
     "neighborhoods_in_route": [
       "Bushwick"
@@ -1419,7 +1419,7 @@
       "max_preference_intensity": 0.433,
       "group_size": 2
     },
-    "total_utility": 534.24,
+    "total_utility": 534.49,
     "walking_miles": 0.292,
     "windows_captured": 2,
     "excluded_count": 9,
@@ -1443,12 +1443,12 @@
     ],
     "summary_words": 60,
     "stop_word_counts": [
-      91,
-      86
+      87,
+      90
     ],
     "ru_gaps": [
-      4.0,
-      2.0
+      2.0,
+      4.0
     ],
     "cf_count": 2,
     "per_user_means": [
@@ -1466,21 +1466,21 @@
   },
   {
     "name": "arc_date_night_two",
-    "time_ms": 27.38,
+    "time_ms": 29.69,
     "n_users": 2,
     "max_stops": 2,
     "n_stops": 2,
     "stop_names": [
-      "Lost in Paradise Rooftop",
-      "Vida Verde - Tequila Bar"
+      "Vida Verde - Tequila Bar",
+      "Lost in Paradise Rooftop"
     ],
     "stop_arrivals": [
-      "2025-05-02T19:43:49.667727",
-      "2025-05-02T20:47:03.753779"
+      "2025-05-02T19:34:34.506240",
+      "2025-05-02T20:37:48.592292"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1491,7 +1491,7 @@
       "max_preference_intensity": 0.42,
       "group_size": 2
     },
-    "total_utility": 538.0,
+    "total_utility": 538.252,
     "walking_miles": 0.912,
     "windows_captured": 0,
     "excluded_count": 8,
@@ -1519,8 +1519,8 @@
       80
     ],
     "ru_gaps": [
-      4.0,
-      2.0
+      2.0,
+      4.0
     ],
     "cf_count": 2,
     "per_user_means": [
@@ -1538,23 +1538,23 @@
   },
   {
     "name": "arc_birthday_six",
-    "time_ms": 81.57,
+    "time_ms": 83.82,
     "n_users": 6,
     "max_stops": 3,
     "n_stops": 3,
     "stop_names": [
-      "Sing Sing Ave A.",
       "Planet Rose",
+      "Sing Sing Ave A.",
       "Iggy's"
     ],
     "stop_arrivals": [
-      "2025-05-02T21:05:28.721365",
-      "2025-05-02T21:57:07.781217",
-      "2025-05-02T23:06:43.087755"
+      "2025-05-02T21:04:23.657830",
+      "2025-05-02T21:56:02.717682",
+      "2025-05-02T23:09:02.143046"
     ],
     "neighborhoods_in_route": [
-      "West Village",
-      "East Village"
+      "East Village",
+      "West Village"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1565,8 +1565,8 @@
       "max_preference_intensity": 0.383,
       "group_size": 6
     },
-    "total_utility": 2394.36,
-    "walking_miles": 1.562,
+    "total_utility": 2394.718,
+    "walking_miles": 1.732,
     "windows_captured": 3,
     "excluded_count": 9,
     "exclusion_breakdown": {
@@ -1589,13 +1589,13 @@
     ],
     "summary_words": 70,
     "stop_word_counts": [
-      90,
-      86,
+      88,
+      88,
       86
     ],
     "ru_gaps": [
-      18.0,
       12.0,
+      18.0,
       6.0
     ],
     "cf_count": 2,
@@ -1618,7 +1618,7 @@
   },
   {
     "name": "arc_dive_tour_three",
-    "time_ms": 33.77,
+    "time_ms": 34.94,
     "n_users": 3,
     "max_stops": 4,
     "n_stops": 4,
@@ -1635,9 +1635,9 @@
       "2025-05-03T00:27:57.012903"
     ],
     "neighborhoods_in_route": [
+      "East Village",
       "Hell's Kitchen",
-      "Lower East Side",
-      "East Village"
+      "Lower East Side"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1700,21 +1700,21 @@
   },
   {
     "name": "arc_post_dinner_two",
-    "time_ms": 27.45,
+    "time_ms": 28.8,
     "n_users": 2,
     "max_stops": 2,
     "n_stops": 2,
     "stop_names": [
-      "Lost in Paradise Rooftop",
-      "Vida Verde - Tequila Bar"
+      "Vida Verde - Tequila Bar",
+      "Lost in Paradise Rooftop"
     ],
     "stop_arrivals": [
-      "2025-05-02T21:43:49.667727",
-      "2025-05-02T22:47:03.753779"
+      "2025-05-02T21:34:34.506240",
+      "2025-05-02T22:37:48.592292"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1725,7 +1725,7 @@
       "max_preference_intensity": 0.45,
       "group_size": 2
     },
-    "total_utility": 534.0,
+    "total_utility": 534.173,
     "walking_miles": 0.912,
     "windows_captured": 0,
     "excluded_count": 9,
@@ -1753,8 +1753,8 @@
       80
     ],
     "ru_gaps": [
-      4.0,
-      2.0
+      2.0,
+      4.0
     ],
     "cf_count": 2,
     "per_user_means": [
@@ -1772,7 +1772,7 @@
   },
   {
     "name": "random_seed_0",
-    "time_ms": 28.91,
+    "time_ms": 29.71,
     "n_users": 4,
     "max_stops": 1,
     "n_stops": 1,
@@ -1841,7 +1841,7 @@
   },
   {
     "name": "random_seed_1",
-    "time_ms": 36.02,
+    "time_ms": 37.22,
     "n_users": 2,
     "max_stops": 1,
     "n_stops": 1,
@@ -1908,17 +1908,17 @@
   },
   {
     "name": "random_seed_2",
-    "time_ms": 13.12,
+    "time_ms": 14.87,
     "n_users": 1,
     "max_stops": 5,
     "n_stops": 2,
     "stop_names": [
-      "Sing Sing Ave A.",
-      "Planet Rose"
+      "Mister Paradise",
+      "Vida Verde - Tequila Bar"
     ],
     "stop_arrivals": [
-      "2025-05-02T22:05:28.721365",
-      "2025-05-02T22:57:07.781217"
+      "2025-05-02T22:03:03.797788",
+      "2025-05-02T22:50:31.905800"
     ],
     "neighborhoods_in_route": [
       "East Village"
@@ -1932,9 +1932,9 @@
       "max_preference_intensity": 0.062,
       "group_size": 1
     },
-    "total_utility": 1.263,
-    "walking_miles": 0.333,
-    "windows_captured": 2,
+    "total_utility": 1.3,
+    "walking_miles": 0.123,
+    "windows_captured": 0,
     "excluded_count": 9,
     "exclusion_breakdown": {
       "budget_gross_mismatch": 9
@@ -1954,22 +1954,22 @@
         0.51
       ]
     ],
-    "summary_words": 58,
+    "summary_words": 59,
     "stop_word_counts": [
-      90,
-      85
+      66,
+      75
     ],
     "ru_gaps": [
-      -0.083,
-      -0.088
+      -0.037,
+      -0.007
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.511
+      0.575
     ],
     "served_gini": 0.0,
-    "min_per_user_mean": 0.511,
-    "max_per_user_mean": 0.511,
+    "min_per_user_mean": 0.575,
+    "max_per_user_mean": 0.575,
     "top_criterion_per_stop": {
       "budget": 2
     },
@@ -1978,24 +1978,25 @@
   },
   {
     "name": "random_seed_3",
-    "time_ms": 14.89,
+    "time_ms": 17.34,
     "n_users": 2,
     "max_stops": 4,
     "n_stops": 4,
     "stop_names": [
-      "Otto's Shrunken Head",
-      "Planet Rose",
+      "The Back Room",
       "DROM",
-      "Sing Sing Ave A."
+      "Sing Sing Ave A.",
+      "Arlene's Grocery"
     ],
     "stop_arrivals": [
-      "2025-05-02T19:03:33.063019",
-      "2025-05-02T19:50:07.062834",
-      "2025-05-02T20:38:05.998968",
-      "2025-05-02T21:32:23.418218"
+      "2025-05-02T19:10:36.467569",
+      "2025-05-02T20:09:43.032109",
+      "2025-05-02T21:04:00.451359",
+      "2025-05-02T21:54:26.122757"
     ],
     "neighborhoods_in_route": [
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "egalitarian_min",
     "rule_fired": "strategy_egalitarian",
@@ -2006,9 +2007,9 @@
       "max_preference_intensity": 0.164,
       "group_size": 2
     },
-    "total_utility": 1.968,
-    "walking_miles": 0.692,
-    "windows_captured": 2,
+    "total_utility": 2.043,
+    "walking_miles": 1.441,
+    "windows_captured": 3,
     "excluded_count": 71,
     "exclusion_breakdown": {
       "budget_gross_mismatch": 71
@@ -2028,27 +2029,27 @@
         0.508
       ]
     ],
-    "summary_words": 67,
+    "summary_words": 69,
     "stop_word_counts": [
-      67,
-      74,
+      71,
       84,
-      84
+      83,
+      80
     ],
     "ru_gaps": [
-      -0.082,
-      -0.104,
+      -0.113,
       -0.123,
-      -0.1
+      -0.1,
+      -0.119
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.453,
-      0.453
+      0.422,
+      0.463
     ],
-    "served_gini": 0.0,
-    "min_per_user_mean": 0.453,
-    "max_per_user_mean": 0.453,
+    "served_gini": 0.023,
+    "min_per_user_mean": 0.422,
+    "max_per_user_mean": 0.463,
     "top_criterion_per_stop": {
       "budget": 4
     },
@@ -2057,23 +2058,23 @@
   },
   {
     "name": "random_seed_4",
-    "time_ms": 11.16,
+    "time_ms": 12.12,
     "n_users": 2,
     "max_stops": 3,
     "n_stops": 3,
     "stop_names": [
-      "Otto's Shrunken Head",
       "DROM",
-      "Arlene's Grocery"
+      "Arlene's Grocery",
+      "Planet Rose"
     ],
     "stop_arrivals": [
-      "2025-05-02T19:03:33.063019",
-      "2025-05-02T19:52:51.723022",
-      "2025-05-02T20:52:34.783519"
+      "2025-05-02T19:05:21.579991",
+      "2025-05-02T20:05:04.640488",
+      "2025-05-02T21:02:06.076570"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "egalitarian_min",
     "rule_fired": "strategy_egalitarian",
@@ -2084,9 +2085,9 @@
       "max_preference_intensity": 0.198,
       "group_size": 2
     },
-    "total_utility": 1.531,
-    "walking_miles": 0.951,
-    "windows_captured": 1,
+    "total_utility": 1.937,
+    "walking_miles": 1.337,
+    "windows_captured": 2,
     "excluded_count": 71,
     "exclusion_breakdown": {
       "budget_gross_mismatch": 71
@@ -2106,25 +2107,25 @@
         0.554
       ]
     ],
-    "summary_words": 64,
+    "summary_words": 63,
     "stop_word_counts": [
-      70,
-      72,
-      78
+      74,
+      77,
+      83
     ],
     "ru_gaps": [
-      -0.019,
       -0.024,
-      -0.012
+      -0.012,
+      -0.059
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.516,
-      0.47
+      0.512,
+      0.457
     ],
-    "served_gini": 0.023,
-    "min_per_user_mean": 0.47,
-    "max_per_user_mean": 0.516,
+    "served_gini": 0.028,
+    "min_per_user_mean": 0.457,
+    "max_per_user_mean": 0.512,
     "top_criterion_per_stop": {
       "budget": 3
     },
@@ -2133,7 +2134,7 @@
   },
   {
     "name": "random_seed_5",
-    "time_ms": 35.28,
+    "time_ms": 37.08,
     "n_users": 5,
     "max_stops": 2,
     "n_stops": 2,
@@ -2146,8 +2147,8 @@
       "2025-05-02T21:40:10.434297"
     ],
     "neighborhoods_in_route": [
-      "Greenwich Village",
-      "East Village"
+      "East Village",
+      "Greenwich Village"
     ],
     "strategy": "copeland_pairwise",
     "rule_fired": "strategy_copeland",
@@ -2208,7 +2209,7 @@
   },
   {
     "name": "random_seed_6",
-    "time_ms": 29.13,
+    "time_ms": 30.24,
     "n_users": 5,
     "max_stops": 5,
     "n_stops": 1,
@@ -2279,7 +2280,7 @@
   },
   {
     "name": "random_seed_7",
-    "time_ms": 12.03,
+    "time_ms": 13.16,
     "n_users": 3,
     "max_stops": 5,
     "n_stops": 2,
@@ -2292,8 +2293,8 @@
       "2025-05-02T23:13:58.964368"
     ],
     "neighborhoods_in_route": [
-      "West Village",
-      "East Village"
+      "East Village",
+      "West Village"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -2352,25 +2353,25 @@
   },
   {
     "name": "random_seed_8",
-    "time_ms": 15.08,
+    "time_ms": 17.14,
     "n_users": 2,
     "max_stops": 4,
     "n_stops": 4,
     "stop_names": [
       "Arlene's Grocery",
       "Sing Sing Ave A.",
-      "Otto's Shrunken Head",
-      "Planet Rose"
+      "Planet Rose",
+      "Otto's Shrunken Head"
     ],
     "stop_arrivals": [
       "2025-05-02T20:10:34.814974",
       "2025-05-02T21:01:00.486372",
-      "2025-05-02T21:51:06.762774",
-      "2025-05-02T22:37:40.762589"
+      "2025-05-02T21:52:39.546224",
+      "2025-05-02T22:39:13.546039"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "utilitarian_sum",
     "rule_fired": "strategy_utilitarian",
@@ -2381,8 +2382,8 @@
       "max_preference_intensity": 0.227,
       "group_size": 2
     },
-    "total_utility": 4.418,
-    "walking_miles": 0.605,
+    "total_utility": 4.485,
+    "walking_miles": 0.682,
     "windows_captured": 3,
     "excluded_count": 71,
     "exclusion_breakdown": {
@@ -2407,14 +2408,14 @@
     "stop_word_counts": [
       79,
       83,
-      71,
-      79
+      78,
+      72
     ],
     "ru_gaps": [
       -0.12,
       -0.06,
-      -0.003,
-      0.003
+      0.003,
+      -0.003
     ],
     "cf_count": 2,
     "per_user_means": [
@@ -2432,17 +2433,17 @@
   },
   {
     "name": "random_seed_9",
-    "time_ms": 25.68,
+    "time_ms": 26.53,
     "n_users": 4,
     "max_stops": 2,
     "n_stops": 2,
     "stop_names": [
-      "Lost in Paradise Rooftop",
-      "The Back Room"
+      "The Back Room",
+      "Lost in Paradise Rooftop"
     ],
     "stop_arrivals": [
-      "2025-05-02T20:13:49.667727",
-      "2025-05-02T21:03:14.261727"
+      "2025-05-02T20:10:36.467569",
+      "2025-05-02T21:00:01.061569"
     ],
     "neighborhoods_in_route": [
       "Lower East Side"
@@ -2456,7 +2457,7 @@
       "max_preference_intensity": 0.371,
       "group_size": 4
     },
-    "total_utility": 951.0,
+    "total_utility": 951.181,
     "walking_miles": 0.22,
     "windows_captured": 0,
     "excluded_count": 9,
@@ -2480,12 +2481,12 @@
     ],
     "summary_words": 67,
     "stop_word_counts": [
-      84,
-      76
+      77,
+      83
     ],
     "ru_gaps": [
-      13.0,
-      -10.0
+      -10.0,
+      13.0
     ],
     "cf_count": 2,
     "per_user_means": [
@@ -2505,7 +2506,7 @@
   },
   {
     "name": "random_seed_10",
-    "time_ms": 37.3,
+    "time_ms": 37.63,
     "n_users": 5,
     "max_stops": 1,
     "n_stops": 1,
@@ -2575,7 +2576,7 @@
   },
   {
     "name": "random_seed_11",
-    "time_ms": 13.29,
+    "time_ms": 13.64,
     "n_users": 4,
     "max_stops": 1,
     "n_stops": 1,
@@ -2597,7 +2598,7 @@
       "max_preference_intensity": 0.257,
       "group_size": 4
     },
-    "total_utility": 0.469,
+    "total_utility": 0.489,
     "walking_miles": 0.0,
     "windows_captured": 0,
     "excluded_count": 71,
@@ -2644,25 +2645,25 @@
   },
   {
     "name": "random_seed_12",
-    "time_ms": 38.8,
+    "time_ms": 43.22,
     "n_users": 4,
     "max_stops": 5,
     "n_stops": 4,
     "stop_names": [
       "Vida Verde - Tequila Bar",
-      "Lost in Paradise Rooftop",
       "The Back Room",
-      "Pineapple Club"
+      "Lost in Paradise Rooftop",
+      "929"
     ],
     "stop_arrivals": [
       "2025-05-02T22:04:34.506240",
-      "2025-05-02T23:07:48.592292",
-      "2025-05-02T23:57:13.186292",
-      "2025-05-03T00:44:56.670949"
+      "2025-05-02T23:04:15.991426",
+      "2025-05-02T23:53:40.585426",
+      "2025-05-03T00:40:31.109169"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "utilitarian_sum",
     "rule_fired": "strategy_utilitarian",
@@ -2673,8 +2674,8 @@
       "max_preference_intensity": 0.321,
       "group_size": 4
     },
-    "total_utility": 8.312,
-    "walking_miles": 1.268,
+    "total_utility": 8.715,
+    "walking_miles": 1.047,
     "windows_captured": 0,
     "excluded_count": 9,
     "exclusion_breakdown": {
@@ -2695,29 +2696,29 @@
         0.537
       ]
     ],
-    "summary_words": 73,
+    "summary_words": 72,
     "stop_word_counts": [
       77,
-      76,
       70,
-      70
+      76,
+      69
     ],
     "ru_gaps": [
       -0.018,
-      0.009,
       -0.036,
-      -0.072
+      0.009,
+      -0.074
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.472,
-      0.555,
-      0.475,
-      0.576
+      0.478,
+      0.553,
+      0.473,
+      0.574
     ],
-    "served_gini": 0.047,
-    "min_per_user_mean": 0.472,
-    "max_per_user_mean": 0.576,
+    "served_gini": 0.045,
+    "min_per_user_mean": 0.473,
+    "max_per_user_mean": 0.574,
     "top_criterion_per_stop": {
       "budget": 4
     },
@@ -2726,25 +2727,24 @@
   },
   {
     "name": "random_seed_13",
-    "time_ms": 25.79,
+    "time_ms": 28.92,
     "n_users": 3,
     "max_stops": 4,
     "n_stops": 4,
     "stop_names": [
-      "Planet Rose",
       "The Back Room",
-      "The Rhymers' Club",
-      "Lost in Paradise Rooftop"
+      "929",
+      "Lost in Paradise Rooftop",
+      "The Rhymers' Club"
     ],
     "stop_arrivals": [
-      "2025-05-02T22:04:23.657830",
-      "2025-05-02T23:00:38.415811",
-      "2025-05-02T23:53:48.331557",
-      "2025-05-03T00:42:34.801971"
+      "2025-05-02T22:10:36.467569",
+      "2025-05-02T22:58:15.170246",
+      "2025-05-02T23:45:05.693989",
+      "2025-05-03T00:33:52.164403"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "Lower East Side"
     ],
     "strategy": "egalitarian_min",
     "rule_fired": "strategy_egalitarian",
@@ -2755,9 +2755,9 @@
       "max_preference_intensity": 0.311,
       "group_size": 3
     },
-    "total_utility": 2.01,
-    "walking_miles": 1.159,
-    "windows_captured": 1,
+    "total_utility": 2.271,
+    "walking_miles": 0.413,
+    "windows_captured": 0,
     "excluded_count": 71,
     "exclusion_breakdown": {
       "budget_gross_mismatch": 71
@@ -2777,28 +2777,28 @@
         0.528
       ]
     ],
-    "summary_words": 72,
+    "summary_words": 70,
     "stop_word_counts": [
-      88,
-      76,
-      76,
-      81
+      78,
+      74,
+      80,
+      77
     ],
     "ru_gaps": [
-      -0.075,
       0.009,
-      0.009,
-      -0.021
+      -0.034,
+      -0.021,
+      0.009
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.492,
-      0.492,
-      0.538
+      0.506,
+      0.496,
+      0.566
     ],
-    "served_gini": 0.02,
-    "min_per_user_mean": 0.492,
-    "max_per_user_mean": 0.538,
+    "served_gini": 0.03,
+    "min_per_user_mean": 0.496,
+    "max_per_user_mean": 0.566,
     "top_criterion_per_stop": {
       "budget": 4
     },
@@ -2807,24 +2807,25 @@
   },
   {
     "name": "random_seed_14",
-    "time_ms": 19.11,
+    "time_ms": 22.01,
     "n_users": 1,
     "max_stops": 4,
     "n_stops": 4,
     "stop_names": [
-      "Sing Sing Ave A.",
-      "Planet Rose",
-      "DROM",
-      "Vida Verde - Tequila Bar"
+      "Vida Verde - Tequila Bar",
+      "Mister Paradise",
+      "The Back Room",
+      "Lost in Paradise Rooftop"
     ],
     "stop_arrivals": [
-      "2025-05-02T21:05:28.721365",
-      "2025-05-02T21:57:07.781217",
-      "2025-05-02T22:45:06.717351",
-      "2025-05-02T23:32:27.333861"
+      "2025-05-02T21:04:34.506240",
+      "2025-05-02T21:52:02.614252",
+      "2025-05-02T22:49:21.369495",
+      "2025-05-02T23:38:45.963495"
     ],
     "neighborhoods_in_route": [
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "utilitarian_sum",
     "rule_fired": "strategy_utilitarian",
@@ -2835,9 +2836,9 @@
       "max_preference_intensity": 0.162,
       "group_size": 1
     },
-    "total_utility": 2.344,
-    "walking_miles": 0.599,
-    "windows_captured": 3,
+    "total_utility": 2.641,
+    "walking_miles": 0.96,
+    "windows_captured": 0,
     "excluded_count": 9,
     "exclusion_breakdown": {
       "budget_gross_mismatch": 9
@@ -2857,26 +2858,26 @@
         0.538
       ]
     ],
-    "summary_words": 66,
+    "summary_words": 70,
     "stop_word_counts": [
-      85,
-      81,
-      81,
-      69
+      70,
+      65,
+      71,
+      73
     ],
     "ru_gaps": [
-      -0.098,
-      -0.103,
-      -0.12,
-      -0.076
+      -0.076,
+      -0.106,
+      -0.089,
+      -0.069
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.496
+      0.51
     ],
     "served_gini": 0.0,
-    "min_per_user_mean": 0.496,
-    "max_per_user_mean": 0.496,
+    "min_per_user_mean": 0.51,
+    "max_per_user_mean": 0.51,
     "top_criterion_per_stop": {
       "budget": 4
     },
@@ -2885,7 +2886,7 @@
   },
   {
     "name": "random_seed_15",
-    "time_ms": 27.85,
+    "time_ms": 32.49,
     "n_users": 2,
     "max_stops": 5,
     "n_stops": 4,
@@ -2913,7 +2914,7 @@
       "max_preference_intensity": 0.419,
       "group_size": 2
     },
-    "total_utility": 939.0,
+    "total_utility": 939.327,
     "walking_miles": 0.413,
     "windows_captured": 0,
     "excluded_count": 21,
@@ -2964,7 +2965,7 @@
   },
   {
     "name": "random_seed_16",
-    "time_ms": 18.79,
+    "time_ms": 19.52,
     "n_users": 3,
     "max_stops": 1,
     "n_stops": 1,
@@ -3032,24 +3033,23 @@
   },
   {
     "name": "random_seed_17",
-    "time_ms": 28.46,
+    "time_ms": 32.92,
     "n_users": 5,
     "max_stops": 5,
     "n_stops": 4,
     "stop_names": [
+      "Vida Verde - Tequila Bar",
+      "Mister Paradise",
       "Planet Rose",
-      "Sing Sing Ave A.",
-      "Arlene's Grocery",
-      "Lost in Paradise Rooftop"
+      "Sing Sing Ave A."
     ],
     "stop_arrivals": [
-      "2025-05-02T21:04:23.657830",
-      "2025-05-02T21:56:02.717682",
-      "2025-05-02T22:46:28.389080",
-      "2025-05-02T23:34:44.453099"
+      "2025-05-02T21:04:34.506240",
+      "2025-05-02T21:52:02.614252",
+      "2025-05-02T22:39:21.397873",
+      "2025-05-02T23:31:00.457725"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
       "East Village"
     ],
     "strategy": "egalitarian_min",
@@ -3061,9 +3061,9 @@
       "max_preference_intensity": 0.347,
       "group_size": 5
     },
-    "total_utility": 2.075,
-    "walking_miles": 0.767,
-    "windows_captured": 3,
+    "total_utility": 2.154,
+    "walking_miles": 0.572,
+    "windows_captured": 2,
     "excluded_count": 71,
     "exclusion_breakdown": {
       "budget_gross_mismatch": 71
@@ -3083,30 +3083,30 @@
         0.566
       ]
     ],
-    "summary_words": 75,
+    "summary_words": 74,
     "stop_word_counts": [
-      91,
-      86,
-      78,
-      79
+      80,
+      71,
+      89,
+      87
     ],
     "ru_gaps": [
+      -0.031,
+      -0.061,
       -0.041,
-      -0.116,
-      -0.136,
-      -0.024
+      -0.116
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.519,
-      0.507,
-      0.494,
-      0.486,
-      0.439
+      0.489,
+      0.52,
+      0.512,
+      0.52,
+      0.466
     ],
-    "served_gini": 0.03,
-    "min_per_user_mean": 0.439,
-    "max_per_user_mean": 0.519,
+    "served_gini": 0.022,
+    "min_per_user_mean": 0.466,
+    "max_per_user_mean": 0.52,
     "top_criterion_per_stop": {
       "budget": 4
     },
@@ -3115,26 +3115,25 @@
   },
   {
     "name": "random_seed_18",
-    "time_ms": 33.67,
+    "time_ms": 32.15,
     "n_users": 2,
     "max_stops": 5,
-    "n_stops": 5,
+    "n_stops": 4,
     "stop_names": [
-      "McSorley\u2019s Old Ale House",
       "Vida Verde - Tequila Bar",
-      "DROM",
-      "Planet Rose",
-      "Otto's Shrunken Head"
+      "Mister Paradise",
+      "Pineapple Club",
+      "Lost in Paradise Rooftop"
     ],
     "stop_arrivals": [
-      "2025-05-02T19:02:01.687943",
-      "2025-05-02T19:51:55.295602",
-      "2025-05-02T20:39:15.912112",
-      "2025-05-02T21:27:14.848246",
-      "2025-05-02T22:13:48.848061"
+      "2025-05-02T19:04:34.506240",
+      "2025-05-02T19:52:02.614252",
+      "2025-05-02T20:49:52.920708",
+      "2025-05-02T21:38:04.997040"
     ],
     "neighborhoods_in_route": [
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "egalitarian_min",
     "rule_fired": "strategy_egalitarian",
@@ -3145,9 +3144,9 @@
       "max_preference_intensity": 0.188,
       "group_size": 2
     },
-    "total_utility": 2.633,
-    "walking_miles": 0.589,
-    "windows_captured": 2,
+    "total_utility": 2.31,
+    "walking_miles": 0.925,
+    "windows_captured": 0,
     "excluded_count": 21,
     "exclusion_breakdown": {
       "budget_gross_mismatch": 21
@@ -3167,38 +3166,36 @@
         0.56
       ]
     ],
-    "summary_words": 73,
+    "summary_words": 72,
     "stop_word_counts": [
-      80,
-      79,
-      86,
-      90,
-      72
+      81,
+      71,
+      70,
+      80
     ],
     "ru_gaps": [
-      -0.008,
       -0.015,
-      -0.105,
-      -0.097,
-      -0.015
+      -0.064,
+      -0.028,
+      -0.008
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.518,
-      0.488
+      0.605,
+      0.498
     ],
-    "served_gini": 0.015,
-    "min_per_user_mean": 0.488,
-    "max_per_user_mean": 0.518,
+    "served_gini": 0.049,
+    "min_per_user_mean": 0.498,
+    "max_per_user_mean": 0.605,
     "top_criterion_per_stop": {
-      "budget": 5
+      "budget": 4
     },
     "failed_invariants": [],
     "error": null
   },
   {
     "name": "random_seed_19",
-    "time_ms": 43.45,
+    "time_ms": 50.59,
     "n_users": 6,
     "max_stops": 5,
     "n_stops": 5,
@@ -3206,18 +3203,19 @@
       "Planet Rose",
       "Sing Sing Ave A.",
       "Barcade",
-      "McSorley\u2019s Old Ale House",
-      "Otto's Shrunken Head"
+      "Burp Castle",
+      "The Back Room"
     ],
     "stop_arrivals": [
       "2025-05-02T22:04:23.657830",
       "2025-05-02T22:56:02.717682",
       "2025-05-02T23:43:23.822210",
-      "2025-05-03T00:33:13.426816",
-      "2025-05-03T01:23:45.383873"
+      "2025-05-03T00:32:20.237675",
+      "2025-05-03T01:26:52.048557"
     ],
     "neighborhoods_in_route": [
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "egalitarian_min",
     "rule_fired": "strategy_egalitarian",
@@ -3228,8 +3226,8 @@
       "max_preference_intensity": 0.303,
       "group_size": 6
     },
-    "total_utility": 2.341,
-    "walking_miles": 0.968,
+    "total_utility": 2.52,
+    "walking_miles": 1.124,
     "windows_captured": 2,
     "excluded_count": 71,
     "exclusion_breakdown": {
@@ -3255,28 +3253,28 @@
       82,
       83,
       66,
-      75,
+      73,
       70
     ],
     "ru_gaps": [
       0.001,
       -0.066,
       -0.038,
-      -0.024,
-      -0.039
+      -0.087,
+      -0.041
     ],
     "cf_count": 2,
     "per_user_means": [
-      0.445,
       0.478,
-      0.432,
       0.502,
-      0.491,
-      0.454
+      0.409,
+      0.511,
+      0.514,
+      0.46
     ],
-    "served_gini": 0.03,
-    "min_per_user_mean": 0.432,
-    "max_per_user_mean": 0.502,
+    "served_gini": 0.041,
+    "min_per_user_mean": 0.409,
+    "max_per_user_mean": 0.514,
     "top_criterion_per_stop": {
       "budget": 5
     },

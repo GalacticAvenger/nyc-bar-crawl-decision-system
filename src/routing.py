@@ -24,7 +24,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Callable, Optional
 
-from .models import Bar, GroupInput, Route, RouteStop, TemporalWindow
+from .models import AdaptedCase, Bar, GroupInput, Route, RouteStop, TemporalWindow
 from .temporal import is_open, temporal_bonus, day_name
 
 
@@ -77,6 +77,41 @@ def _scores_for_stage(
     if isinstance(group_scores_by_stage, dict):
         return group_scores_by_stage
     return group_scores_by_stage[stage_idx]
+
+
+def _seed_bonus(
+    bar: Bar,
+    stage_idx: int,
+    seed_sequence: Optional[AdaptedCase],
+    rules: dict,
+) -> float:
+    """Additive CBR-seed bonus at stage_idx. Zero when no seed is given.
+
+    Reads the configured magnitude from `rules.routing_config.cbr_seed_bonus`
+    (default 0.15). The actual bonus per candidate is magnitude × fraction
+    of the stage's vibe_profile weight the bar's tags cover — so a bar
+    that matches half the profile's weight gets half the max bonus. This
+    is a PRIOR, not a constraint: a strong off-seed bar can still win.
+
+    Stages flagged in `seed_sequence.unadapted_stages` produce zero bonus —
+    we don't know what they were meant to be, so we don't push the router
+    there.
+    """
+    if seed_sequence is None:
+        return 0.0
+    if stage_idx >= len(seed_sequence.adapted_sequence):
+        return 0.0
+    if stage_idx in seed_sequence.unadapted_stages:
+        return 0.0
+    stage = seed_sequence.adapted_sequence[stage_idx]
+    vibe_profile = stage.get("vibe_profile") or {}
+    if not vibe_profile:
+        return 0.0
+    total_weight = sum(vibe_profile.values()) or 1.0
+    matched = sum(w for v, w in vibe_profile.items() if v in bar.vibe_tags)
+    magnitude = (rules.get("routing_config", {})
+                      .get("cbr_seed_bonus", 0.15))
+    return magnitude * (matched / total_weight)
 
 
 def _walking_penalty(miles: float, rules: dict, walking_only: bool = True) -> float:
@@ -148,6 +183,7 @@ def greedy_route(
     group: GroupInput,
     rules: dict,
     user_budget_weight: float = 0.0,
+    seed_sequence: Optional[AdaptedCase] = None,
 ) -> tuple[list[Step], list[str]]:
     """Greedy: from start, always pick the highest (utility + bonus − walk)
     bar that is still reachable and open. At step i, score against the
@@ -182,7 +218,8 @@ def greedy_route(
                                             user_budget_weight=user_budget_weight,
                                             user_wants_food=group.want_food)
             util = scores[bar.id]
-            net = util + bonus - penalty
+            seed = _seed_bonus(bar, stage_idx, seed_sequence, rules)
+            net = util + bonus + seed - penalty
             if best is None or net > best[0]:
                 best = (net, Step(
                     bar=bar, arrival=arrival,
@@ -213,6 +250,7 @@ def _recompute_schedule(
     group: GroupInput,
     rules: dict,
     user_budget_weight: float = 0.0,
+    seed_sequence: Optional[AdaptedCase] = None,
 ) -> Optional[tuple[list[Step], float]]:
     """Given a fixed order of bars, compute arrival/departure, feasibility,
     and total objective. At position i, use the arc-stage-specific scores.
@@ -237,10 +275,11 @@ def _recompute_schedule(
                                         user_budget_weight=user_budget_weight,
                                         user_wants_food=group.want_food)
         util = scores.get(bar.id, 0.0)
-        total += util + bonus - penalty
+        seed = _seed_bonus(bar, stage_idx, seed_sequence, rules)
+        total += util + bonus + seed - penalty
         steps.append(Step(bar=bar, arrival=arrival,
                           departure=arrival + timedelta(minutes=stop_minutes),
-                          utility=util, bonus=bonus, windows=windows))
+                          utility=util, bonus=bonus + seed, windows=windows))
         current_loc = (bar.lat, bar.lon)
         current_time = arrival + timedelta(minutes=stop_minutes)
     return steps, total
@@ -256,6 +295,7 @@ def two_opt_improve(
     group: GroupInput,
     rules: dict,
     user_budget_weight: float = 0.0,
+    seed_sequence: Optional[AdaptedCase] = None,
 ) -> tuple[list[Step], list[str]]:
     """Try swapping pairs of stops; accept any swap that's feasible AND improves
     the total objective. Continue until no improvement. Return (steps, log)."""
@@ -278,7 +318,8 @@ def two_opt_improve(
                 new_order = [s.bar for s in current]
                 new_order[i:j + 1] = list(reversed(new_order[i:j + 1]))
                 result = _recompute_schedule(new_order, group_scores_by_stage, group, rules,
-                                             user_budget_weight=user_budget_weight)
+                                             user_budget_weight=user_budget_weight,
+                                             seed_sequence=seed_sequence)
                 if result is None:
                     continue
                 new_steps, new_total = result
@@ -307,6 +348,7 @@ def enumerate_exact(
     group: GroupInput,
     rules: dict,
     user_budget_weight: float = 0.0,
+    seed_sequence: Optional[AdaptedCase] = None,
 ) -> tuple[Optional[list[Step]], float, int]:
     """Enumerate all permutations of candidate subsets up to max_stops.
     Returns (best_steps_or_None, best_objective, perms_tried)."""
@@ -320,7 +362,8 @@ def enumerate_exact(
             for perm in itertools.permutations(subset):
                 perms_tried += 1
                 result = _recompute_schedule(list(perm), group_scores_by_stage, group, rules,
-                                             user_budget_weight=user_budget_weight)
+                                             user_budget_weight=user_budget_weight,
+                                             seed_sequence=seed_sequence)
                 if result is None:
                     continue
                 steps, total = result
@@ -342,14 +385,20 @@ def best_route(
     strategy_used: str = "",
     strategy_rationale: str = "",
     user_budget_weight: float = 0.0,
+    seed_sequence: Optional[AdaptedCase] = None,
 ) -> Route:
     """Orchestrate: greedy → 2-opt → (if small) exact check. Return Route.
     `group_scores_by_stage` can be a single dict (no arc) or a list of dicts
-    (one per arc stage)."""
+    (one per arc stage).
+
+    When `seed_sequence` is supplied (Phase 3), each candidate gets an
+    additive CBR-seed bonus based on how well its vibe_tags overlap with
+    the seed's stage profile. The bonus is a PRIOR, not a constraint."""
     log: list[str] = []
     greedy_steps, greedy_log = greedy_route(
         candidates, group_scores_by_stage, group, rules,
         user_budget_weight=user_budget_weight,
+        seed_sequence=seed_sequence,
     )
     log.extend(["GREEDY:"] + greedy_log)
 
@@ -361,6 +410,7 @@ def best_route(
     improved, opt_log = two_opt_improve(
         greedy_steps, group_scores_by_stage, group, rules,
         user_budget_weight=user_budget_weight,
+        seed_sequence=seed_sequence,
     )
     log.extend(["2-OPT:"] + opt_log)
     chosen_steps = improved
@@ -370,6 +420,7 @@ def best_route(
         exact_steps, exact_total, perms = enumerate_exact(
             chosen_bars, group_scores_by_stage, group, rules,
             user_budget_weight=user_budget_weight,
+            seed_sequence=seed_sequence,
         )
         current_total = _total_of(chosen_steps)
         log.append(f"EXACT: enumerated {perms} permutations over {len(chosen_bars)} bars.")

@@ -12,9 +12,9 @@
     "order_sensitive_diffs": 0
   },
   "budget_perturb": {
-    "perturbation_route_diffs": 3,
-    "util_delta_mean": -61.1978,
-    "util_delta_max_abs": 1015.0459
+    "perturbation_route_diffs": 4,
+    "util_delta_mean": -61.1905,
+    "util_delta_max_abs": 1014.9463
   },
   "thresholds": {
     "budget_transitions": [
@@ -113,83 +113,83 @@
     "frac_walkable_06": 0.097
   },
   "equity": {
-    "gini_mean": 0.035,
-    "gini_median": 0.033,
+    "gini_mean": 0.036,
+    "gini_median": 0.035,
     "gini_max": 0.078,
     "worst_user_mean_min": 0.396,
-    "worst_user_mean_median": 0.474,
+    "worst_user_mean_median": 0.468,
     "n_runs": 50
   },
   "perf": {
     "by_users": [
       {
         "n_users": 1,
-        "median_ms": 4.6
+        "median_ms": 5.5
       },
       {
         "n_users": 2,
-        "median_ms": 5.6
+        "median_ms": 6.4
       },
       {
         "n_users": 4,
-        "median_ms": 6.2
+        "median_ms": 7.0
       },
       {
         "n_users": 6,
-        "median_ms": 9.5
+        "median_ms": 10.4
       },
       {
         "n_users": 8,
-        "median_ms": 10.9
+        "median_ms": 12.0
       },
       {
         "n_users": 10,
-        "median_ms": 7.5
+        "median_ms": 8.3
       }
     ],
     "by_max_stops": [
       {
         "max_stops": 1,
-        "median_ms": 13.5
+        "median_ms": 14.1
       },
       {
         "max_stops": 2,
-        "median_ms": 15.2
+        "median_ms": 16.3
       },
       {
         "max_stops": 3,
-        "median_ms": 17.0
+        "median_ms": 18.9
       },
       {
         "max_stops": 4,
-        "median_ms": 21.4
+        "median_ms": 23.7
       },
       {
         "max_stops": 5,
-        "median_ms": 39.5
+        "median_ms": 45.2
       },
       {
         "max_stops": 6,
-        "median_ms": 164.2
+        "median_ms": 194.3
       }
     ]
   },
   "explanation": {
     "summary_words_median": 65.5,
     "stop_words_median": 79,
-    "stop_words_max": 95,
-    "stop_over_80": 35,
+    "stop_words_max": 98,
+    "stop_over_80": 31,
     "summary_over_200": 0,
     "duplicate_stop_openings_routes": 0
   },
   "counterfactuals": {
     "n_with_cf": 20,
-    "n_identical_cf": 24,
-    "n_better_cf": 18
+    "n_identical_cf": 25,
+    "n_better_cf": 19
   },
   "runner_ups": {
     "n_gaps": 112,
-    "gap_mean": 3.0143,
+    "gap_mean": 3.0173,
     "gap_median": 1.0,
     "gap_p90": 9.0,
     "n_close": 37,
@@ -240,9 +240,9 @@
     ]
   },
   "coverage": {
-    "unique_bars_used": 26,
+    "unique_bars_used": 27,
     "total_bars": 143,
-    "coverage_pct": 18.2
+    "coverage_pct": 18.9
   },
   "vibe_leakage": {
     "extras_in_bars": [],
