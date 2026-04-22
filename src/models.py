@@ -120,6 +120,39 @@ class GroupInput:
 
 
 # ---------------------------------------------------------------------------
+# Strategy decision (VOTE-shaped meta-selector output)
+# ---------------------------------------------------------------------------
+
+@dataclass
+class StrategyDecision:
+    """What the meta-selector produced, in VOTE's shape.
+
+    `strategy_id` is the machine name (still usable as the old string return).
+    `rank` is A / B / C / D / E; A = strong moral/structural claim (honor
+    dealbreakers, protect the worst-off), B = robust positional/pairwise, C =
+    shallow fallback (simple utilitarian), D = reserved, E = margin too thin,
+    deeper analysis warranted.
+    `triggering_profile_signal` names the one metric that tipped the rule
+    (e.g. "budget_spread_ratio=2.4 exceeded threshold 2.0").
+    `considered_alternatives` lists the other four strategies with a short
+    why_not_chosen string so explanations can cite them directly.
+    `requires_deeper_analysis` flips to True when the chosen plan's
+    normalized margin over its runner-up is below the configured threshold
+    (rules.yaml group_strategy_rules.deeper_analysis.margin_threshold).
+    """
+    strategy_id: str
+    rank: str
+    narrative_name: str
+    quote: str
+    triggering_profile_signal: str
+    applies_when: str
+    considered_alternatives: list[tuple[str, str, str]] = field(default_factory=list)
+    triggering_rule_id: str = ""
+    rationale: str = ""
+    requires_deeper_analysis: bool = False
+
+
+# ---------------------------------------------------------------------------
 # Case library
 # ---------------------------------------------------------------------------
 
@@ -180,6 +213,7 @@ class RunnerUp:
     gap: float
     gap_criteria: dict[str, float]      # criterion -> delta (winner - runner_up)
     unlock_hint: str = ""                # natural-language "what would have to change"
+    relative_gap: float = 0.0            # gap normalized to [0,1] vs winner score (or score range)
 
 
 @dataclass

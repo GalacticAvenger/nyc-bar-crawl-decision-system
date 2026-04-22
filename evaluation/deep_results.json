@@ -1,0 +1,251 @@
+{
+  "determinism": {
+    "deterministic": true,
+    "route_sigs": [
+      [
+        "bar_077",
+        "bar_118"
+      ]
+    ]
+  },
+  "user_order": {
+    "order_sensitive_diffs": 0
+  },
+  "budget_perturb": {
+    "perturbation_route_diffs": 3,
+    "util_delta_mean": -61.1978,
+    "util_delta_max_abs": 1015.0459
+  },
+  "thresholds": {
+    "budget_transitions": [
+      {
+        "poor_cap": 10,
+        "budget_spread_ratio": 2.0,
+        "strategy": "utilitarian_sum",
+        "rule": "strategy_utilitarian"
+      },
+      {
+        "poor_cap": 8,
+        "budget_spread_ratio": 2.5,
+        "strategy": "egalitarian_min",
+        "rule": "strategy_egalitarian"
+      },
+      {
+        "poor_cap": 7,
+        "budget_spread_ratio": 2.86,
+        "strategy": "egalitarian_min",
+        "rule": "strategy_egalitarian"
+      },
+      {
+        "poor_cap": 6,
+        "budget_spread_ratio": 3.33,
+        "strategy": "egalitarian_min",
+        "rule": "strategy_egalitarian"
+      },
+      {
+        "poor_cap": 5,
+        "budget_spread_ratio": 4.0,
+        "strategy": "egalitarian_min",
+        "rule": "strategy_egalitarian"
+      },
+      {
+        "poor_cap": 4,
+        "budget_spread_ratio": 5.0,
+        "strategy": "egalitarian_min",
+        "rule": "strategy_egalitarian"
+      }
+    ],
+    "veto_transitions": [
+      {
+        "n_vetoes": 0,
+        "density": 0.0,
+        "strategy": "utilitarian_sum",
+        "rule": "strategy_utilitarian"
+      },
+      {
+        "n_vetoes": 5,
+        "density": 0.035,
+        "strategy": "utilitarian_sum",
+        "rule": "strategy_utilitarian"
+      },
+      {
+        "n_vetoes": 15,
+        "density": 0.105,
+        "strategy": "utilitarian_sum",
+        "rule": "strategy_utilitarian"
+      },
+      {
+        "n_vetoes": 25,
+        "density": 0.175,
+        "strategy": "utilitarian_sum",
+        "rule": "strategy_utilitarian"
+      },
+      {
+        "n_vetoes": 35,
+        "density": 0.245,
+        "strategy": "approval_veto",
+        "rule": "strategy_veto"
+      },
+      {
+        "n_vetoes": 50,
+        "density": 0.35,
+        "strategy": "approval_veto",
+        "rule": "strategy_veto"
+      }
+    ]
+  },
+  "accessibility": {
+    "step_free_true": 0,
+    "step_free_false": 0,
+    "step_free_none": 143,
+    "with_a11y_filter_survivors": 0,
+    "a11y_excluded_count": 122
+  },
+  "past_midnight": {
+    "past_midnight_bars": 143,
+    "sample_open_at_1am": true
+  },
+  "walking_distances": {
+    "p10_miles": 0.633,
+    "p50_miles": 2.377,
+    "p90_miles": 5.12,
+    "max_miles": 7.773,
+    "frac_walkable_06": 0.097
+  },
+  "equity": {
+    "gini_mean": 0.035,
+    "gini_median": 0.033,
+    "gini_max": 0.078,
+    "worst_user_mean_min": 0.396,
+    "worst_user_mean_median": 0.474,
+    "n_runs": 50
+  },
+  "perf": {
+    "by_users": [
+      {
+        "n_users": 1,
+        "median_ms": 4.5
+      },
+      {
+        "n_users": 2,
+        "median_ms": 5.6
+      },
+      {
+        "n_users": 4,
+        "median_ms": 6.3
+      },
+      {
+        "n_users": 6,
+        "median_ms": 9.3
+      },
+      {
+        "n_users": 8,
+        "median_ms": 10.9
+      },
+      {
+        "n_users": 10,
+        "median_ms": 7.4
+      }
+    ],
+    "by_max_stops": [
+      {
+        "max_stops": 1,
+        "median_ms": 13.2
+      },
+      {
+        "max_stops": 2,
+        "median_ms": 15.0
+      },
+      {
+        "max_stops": 3,
+        "median_ms": 17.0
+      },
+      {
+        "max_stops": 4,
+        "median_ms": 20.9
+      },
+      {
+        "max_stops": 5,
+        "median_ms": 39.3
+      },
+      {
+        "max_stops": 6,
+        "median_ms": 163.4
+      }
+    ]
+  },
+  "explanation": {
+    "summary_words_median": 65.5,
+    "stop_words_median": 51,
+    "stop_words_max": 67,
+    "stop_over_80": 0,
+    "summary_over_200": 0,
+    "duplicate_stop_openings_routes": 0
+  },
+  "counterfactuals": {
+    "n_with_cf": 20,
+    "n_identical_cf": 24,
+    "n_better_cf": 18
+  },
+  "runner_ups": {
+    "n_gaps": 112,
+    "gap_mean": 3.0143,
+    "gap_median": 1.0,
+    "gap_p90": 9.0,
+    "n_close": 37,
+    "n_far": 66
+  },
+  "cbr": {
+    "date_top3": [
+      [
+        "case_whiskey_appreciation",
+        0.677
+      ],
+      [
+        "case_cocktail_flight_date",
+        0.654
+      ],
+      [
+        "case_les_speakeasy_ladder",
+        0.558
+      ]
+    ],
+    "party_top3": [
+      [
+        "case_large_group_birthday",
+        0.659
+      ],
+      [
+        "case_karaoke_birthday",
+        0.636
+      ],
+      [
+        "case_astoria_beer_garden_night",
+        0.513
+      ]
+    ],
+    "dive_top3": [
+      [
+        "case_east_village_dive_tour",
+        0.695
+      ],
+      [
+        "case_hells_kitchen_pub_crawl",
+        0.673
+      ],
+      [
+        "case_sports_sunday",
+        0.563
+      ]
+    ]
+  },
+  "coverage": {
+    "unique_bars_used": 26,
+    "total_bars": 143,
+    "coverage_pct": 18.2
+  },
+  "vibe_leakage": {
+    "extras_in_bars": [],
+    "unused_vocab": []
+  }
+}

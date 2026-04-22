@@ -171,10 +171,17 @@ def explain_stop(
     per_user_scores: dict[str, dict[str, Score]],
     runner_up: Optional[RunnerUp],
     rules: dict,
+    users: Optional[list[UserPreference]] = None,
 ) -> str:
     """≤80 words (soft). Names the bar, one user, concrete attribute(s),
     the top reason it beat its slot competitors, and — if genuinely
-    informative — the runner-up with an unlock hint."""
+    informative — the runner-up with an unlock hint.
+
+    Honesty rules (BUILD_PLAN §10):
+      * never assert "fits the budget" without checking each user's cap
+      * never hardcode group size in the dominant-user line
+      * never quote a runner-up gap that's not in a comparable unit
+    """
     bar = stop.bar
     total_stops = len(route.stops)
     user_scores = _average_per_user_score(route, per_user_scores, bar.id)
@@ -189,9 +196,25 @@ def explain_stop(
     at_time = _format_time(stop.arrival)
     lead_verb = _lead_verb(idx, total_stops)
 
+    # Per-user budget honesty: who is over budget at this bar?
+    over_budget = []
+    if users:
+        for u in users:
+            if u.max_per_drink and bar.avg_drink_price > u.max_per_drink + 1e-6:
+                over_budget.append(u.name)
+
     # Lead sentence — vary by stop index + top criterion
     top_c = top_crits[0][0] if top_crits else "vibe"
     reason1 = CRITERION_PHRASES.get(top_c, "scores well")
+    # If "fits the budget" is the headline reason but someone's over budget,
+    # the headline is dishonest — swap to a neutral fallback and add the
+    # disclaimer below.
+    if top_c == "budget" and over_budget:
+        if len(top_crits) > 1:
+            reason1 = CRITERION_PHRASES.get(top_crits[1][0], "scores well overall")
+        else:
+            reason1 = "scores well overall"
+
     price_phrase = phrase_for(bar.price_tier, "price")
     noise_phrase = phrase_for(bar.noise_level, "noise")
 
@@ -209,6 +232,21 @@ def explain_stop(
 
     # Secondary — temporal window caught OR second criterion OR quality signal OR user_note
     extras = []
+
+    # BUDGET HONESTY: if anyone is over budget, surface it explicitly.
+    if over_budget:
+        if len(over_budget) == 1:
+            extras.append(
+                f"Heads-up: at ~${bar.avg_drink_price:.0f}/drink this is over "
+                f"{over_budget[0]}'s ${_user_cap(users, over_budget[0]):.0f} cap."
+            )
+        else:
+            named = ", ".join(over_budget[:-1]) + f" and {over_budget[-1]}"
+            extras.append(
+                f"Heads-up: at ~${bar.avg_drink_price:.0f}/drink this is over "
+                f"the cap for {named}."
+            )
+
     if stop.temporal_bonuses_captured:
         w = stop.temporal_bonuses_captured[0]
         details = w.details or w.kind.replace("_", " ")
@@ -237,21 +275,53 @@ def explain_stop(
 
     sentences = [lead] + extras
 
-    # Runner-up with unlock — only include if the gap is small enough to be
-    # a genuine alternative (avoid stating runner-ups that are way behind).
-    if runner_up and runner_up.bar.id != bar.id and runner_up.gap < 1.5:
-        ru_name = runner_up.bar.name
-        hint = runner_up.unlock_hint
-        if hint:
-            sentences.append(f"Close second: {ru_name} — it would have edged ahead if you'd {hint}.")
-        else:
-            sentences.append(f"Close second: {ru_name} (gap: {runner_up.gap:.2f}).")
+    # Runner-up with unlock — use NORMALIZED gap so the threshold means the
+    # same thing under utilitarian, Borda, and Copeland. Treat "close" as
+    # the runner-up scoring within 10% of the winner.
+    if runner_up and runner_up.bar.id != bar.id:
+        rel_gap = getattr(runner_up, "relative_gap", None)
+        is_close = (rel_gap is not None and rel_gap <= 0.10)
+        # Fall back to absolute gap on utilitarian-shaped scores when relative
+        # gap isn't populated (e.g. older callers).
+        if rel_gap is None and 0 <= runner_up.gap < 0.20:
+            is_close = True
+        if is_close:
+            ru_name = runner_up.bar.name
+            hint = runner_up.unlock_hint
+            # `unlock_hint_for` returns a parenthetical when no single criterion
+            # tilts the runner-up ahead — don't stitch that into a "if you'd ..."
+            # sentence (reads as broken grammar).
+            if hint and hint.startswith("("):
+                sentences.append(f"Close second: {ru_name} {hint}.")
+            elif hint:
+                sentences.append(
+                    f"Close second: {ru_name} — it would have edged ahead "
+                    f"if you'd {hint}."
+                )
+            else:
+                sentences.append(f"Close second: {ru_name}.")
 
-    # Dominant user framing if 2+ users AND a clear winner — rotate by stop idx
-    if dom_user and len(per_user_scores) > 1 and idx % 2 == 0:
-        sentences.append(f"{dom_user} scored this highest of the three.")
+    # Dominant user framing if 2+ users AND a clear winner — rotate by stop idx.
+    # Use the actual group size, not a hardcoded number.
+    n_users = len(per_user_scores)
+    if dom_user and n_users > 1 and idx % 2 == 0:
+        if n_users == 2:
+            other = next((u for u in per_user_scores if u != dom_user), None)
+            if other:
+                sentences.append(f"{dom_user} rated this higher than {other}.")
+        else:
+            sentences.append(f"{dom_user} rated this highest of the {n_users}.")
 
     return " ".join(s.rstrip(" ") if not s.endswith(".") else s for s in sentences)
+
+
+def _user_cap(users: Optional[list[UserPreference]], name: str) -> float:
+    if not users:
+        return 0.0
+    for u in users:
+        if u.name == name:
+            return u.max_per_drink
+    return 0.0
 
 
 # ---------------------------------------------------------------------------
@@ -323,6 +393,16 @@ def explain_exclusion(bar: Bar, reason: str, rule_id: str,
     if rule_id == "pareto_dominated":
         dominator = extra.get("dominator_name", "another option")
         return f"{bar.name} was dropped: {dominator} beat it on every criterion."
+    if rule_id in ("accessibility_unmet", "accessible_restroom_unmet"):
+        need = extra.get("need", "the requested access")
+        unknown = extra.get("unknown", False)
+        if unknown:
+            return (f"{bar.name} was excluded: {need} is unverified for this bar — "
+                    f"can't promise it meets the requirement.")
+        return f"{bar.name} was excluded: doesn't provide {need}."
+    if rule_id == "age_policy_mismatch":
+        underage = extra.get("underage_user", "a member of the group")
+        return f"{bar.name} was excluded: {bar.age_policy} only and {underage} is under 21."
     return f"{bar.name} was excluded: {reason}"
 
 
@@ -333,7 +413,12 @@ def explain_exclusion(bar: Bar, reason: str, rule_id: str,
 def explain_counterfactual(cf_kind: str, cf_description: str,
                            original_route: Route,
                            alt_route: Route) -> str:
-    """Describe how an alternative scenario's route differs from the original."""
+    """Describe how an alternative scenario's route differs from the original.
+
+    Utility deltas are reported as a percentage of the base utility — raw
+    deltas would be misleading because Borda/Copeland scores live on integer
+    rank scales while utilitarian sums are continuous in [0,1].
+    """
     if alt_route.is_empty:
         return f"{cf_description.capitalize()}, no feasible crawl would have materialized."
 
@@ -345,29 +430,59 @@ def explain_counterfactual(cf_kind: str, cf_description: str,
     removed = [s.bar.name for s in original_route.stops if s.bar.id not in alt_ids]
 
     delta_util = alt_route.total_utility - original_route.total_utility
+    pct_str = _format_delta_pct(delta_util, original_route.total_utility)
 
     pieces = [f"{cf_description.capitalize()},"]
     if not new and not removed and len(alt_ids) == len(orig_ids) and alt_ids == orig_ids:
-        pieces.append("the crawl would have been identical —")
+        # No structural change — vary the wording so 3+ unchanged CFs don't
+        # all read identically in the same plan.
         if abs(delta_util) < 0.1:
-            pieces.append("the same stops, same order.")
+            verbs = ("the same crawl emerges — same stops, same order.",
+                    "no change — the planner would still pick this exact crawl.",
+                    "the plan is unchanged.")
+            pieces.append(verbs[hash(cf_kind) % len(verbs)])
         else:
-            pieces.append(f"same stops but total utility would shift by {delta_util:+.2f}.")
+            pieces.append(
+                f"the same stops in the same order, but the group's overall "
+                f"score shifts {pct_str}."
+            )
     elif new and removed:
+        # Swap: the structure changed even if the score didn't. Phrase the
+        # score-change explicitly to avoid sounding contradictory ("swap A for B
+        # essentially unchanged" reads as nonsense).
+        score_clause = (
+            "with similar overall score" if pct_str == "essentially unchanged"
+            else f"score change {pct_str}"
+        )
         pieces.append(
             f"the plan would swap {', '.join(removed)} for {', '.join(new)} "
-            f"(total utility {delta_util:+.2f})."
+            f"({score_clause})."
         )
     elif new:
-        pieces.append(f"{', '.join(new)} would be added (+{delta_util:.2f}).")
+        pieces.append(f"{', '.join(new)} would be added ({pct_str}).")
     elif removed:
-        pieces.append(f"{', '.join(removed)} would be dropped ({delta_util:+.2f}).")
+        pieces.append(f"{', '.join(removed)} would be dropped ({pct_str}).")
     else:
         # Same bars, different order
         pieces.append(
-            f"the bars stay the same but the order changes ({delta_util:+.2f} in utility)."
+            f"the bars stay the same but the order changes ({pct_str})."
         )
     return " ".join(pieces)
+
+
+def _format_delta_pct(delta: float, base: float) -> str:
+    """Format a utility shift as a relative percent of the base. Falls back
+    to a qualitative label when the base is near zero (avoids divide-by-zero
+    and meaningless huge percentages)."""
+    if base is None or abs(base) < 1e-6:
+        if abs(delta) < 1e-3:
+            return "no measurable change"
+        return ("a small improvement" if delta > 0 else "a small drop")
+    pct = 100.0 * delta / abs(base)
+    if abs(pct) < 1.0:
+        return "essentially unchanged"
+    sign = "+" if pct > 0 else ""
+    return f"{sign}{pct:.0f}% in group score"
 
 
 # ---------------------------------------------------------------------------

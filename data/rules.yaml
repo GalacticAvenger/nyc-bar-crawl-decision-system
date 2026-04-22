@@ -230,10 +230,14 @@ group_strategy_rules:
       priority: 1
 
     - id: strategy_egalitarian
-      condition: "budget_spread_ratio > 3.0"
+      condition: "budget_spread_ratio > 2.0"
       strategy: "egalitarian_min"
       rationale_template: "The group's budget spread is wide ({ratio}x between highest and lowest). Egalitarian (Rawlsian) aggregation protects the member with the tightest budget."
       priority: 2
+      # Threshold lowered from 3.0 → 2.0 after evaluation found that even a
+      # 2.2× spread produced plans where the lowest-budget user was over their
+      # cap on every stop. 2.0× now triggers egalitarian — utilitarian still
+      # fires for genuinely aligned groups (≤2× spread).
 
     - id: strategy_copeland
       condition: "vibe_variance > 0.30"
@@ -253,32 +257,66 @@ group_strategy_rules:
       rationale_template: "The group's preferences are aligned and budgets compatible. Utilitarian aggregation (sum of individual utilities) simply maximizes total group happiness."
       priority: 5
 
+  # VOTE-style strategy metadata. Each strategy carries a rank (A = strong
+  # moral/structural claim, C = shallow fallback, E = deeper analysis needed)
+  # plus a narrative_name (phrase usable in explanation prose) and a quote
+  # (a thing a group member might say that captures the strategy's spirit).
+  # applies_when is an English description of the profile condition; the
+  # machine-readable condition lives on the matching selection_rules entry.
   strategies:
 
     utilitarian_sum:
       description: "G(b) = sum of U(b, u) across users. Maximizes average happiness."
       best_for: "Aligned groups."
       worst_for: "Groups where one member has intense preferences that drag the sum."
+      rank: "C"
+      narrative_name: "Maximize aggregate satisfaction"
+      quote: "We all want roughly the same thing — pick whatever makes everyone happiest on average."
+      applies_when: "Preferences are aligned and budgets compatible — no single member is an outlier."
 
     egalitarian_min:
       description: "G(b) = min of U(b, u) across users. Rawlsian."
       best_for: "Wide preference or budget gaps."
       worst_for: "Homogeneous groups."
+      rank: "A"
+      narrative_name: "Protect the person who'd otherwise be left out"
+      quote: "If Sarah can't afford any of these bars, it's not a group trip — it's us plus her."
+      applies_when: "One member's budget (or vibe profile) is tight enough that averaging over the group would systematically leave them out."
 
     borda_count:
       description: "Each user ranks bars; bar receives (n - rank) points per user."
       best_for: "Groups with outlier intense preferences."
       worst_for: "Groups where intensity matters (e.g., one user has a real allergy)."
+      rank: "B"
+      narrative_name: "Respect the intensity of preference"
+      quote: "Alex cares more about rooftops than the rest of us care about anything — ranking, not raw scoring, is how we stop his weights from steamrolling."
+      applies_when: "One member's preferences are unusually peaked — raw-weight aggregation would let their intensity dominate."
 
     copeland_pairwise:
       description: "For every pair of bars, which wins under majority vote? Count wins."
       best_for: "Groups split on vibe; Condorcet-consistent choice."
       worst_for: "Small groups or when cycles exist."
+      rank: "B"
+      narrative_name: "The candidate who wins every head-to-head"
+      quote: "Line them all up head-to-head; whichever wins the most pairwise contests wins the group."
+      applies_when: "The group is split on vibe with no clear aligned center — pairwise majority is more robust than summing."
 
     approval_veto:
       description: "Each user marks bars as approve / neutral / veto. Vetoes hard-exclude; approvals tally."
       best_for: "Groups with strong hard constraints."
       worst_for: "Groups with mild preferences (too coarse)."
+      rank: "A"
+      narrative_name: "Honor the dealbreaker"
+      quote: "Jordan said absolutely not to tourist traps — that's not a suggestion, it's a line."
+      applies_when: "At least one member has hard dealbreakers that veto a meaningful share of the candidate bars."
+
+  # Deeper-analysis tier. When the winning plan's normalized margin over the
+  # runner-up plan is smaller than this threshold, the chosen strategy gets
+  # re-labelled rank E and requires_deeper_analysis is set on the decision.
+  # The caller can invoke decision_system.deeper_analysis(plan_result) for a
+  # side-by-side per-stop diff. Threshold is normalized margin (relative_gap).
+  deeper_analysis:
+    margin_threshold: 0.05
 
 
 # ----------------------------------------------------------------------------

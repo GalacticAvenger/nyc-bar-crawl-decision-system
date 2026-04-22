@@ -96,15 +96,19 @@ def test_identical_users_all_strategies_agree():
             f"{strat} should rank b1 first for identical users, got {sorted_bars[0].bar_id}"
 
 
+# Phase 1: select_strategy now returns a StrategyDecision object instead of
+# a (name, rule_id, rationale) tuple. Tests below were updated to read fields
+# off the StrategyDecision; the old strategy_id / triggering_rule_id strings
+# are preserved on the dataclass so behavioural coverage is unchanged.
 def test_meta_selector_veto_fires_on_high_dealbreakers():
     bars = load_bars()[:10]
     rules = load_rules()
     users = [UserPreference(name="A", vetoes=tuple(b.id for b in bars[:5]))]
     profile = disagreement_profile(users, bars)
     assert profile["dealbreaker_density"] > 0.2
-    strat, rule_id, rationale = select_strategy(profile, rules)
-    assert strat == "approval_veto"
-    assert rule_id == "strategy_veto"
+    decision = select_strategy(profile, rules)
+    assert decision.strategy_id == "approval_veto"
+    assert decision.triggering_rule_id == "strategy_veto"
 
 
 def test_meta_selector_egalitarian_fires_on_budget_gap():
@@ -116,8 +120,8 @@ def test_meta_selector_egalitarian_fires_on_budget_gap():
     ]
     profile = disagreement_profile(users, bars)
     assert profile["budget_spread_ratio"] > 3.0
-    strat, rule_id, _ = select_strategy(profile, rules)
-    assert strat == "egalitarian_min"
+    decision = select_strategy(profile, rules)
+    assert decision.strategy_id == "egalitarian_min"
 
 
 def test_meta_selector_utilitarian_is_default():
@@ -129,5 +133,5 @@ def test_meta_selector_utilitarian_is_default():
         UserPreference(name="B", max_per_drink=16, vibe_weights={"chill": 0.5, "conversation": 0.5}),
     ]
     profile = disagreement_profile(users, bars)
-    strat, rule_id, _ = select_strategy(profile, rules)
-    assert strat == "utilitarian_sum"
+    decision = select_strategy(profile, rules)
+    assert decision.strategy_id == "utilitarian_sum"

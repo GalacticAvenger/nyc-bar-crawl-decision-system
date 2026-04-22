@@ -30,7 +30,7 @@ from .explanation_engine import (
 from .group_aggregation import aggregate, disagreement_profile, select_strategy
 from .models import (
     Bar, Case, Explanation, GroupInput, GroupScore, PlanResult, Route, RouteStop, Score,
-    UserPreference,
+    StrategyDecision, UserPreference,
 )
 from .option_generation import (
     all_structural_counterfactuals, find_runner_ups, strategy_counterfactuals,
@@ -48,13 +48,23 @@ from .temporal import day_name, is_open
 def _apply_dealbreakers(
     bars: list[Bar], group: GroupInput, rules: dict,
 ) -> tuple[list[Bar], list[dict]]:
-    """Filter hard-dealbreaking bars. Return (survivors, excluded_with_reason)."""
+    """Filter hard-dealbreaking bars. Return (survivors, excluded_with_reason).
+
+    Accessibility rule (per BUILD_PLAN §safety): when the group requests
+    step-free or accessible-restroom access, a bar is admitted ONLY if the
+    field is explicitly True. `False` and `None` (unknown) both exclude — we
+    cannot promise an unverified bar is safe for the user.
+    """
     excluded: list[dict] = []
     survivors: list[Bar] = []
+    if not group.users:
+        # No users = no group prefs to dealbreak against. Return all bars unfiltered.
+        return list(bars), []
     veto_map = {v: u.name for u in group.users for v in u.vetoes}
     poorest = min(group.users, key=lambda u: u.max_per_drink).name
     poorest_cap = min(u.max_per_drink for u in group.users)
     allowed_hoods = set(group.neighborhoods) if group.neighborhoods else None
+    underage = [u for u in group.users if u.age < 21]
 
     for b in bars:
         # 1. user veto
@@ -81,11 +91,34 @@ def _apply_dealbreakers(
                                             extra={"poorest_user": poorest}),
             })
             continue
-        # 4. accessibility
-        if group.accessibility_needs.step_free and b.accessibility.get("step_free") is False:
+        # 4a. age_policy_mismatch: 21+ bars exclude underage users.
+        if underage and b.age_policy and b.age_policy.replace(" ", "").lower() in ("21+", "21andover"):
+            excluded.append({
+                "bar": b, "rule_id": "age_policy_mismatch",
+                "reason": explain_exclusion(
+                    b, "", "age_policy_mismatch",
+                    extra={"underage_user": underage[0].name}),
+            })
+            continue
+        # 4b. step-free access: exclude unless explicitly True (None = unknown = exclude).
+        if group.accessibility_needs.step_free and b.accessibility.get("step_free") is not True:
+            unknown = b.accessibility.get("step_free") is None
             excluded.append({
                 "bar": b, "rule_id": "accessibility_unmet",
-                "reason": f"{b.name} was excluded: no step-free access.",
+                "reason": explain_exclusion(
+                    b, "", "accessibility_unmet",
+                    extra={"need": "step-free access", "unknown": unknown}),
+            })
+            continue
+        # 4c. accessible restroom: same conservative policy.
+        if (group.accessibility_needs.accessible_restroom
+                and b.accessibility.get("accessible_restroom") is not True):
+            unknown = b.accessibility.get("accessible_restroom") is None
+            excluded.append({
+                "bar": b, "rule_id": "accessible_restroom_unmet",
+                "reason": explain_exclusion(
+                    b, "", "accessible_restroom_unmet",
+                    extra={"need": "an accessible restroom", "unknown": unknown}),
             })
             continue
         # 5. open_at_start: must be open at start_time (otherwise it can't be stop 1;
@@ -204,6 +237,12 @@ def plan_crawl(
         cases = cases or loaded["cases"]
         rules = rules or loaded["rules"]
 
+    # If the caller specified neighborhoods but kept the default start_location
+    # (East Village), recenter on the neighborhoods' centroid. Otherwise users
+    # who pick "Bushwick" still pay distance penalties as if they're starting
+    # from EV — the source of the 18% dataset-coverage finding in the eval.
+    group = _maybe_recenter_start(group, bars)
+
     traces: dict = {}
 
     # 0. Disagreement profile computed against the FULL bar list.
@@ -212,7 +251,11 @@ def plan_crawl(
     # lets the veto-based rule fire at all.
     profile = disagreement_profile(group.users, bars)
     traces["disagreement_profile"] = profile
-    strat_name, rule_id, rationale = select_strategy(profile, rules)
+    decision = select_strategy(profile, rules)
+    strat_name = decision.strategy_id
+    rule_id = decision.triggering_rule_id
+    rationale = decision.rationale
+    traces["strategy_decision"] = decision
     traces["strategy_used"] = strat_name
     traces["strategy_rule"] = rule_id
     traces["strategy_rationale"] = rationale
@@ -223,13 +266,23 @@ def plan_crawl(
     traces["excluded_count"] = len(excluded)
 
     if not survivors:
+        # Surface the top reasons in the headline so the user knows what to relax,
+        # not just "no bars".
+        from collections import Counter
+        breakdown = Counter(e["rule_id"] for e in excluded)
+        top_reasons = ", ".join(f"{n} {_humanize_rule(r)}" for r, n in breakdown.most_common(3))
+        summary = (
+            f"No candidate bars survived the hard constraints "
+            f"({len(excluded)} excluded: {top_reasons}). "
+            f"Try relaxing the most-cited rule above — see excluded_bars for "
+            f"the rule that blocked each individual bar."
+        )
         return PlanResult(
             route=Route(stops=[], total_utility=0.0, total_walking_miles=0.0,
                         windows_captured=[], strategy_used="",
                         strategy_rationale=""),
             explanations=Explanation(
-                summary="No candidate bars survived the hard constraints. "
-                        "See excluded_bars for the rule that blocked each.",
+                summary=summary,
                 children=[], evidence=traces,
             ),
             excluded_bars=excluded, traces=traces,
@@ -318,6 +371,31 @@ def plan_crawl(
     runner_ups = find_runner_ups(route, union_scores, per_user, routable)
     runner_ups = unlock_analysis(route, runner_ups, per_user)
     traces["runner_ups"] = {idx: (ru.bar.name, ru.gap) for idx, ru in runner_ups.items()}
+    # Attach each runner-up to its stop so deeper_analysis(plan_result) can
+    # build a side-by-side diff without digging through traces.
+    for idx, stop in enumerate(route.stops):
+        if idx in runner_ups:
+            stop.runner_up = runner_ups[idx]
+
+    # Deeper-analysis trigger. When the mean relative_gap across stops is
+    # below the configured threshold, the winning plan is on a knife's edge —
+    # the rank flips to E and the caller is signalled that deeper_analysis()
+    # is worth invoking. Threshold lives in rules.yaml so it's tunable.
+    margin_threshold = (
+        rules.get("group_strategy_rules", {})
+        .get("deeper_analysis", {})
+        .get("margin_threshold", 0.05)
+    )
+    if runner_ups:
+        gaps = [ru.relative_gap for ru in runner_ups.values()
+                if ru.relative_gap is not None]
+        if gaps:
+            mean_margin = sum(gaps) / len(gaps)
+            traces["plan_margin"] = mean_margin
+            if mean_margin < margin_threshold:
+                decision.requires_deeper_analysis = True
+                decision.rank = "E"
+                traces["strategy_decision"] = decision  # rebind, same object
 
     alternatives: list[Route] = []
     cf_texts: list[str] = []
@@ -339,7 +417,8 @@ def plan_crawl(
     stop_exps = []
     for idx, stop in enumerate(route.stops):
         ru = runner_ups.get(idx)
-        text = explain_stop(idx, stop, route, per_user, ru, rules)
+        text = explain_stop(idx, stop, route, per_user, ru, rules,
+                            users=group.users)
         stop_exps.append(Explanation(summary=text, evidence={"stop_index": idx}))
 
     children = [
@@ -393,3 +472,113 @@ def _avg_budget_weight(group: GroupInput, rules: dict) -> float:
         total += w.get("budget", 0.0)
         n += 1
     return total / max(1, n)
+
+
+_RULE_LABELS = {
+    "user_veto": "vetoed",
+    "neighborhood_excluded": "outside requested neighborhoods",
+    "budget_gross_mismatch": "over budget cap",
+    "accessibility_unmet": "not step-free",
+    "accessible_restroom_unmet": "no accessible restroom",
+    "age_policy_mismatch": "21+ only",
+    "closed_at_arrival": "closed during your window",
+}
+
+
+def _humanize_rule(rule_id: str) -> str:
+    return _RULE_LABELS.get(rule_id, rule_id.replace("_", " "))
+
+
+_DEFAULT_START_LOCATION = (40.7265, -73.9815)  # mirror models.GroupInput default
+
+
+def _maybe_recenter_start(group: GroupInput, bars: list[Bar]) -> GroupInput:
+    """If the caller specified neighborhoods AND didn't override start_location,
+    re-anchor the start to the centroid of bars in those neighborhoods so that
+    distance penalties don't push the planner toward East Village by default."""
+    if not group.neighborhoods:
+        return group
+    if _is_default_start(group.start_location):
+        nh_set = set(group.neighborhoods)
+        nh_bars = [b for b in bars if b.neighborhood in nh_set]
+        if nh_bars:
+            lat = sum(b.lat for b in nh_bars) / len(nh_bars)
+            lon = sum(b.lon for b in nh_bars) / len(nh_bars)
+            # Build a shallow copy with the new start (GroupInput is a regular
+            # dataclass; copy.replace via dataclasses.replace would be ideal,
+            # but mutating is cheap enough here).
+            import dataclasses
+            return dataclasses.replace(group, start_location=(lat, lon))
+    return group
+
+
+def _is_default_start(loc: tuple[float, float]) -> bool:
+    if not loc or len(loc) != 2:
+        return True
+    return (abs(loc[0] - _DEFAULT_START_LOCATION[0]) < 1e-6
+            and abs(loc[1] - _DEFAULT_START_LOCATION[1]) < 1e-6)
+
+
+# ---------------------------------------------------------------------------
+# Deeper analysis — the E-tier callable
+# ---------------------------------------------------------------------------
+
+def deeper_analysis(plan_result: PlanResult, rules: Optional[dict] = None) -> dict:
+    """Side-by-side per-stop diff of the winner vs the runner-up at each stop.
+
+    Invoked by the caller when `plan_result.traces["strategy_decision"]
+    .requires_deeper_analysis` is True. Does not re-plan; reads the
+    runner-up data already populated on each stop.
+
+    Returns a dict with:
+      margin         — mean normalized gap across stops (lower = tighter)
+      margin_threshold — the configured trigger threshold
+      stop_diffs     — list[dict] with one entry per stop:
+                        stop_index, winner {name, group_score},
+                        runner_up {name, relative_gap, gap, unlock_hint, criteria_gap}
+      strategy_decision — the triggering StrategyDecision (for narrative)
+    """
+    route = plan_result.route
+    stop_diffs: list[dict] = []
+    for idx, stop in enumerate(route.stops):
+        entry: dict = {
+            "stop_index": idx,
+            "winner": {
+                "bar_name": stop.bar.name,
+                "bar_id": stop.bar.id,
+                "group_score": stop.group_score,
+                "neighborhood": stop.bar.neighborhood,
+                "price_tier": stop.bar.price_tier,
+            },
+            "runner_up": None,
+        }
+        ru = stop.runner_up
+        if ru is not None:
+            top_criteria_gaps = sorted(
+                ru.gap_criteria.items(), key=lambda kv: -abs(kv[1])
+            )[:3]
+            entry["runner_up"] = {
+                "bar_name": ru.bar.name,
+                "bar_id": ru.bar.id,
+                "relative_gap": ru.relative_gap,
+                "gap": ru.gap,
+                "unlock_hint": ru.unlock_hint,
+                "neighborhood": ru.bar.neighborhood,
+                "price_tier": ru.bar.price_tier,
+                "top_criteria_gaps": top_criteria_gaps,
+            }
+        stop_diffs.append(entry)
+
+    mean_margin = plan_result.traces.get("plan_margin")
+    decision = plan_result.traces.get("strategy_decision")
+    if rules is None:
+        rules = load_all()["rules"]
+    threshold = (rules.get("group_strategy_rules", {})
+                      .get("deeper_analysis", {})
+                      .get("margin_threshold", 0.05))
+    return {
+        "margin": mean_margin,
+        "margin_threshold": threshold,
+        "stop_diffs": stop_diffs,
+        "strategy_decision": decision,
+    }

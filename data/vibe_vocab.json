@@ -1,7 +1,7 @@
 {
-  "_comment": "Fixed vibe vocabulary. Every bar.vibe_tags entry MUST be one of these strings. Every user's vibe preference MUST be a weight over this vocabulary. Version 2.0 was retuned for a 20-something NYC audience: added practical tags (games, late-close, walk-in), split overloaded tags (dancing → dance-floor / dj-set / live-band; outdoor → patio / rooftop / sidewalk-seating; themed → tiki / retro / literary-themed / theatrical), dropped redundants (chill, first-meet, rowdy, loud, bright) and replaced lgbtq-friendly with queer-centered.",
-  "_version": "2.0",
-  "_total_vibes": 45,
+  "_comment": "Fixed vibe vocabulary. Every bar.vibe_tags entry MUST be one of these strings. Every user's vibe preference MUST be a weight over this vocabulary. Version 2.1 trimmed three never-used tags (industry / no-cover / sidewalk-seating) flagged by the eval; v2.0 retuned for a 20-something NYC audience and split overloaded tags.",
+  "_version": "2.1",
+  "_total_vibes": 42,
 
   "facets": {
     "atmosphere": [
@@ -14,7 +14,6 @@
       "touristy",
       "unpretentious",
       "instagrammable",
-      "industry",
       "trending"
     ],
     "purpose": [
@@ -38,7 +37,6 @@
       "airy",
       "patio",
       "rooftop",
-      "sidewalk-seating",
       "tiki",
       "retro",
       "literary-themed",
@@ -48,7 +46,6 @@
       "music-loud",
       "crowd-loud",
       "late-close",
-      "no-cover",
       "walk-in"
     ],
     "identity": [
@@ -67,7 +64,6 @@
     ["touristy", "hidden-gem"],
     ["conversation", "dance-floor"],
     ["conversation", "music-loud"],
-    ["industry", "touristy"],
     ["post-work", "late-close"],
     ["date", "pregame"]
   ],
@@ -76,6 +72,7 @@
     "opposing_pairs": "Used by the scoring engine to detect incoherent vibe profiles — if a user weights both sides of an opposing pair highly, the system flags this in the explanation.",
     "split_rationale": "In v1, 'dancing' lumped DJ sets, live bands, and actual dance floors into one signal — three very different experiences. Same for 'outdoor' (patio vs rooftop vs sidewalk) and 'themed' (tiki vs retro vs literary vs theatrical).",
     "deleted_in_v2": "lgbtq-friendly (too vague; replaced by queer-centered which signals a primary draw, not just a welcoming space), dancing (split), outdoor (split), themed (split), chill (overlap with unpretentious), first-meet (subset of date), rowdy / loud / bright (redundant with noise_level ordinal or rarely used).",
+    "deleted_in_v2_1": "industry (never tagged on any bar; replaced by detecting via specials.industry_night), no-cover (rarely meaningful — most bars are walk-in already), sidewalk-seating (subsumed by patio).",
     "weighting_advice": "For a 20-something audience, Activity-facet vibes (dance-floor, games, live-band, dj-set) carry more decision weight than Atmosphere vibes — people will happily go to a dive OR a cocktail bar for the right activity.",
     "no_drink_type_vibes_except_specific": "Drink preferences (beer/wine/cocktails/whiskey/spirits/shots) live on Bar.drink_categories_served and UserPreference.preferred_drinks. Exception: craft-cocktails and natural-wine are genuine scene signals — a 'natural-wine bar' is a different vibe from a 'wine bar'."
   }

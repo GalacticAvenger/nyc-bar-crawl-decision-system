@@ -35,8 +35,24 @@ def find_runner_ups(
     bars: list[Bar],
 ) -> dict[int, RunnerUp]:
     """For each stop, find the 2nd-highest-utility bar (that's not already in
-    the route). Return dict[stop_index] -> RunnerUp."""
+    the route). Return dict[stop_index] -> RunnerUp.
+
+    `gap` is in raw units of whatever aggregation strategy fired. Because
+    those units differ (utilitarian: continuous; Borda/Copeland: integer
+    counts), we also populate `relative_gap`, scaled to [0, 1] using the
+    score range across all candidate bars under this strategy. The
+    explanation engine should threshold on `relative_gap`, not `gap`.
+    """
     used_ids = {s.bar.id for s in route.stops}
+    # Score range (max - min) used to normalize gaps into a strategy-agnostic
+    # [0,1] scale. Falls back to abs(max) when min == max == 0.
+    if group_scores:
+        score_max = max(group_scores.values())
+        score_min = min(group_scores.values())
+        score_range = max(score_max - score_min, 1e-9)
+    else:
+        score_max, score_min, score_range = 0.0, 0.0, 1.0
+
     result: dict[int, RunnerUp] = {}
     for idx, stop in enumerate(route.stops):
         # Candidates = bars other than used ones
@@ -45,7 +61,10 @@ def find_runner_ups(
             continue
         ranked = sorted(others, key=lambda b: -group_scores[b.id])
         best_alt = ranked[0]
-        gap = group_scores[stop.bar.id] - group_scores[best_alt.id]
+        winner_score = group_scores.get(stop.bar.id, 0.0)
+        alt_score = group_scores[best_alt.id]
+        gap = winner_score - alt_score
+        relative_gap = max(0.0, gap) / score_range
         # Compute per-criterion gap (averaged across users who scored both)
         crit_gap: dict[str, float] = {}
         for u_id, u_scores in per_user_scores.items():
@@ -60,6 +79,7 @@ def find_runner_ups(
             gap=gap,
             gap_criteria=crit_gap,
             unlock_hint="",
+            relative_gap=relative_gap,
         )
     return result
 

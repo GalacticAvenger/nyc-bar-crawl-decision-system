@@ -12,6 +12,7 @@ narrative anchor for the explanation engine ("this plan resembles our
 
 from __future__ import annotations
 
+import math
 from typing import Optional
 
 from .models import Bar, Case, GroupInput, UserPreference
@@ -21,11 +22,40 @@ from .models import Bar, Case, GroupInput, UserPreference
 # Similarity
 # ---------------------------------------------------------------------------
 
+# Tier boundaries are INCLUSIVE on the upper end of cheap/moderate/premium so
+# a $8 cap = cheap, $14 = moderate, $20 = premium. This matches the
+# qualitative tiers in rules.yaml §qualitative_thresholds.price_tier (which
+# also uses min/max with min as the lower bound).
+TIER_ORDER = ("cheap", "moderate", "premium", "splurge")
+
+
 def _budget_tier_of(user_avg_cap: float) -> str:
-    if user_avg_cap < 8: return "cheap"
-    if user_avg_cap < 14: return "moderate"
-    if user_avg_cap < 20: return "premium"
+    if user_avg_cap <= 8: return "cheap"
+    if user_avg_cap <= 14: return "moderate"
+    if user_avg_cap <= 20: return "premium"
     return "splurge"
+
+
+def _expand_tier_spec(spec: str) -> set[str]:
+    """Convert a case's budget_tier string ("cheap", "moderate_to_premium",
+    "moderate to premium", "any") into the set of allowed tier names.
+
+    Substring matching was the old hack; range expansion is what was meant."""
+    if not spec:
+        return set()
+    s = spec.strip().lower().replace(" ", "_")
+    if s == "any":
+        return set(TIER_ORDER)
+    if "_to_" in s:
+        lo_s, hi_s = s.split("_to_", 1)
+        if lo_s in TIER_ORDER and hi_s in TIER_ORDER:
+            lo, hi = TIER_ORDER.index(lo_s), TIER_ORDER.index(hi_s)
+            return set(TIER_ORDER[lo:hi + 1])
+    if s in TIER_ORDER:
+        return {s}
+    # Fallback: try comma-separated list, otherwise nothing
+    parts = {p.strip() for p in s.replace(",", " ").split() if p.strip() in TIER_ORDER}
+    return parts
 
 
 def _case_size_match(case: Case, group_size: int) -> float:
@@ -36,14 +66,29 @@ def _case_size_match(case: Case, group_size: int) -> float:
             return 1.0
         closest = min(abs(group_size - lo), abs(group_size - hi))
         return max(0.0, 1.0 - closest * 0.3)
+    if isinstance(size_spec, list) and len(size_spec) == 1:
+        # exact size requirement
+        target = size_spec[0]
+        if group_size == target:
+            return 1.0
+        return max(0.0, 1.0 - abs(group_size - target) * 0.3)
     return 0.5
 
 
 def _case_budget_match(case: Case, group_budget_tier: str) -> float:
-    expected = case.group_profile.get("budget_tier", "")
-    if group_budget_tier in expected:  # e.g., "moderate_to_premium" contains "moderate"
+    expected = _expand_tier_spec(case.group_profile.get("budget_tier", ""))
+    if not expected:
+        return 0.5  # case is agnostic / unspecified
+    if group_budget_tier in expected:
         return 1.0
-    return 0.3
+    # Adjacent tier — partial credit (e.g. group=moderate, case=premium)
+    try:
+        gi = TIER_ORDER.index(group_budget_tier)
+    except ValueError:
+        return 0.3
+    nearest = min(abs(gi - TIER_ORDER.index(t)) for t in expected
+                  if t in TIER_ORDER)
+    return max(0.0, 1.0 - 0.35 * nearest)
 
 
 def _case_neighborhood_match(case: Case, neighborhoods: tuple[str, ...]) -> float:
@@ -58,15 +103,45 @@ def _case_neighborhood_match(case: Case, neighborhoods: tuple[str, ...]) -> floa
 
 
 def _case_vibe_match(case: Case, combined_vibes: dict[str, float]) -> float:
-    """How well does the aggregate group vibe-weight map to the case's summary?"""
-    summary = case.group_profile.get("vibe_summary", "").lower()
-    if not summary:
+    """Cosine-style overlap between the group's normalized vibe weights and
+    the union of vibe_profiles in the case's solution_sequence.
+
+    The old version matched user vibes against substrings of a free-form
+    summary string ("intimate + sophisticated"), which under-rewarded a
+    perfect match (e.g. dive_tour summary = "divey + unpretentious" missed
+    the user's "divey" vibe even though it was identical, because the search
+    was substring-on-summary, not weight-vector-on-vibe-profile).
+    """
+    if not combined_vibes:
         return 0.5
-    words = {w.strip(" +") for w in summary.replace("+", " ").split() if w}
-    # Count how many of the top-weighted user vibes are mentioned in the summary
-    ranked = sorted(combined_vibes.items(), key=lambda kv: -kv[1])[:4]
-    hits = sum(1 for vibe, _ in ranked if vibe in words or any(vibe in w for w in words))
-    return min(1.0, hits / 4)
+    case_profile: dict[str, float] = {}
+    for step in case.group_profile.get("_indexed_profile") or _index_solution_profile(case):
+        for v, w in step.items():
+            case_profile[v] = max(case_profile.get(v, 0.0), w)
+
+    if not case_profile:
+        # Fall back to summary-word matching for cases with no solution_sequence
+        summary = case.group_profile.get("vibe_summary", "").lower()
+        if not summary:
+            return 0.5
+        words = {w.strip(" +") for w in summary.replace("+", " ").split() if w}
+        ranked = sorted(combined_vibes.items(), key=lambda kv: -kv[1])[:4]
+        hits = sum(1 for vibe, _ in ranked if vibe in words)
+        return min(1.0, hits / 4)
+
+    # Cosine similarity between the two weight vectors
+    keys = set(combined_vibes) | set(case_profile)
+    dot = sum(combined_vibes.get(k, 0.0) * case_profile.get(k, 0.0) for k in keys)
+    n_user = math.sqrt(sum(v * v for v in combined_vibes.values()))
+    n_case = math.sqrt(sum(v * v for v in case_profile.values()))
+    if n_user == 0 or n_case == 0:
+        return 0.5
+    cos = dot / (n_user * n_case)
+    return max(0.0, min(1.0, cos))
+
+
+def _index_solution_profile(case: Case) -> list[dict[str, float]]:
+    return [step.get("vibe_profile", {}) for step in case.solution_sequence]
 
 
 def similarity(case: Case, group: GroupInput) -> tuple[float, dict[str, float]]:
@@ -92,8 +167,9 @@ def similarity(case: Case, group: GroupInput) -> tuple[float, dict[str, float]]:
         "neighborhood": _case_neighborhood_match(case, group.neighborhoods),
         "vibe": _case_vibe_match(case, combined),
     }
-    # Weighted average
-    weights = {"size": 0.20, "budget": 0.20, "neighborhood": 0.25, "vibe": 0.35}
+    # Weighted average. Vibe weight increased — it is the strongest signal
+    # for "is this the right archetype for this group".
+    weights = {"size": 0.15, "budget": 0.20, "neighborhood": 0.20, "vibe": 0.45}
     total = sum(weights[k] * components[k] for k in components)
     return total, components
 
