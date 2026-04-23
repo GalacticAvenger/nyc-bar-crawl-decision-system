@@ -832,9 +832,10 @@ def explain_exclusion(bar: Bar, reason: str, rule_id: str,
         return f"{bar.name} was excluded: {vetoer} vetoed it."
     if rule_id == "budget_gross_mismatch":
         poorest = extra.get("poorest_user", "someone in the group")
+        mult = extra.get("multiplier", 2.0)
         return (
             f"{bar.name} was excluded: its average drink price (${bar.avg_drink_price:.0f}) "
-            f"is more than 2× {poorest}'s cap."
+            f"is more than {mult:g}× {poorest}'s cap."
         )
     if rule_id == "closed_at_arrival":
         t = extra.get("arrival_time", "the planned arrival")

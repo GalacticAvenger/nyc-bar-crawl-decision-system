@@ -46,6 +46,7 @@ NIGHT_STYLES = {
         ],
         "max_stops": 3, "start": time(20, 0), "end": time(1, 0),
         "noise": "lively", "drinks": ["cocktails", "beer"], "walking_only": True,
+        "budget": 14, "budget_multiplier": 2.0,
         "tagline": "Walkable, unpretentious, no cover. Conversation over volume.",
     },
     "Pregame → clubs": {
@@ -56,6 +57,10 @@ NIGHT_STYLES = {
         ],
         "max_stops": 3, "start": time(21, 0), "end": time(3, 30),
         "noise": "loud", "drinks": ["cocktails", "shots", "beer"], "walking_only": False,
+        # Higher slider default AND a relaxed dealbreaker multiplier: real
+        # clubs run $18–25/drink, so the default 2.0× rule silently filters
+        # every candidate out when the slider is at $15.
+        "budget": 18, "budget_multiplier": 2.5,
         "tagline": "Ramp from chatty opener to dance floor. Closes at 3–4am. Uber to the club is assumed.",
     },
     "Dive bar tour": {
@@ -66,6 +71,7 @@ NIGHT_STYLES = {
         ],
         "max_stops": 4, "start": time(20, 0), "end": time(1, 30),
         "noise": "lively", "drinks": ["beer", "shots"], "walking_only": True,
+        "budget": 10, "budget_multiplier": 2.0,
         "tagline": "Cheap, loud enough to be fun, old enough to have ghosts.",
     },
     "Date night": {
@@ -75,6 +81,7 @@ NIGHT_STYLES = {
         ],
         "max_stops": 2, "start": time(19, 30), "end": time(23, 30),
         "noise": "conversation", "drinks": ["cocktails", "wine"], "walking_only": True,
+        "budget": 20, "budget_multiplier": 2.0,
         "tagline": "Two rooms that let you talk. No surprises, no ejections.",
     },
     "Birthday party": {
@@ -85,6 +92,7 @@ NIGHT_STYLES = {
         ],
         "max_stops": 3, "start": time(21, 0), "end": time(3, 0),
         "noise": "loud", "drinks": ["cocktails", "shots", "beer"], "walking_only": False,
+        "budget": 18, "budget_multiplier": 2.5,
         "tagline": "Venues that take reservations. Ends somewhere you can dance.",
     },
     "Post-dinner drinks": {
@@ -94,6 +102,7 @@ NIGHT_STYLES = {
         ],
         "max_stops": 2, "start": time(21, 30), "end": time(0, 30),
         "noise": "conversation", "drinks": ["cocktails", "wine", "whiskey"], "walking_only": True,
+        "budget": 20, "budget_multiplier": 2.0,
         "tagline": "One proper cocktail and a nightcap. Short, honest, home by 1.",
     },
     "Late-night only": {
@@ -103,6 +112,7 @@ NIGHT_STYLES = {
         ],
         "max_stops": 2, "start": time(23, 0), "end": time(3, 30),
         "noise": "loud", "drinks": ["cocktails", "shots"], "walking_only": False,
+        "budget": 18, "budget_multiplier": 2.5,
         "tagline": "For when the night starts where everyone else's ended.",
     },
     "Rooftop summer": {
@@ -113,6 +123,8 @@ NIGHT_STYLES = {
         ],
         "max_stops": 3, "start": time(19, 0), "end": time(0, 30),
         "noise": "conversation", "drinks": ["cocktails", "wine"], "walking_only": False,
+        # Rooftops routinely run $18–30; the default 2.0× filters them all out.
+        "budget": 22, "budget_multiplier": 2.5,
         "tagline": "Golden hour → skyline → something quieter. Warm-weather only.",
     },
     "Games night": {
@@ -122,6 +134,7 @@ NIGHT_STYLES = {
         ],
         "max_stops": 2, "start": time(19, 30), "end": time(1, 0),
         "noise": "lively", "drinks": ["beer", "cocktails"], "walking_only": True,
+        "budget": 14, "budget_multiplier": 2.0,
         "tagline": "Pool, shuffleboard, darts, or board games. Less talking, more doing.",
     },
 }
@@ -243,7 +256,11 @@ def main():
             with st.expander(f"Person {i + 1}", expanded=default_expanded):
                 name = st.text_input("Name", value=f"Friend {i + 1}", key=f"n{i}")
                 if show_fields:
-                    budget = st.slider("Max per drink ($)", 5, 40, 15, key=f"b{i}")
+                    budget = st.slider(
+                        "Max per drink ($)", 5, 40,
+                        style.get("budget", 15),
+                        key=f"b{i}",
+                    )
                     drinks = st.multiselect(
                         "Preferred drinks",
                         ["beer", "wine", "cocktails", "whiskey", "spirits", "shots"],
@@ -380,6 +397,7 @@ def main():
         neighborhoods=tuple(neighborhoods),
         arc_profile=arc_profile,
         walking_only=style.get("walking_only", True),
+        budget_multiplier=style.get("budget_multiplier"),
     )
 
     # Stash inputs so a replan click (which doesn't go through the form)

@@ -436,6 +436,101 @@ def test_threshold_for_parses_yaml_condition(loaded):
 
 
 # ---------------------------------------------------------------------------
+# Budget-multiplier override (Phase 4.1 UX fix)
+# ---------------------------------------------------------------------------
+
+def test_budget_multiplier_default_from_rules_is_two(loaded):
+    """Default multiplier comes from rules.yaml — value is 2.0."""
+    rules = loaded["rules"]
+    bgm = next(r for r in rules["dealbreaker_rules"]
+                if r["id"] == "budget_gross_mismatch")
+    assert bgm.get("multiplier") == 2.0
+
+
+def test_group_budget_multiplier_override_admits_splurge_bar(loaded):
+    """With the default 2.0× multiplier a $32 drink bar gets excluded at a
+    $15 cap. Setting GroupInput.budget_multiplier=2.5 admits it."""
+    from src.decision_system import _apply_dealbreakers
+
+    bars = loaded["bars"]
+    rules = loaded["rules"]
+    mr_purple = next((b for b in bars if "Mr. Purple" in b.name), None)
+    assert mr_purple is not None, "Mr. Purple must be in the dataset"
+    users = [UserPreference(name="A", max_per_drink=15.0),
+             UserPreference(name="B", max_per_drink=15.0)]
+
+    g_default = GroupInput(
+        users=users,
+        start_time=datetime(2026, 4, 24, 21, 0),
+        end_time=datetime(2026, 4, 25, 3, 0),
+        max_stops=3,
+    )
+    _survivors_default, excluded_default = _apply_dealbreakers(bars, g_default, rules)
+    excluded_ids = {e["bar"].id for e in excluded_default
+                     if e["rule_id"] == "budget_gross_mismatch"}
+    # At 2.0× × $15 = $30, Mr. Purple ($32.50) must be excluded.
+    assert mr_purple.id in excluded_ids
+
+    g_relaxed = GroupInput(
+        users=users,
+        start_time=datetime(2026, 4, 24, 21, 0),
+        end_time=datetime(2026, 4, 25, 3, 0),
+        max_stops=3,
+        budget_multiplier=2.5,
+    )
+    survivors_relaxed, excluded_relaxed = _apply_dealbreakers(
+        bars, g_relaxed, rules,
+    )
+    # At 2.5× × $15 = $37.50 > $32.50, Mr. Purple must survive.
+    assert mr_purple.id in {b.id for b in survivors_relaxed}
+    assert mr_purple.id not in {
+        e["bar"].id for e in excluded_relaxed
+        if e["rule_id"] == "budget_gross_mismatch"
+    }
+
+
+def test_budget_exclusion_explanation_cites_the_actual_multiplier(loaded):
+    """The exclusion text must quote the multiplier that fired — a plan
+    with budget_multiplier=2.5 should not say '2×' in its exclusions."""
+    from src.decision_system import _apply_dealbreakers
+
+    bars = loaded["bars"]
+    rules = loaded["rules"]
+    # Pick an expensive bar that 2.5× × $10 = $25 would still exclude
+    splurge = next(b for b in bars if b.avg_drink_price > 30)
+    users = [UserPreference(name="A", max_per_drink=10.0)]
+    g = GroupInput(
+        users=users,
+        start_time=datetime(2026, 4, 24, 21, 0),
+        end_time=datetime(2026, 4, 25, 3, 0),
+        max_stops=3,
+        budget_multiplier=2.5,
+    )
+    _, excluded = _apply_dealbreakers(bars, g, rules)
+    match = next(e for e in excluded if e["bar"].id == splurge.id
+                 and e["rule_id"] == "budget_gross_mismatch")
+    # The exclusion text cites 2.5, not 2
+    assert "2.5×" in match["reason"] or "2.5x" in match["reason"].lower(), (
+        f"exclusion should quote 2.5×: {match['reason']}"
+    )
+
+
+def test_mr_purple_tagging_includes_nightlife_signals(loaded):
+    """Phase 4.1 bar_overrides update: Mr. Purple should now carry
+    dj-set + late-close + music-loud so it can compete with clubs on the
+    Pregame→clubs peak stage."""
+    bars = loaded["bars"]
+    mr_purple = next(b for b in bars if "Mr. Purple" in b.name)
+    assert "dj-set" in mr_purple.vibe_tags
+    assert "late-close" in mr_purple.vibe_tags
+    assert "music-loud" in mr_purple.vibe_tags
+    # The updated tagging should NOT include conversation — that tag is
+    # in an opposing pair with dance-floor and would penalize the bar on
+    # club-heavy stages.
+    assert "conversation" not in mr_purple.vibe_tags
+
+
+# ---------------------------------------------------------------------------
 # Fix 10 — start_location auto-recenter on neighborhoods centroid
 # ---------------------------------------------------------------------------
 

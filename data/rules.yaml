@@ -117,11 +117,16 @@ dealbreaker_rules:
     explanation_template: "{bar_name} excluded: accessible restroom required but not available."
 
   - id: budget_gross_mismatch
-    description: "Bar's average drink price is more than 2x any user's max."
+    description: "Bar's average drink price is more than `multiplier`× any user's max."
     applies_to: bar
     severity: hard
-    condition: "bar.avg_drink_price > 2.0 * min(user.max_per_drink for user in group)"
-    explanation_template: "{bar_name} ({price_tier}, ~${avg_drink_price}) exceeds {poorest_user}'s budget cap (${max_per_drink}) by more than 2x."
+    # The multiplier can be overridden per plan via GroupInput.budget_multiplier.
+    # Club-heavy night styles (Pregame→clubs, Rooftop summer) set this to 2.5
+    # because clubs + rooftops genuinely run above normal bar prices and the
+    # default 2.0× would exclude every real candidate.
+    multiplier: 2.0
+    condition: "bar.avg_drink_price > multiplier * min(user.max_per_drink for user in group)"
+    explanation_template: "{bar_name} ({price_tier}, ~${avg_drink_price}) exceeds {poorest_user}'s budget cap (${max_per_drink}) by more than {multiplier}x."
 
   - id: age_policy_mismatch
     description: "Bar is 21+ only and any user in group is under 21."

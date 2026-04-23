@@ -123,8 +123,8 @@ overrides:
     add_vibes: [rooftop, airy, trending, instagrammable]
     note: "LES boutique hotel rooftop"
   "Mr. Purple":
-    add_vibes: [rooftop, airy, trending]
-    note: "Hotel Indigo LES rooftop; purple-lit instagram bait"
+    add_vibes: [rooftop, airy, trending, dj-set, late-close, music-loud, instagrammable]
+    note: "Hotel Indigo LES rooftop; purple-lit, late DJs, functions as a scene bar / rooftop club on weekends"
   "Jungle Bird":
     add_vibes: [tiki, craft-cocktails]
     note: "Tropical/tiki Flatiron cocktail bar"

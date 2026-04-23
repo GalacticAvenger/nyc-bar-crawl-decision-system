@@ -67,6 +67,19 @@ def _apply_dealbreakers(
     allowed_hoods = set(group.neighborhoods) if group.neighborhoods else None
     underage = [u for u in group.users if u.age < 21]
 
+    # Resolve the budget_gross_mismatch multiplier. Priority: per-plan
+    # override on GroupInput → rules.yaml value → hardcoded 2.0 fallback.
+    # Club-heavy night styles (Pregame→clubs, Rooftop summer) override this
+    # to 2.5 so real nightlife venues aren't silently filtered out.
+    budget_mult = group.budget_multiplier
+    if budget_mult is None:
+        for r in rules.get("dealbreaker_rules", []):
+            if r.get("id") == "budget_gross_mismatch":
+                budget_mult = r.get("multiplier", 2.0)
+                break
+        if budget_mult is None:
+            budget_mult = 2.0
+
     for b in bars:
         # 1. user veto
         if b.id in veto_map:
@@ -84,12 +97,13 @@ def _apply_dealbreakers(
                                             extra={"allowed": ", ".join(sorted(allowed_hoods))}),
             })
             continue
-        # 3. budget gross mismatch
-        if b.avg_drink_price > 2.0 * poorest_cap:
+        # 3. budget gross mismatch (multiplier is tunable per plan)
+        if b.avg_drink_price > budget_mult * poorest_cap:
             excluded.append({
                 "bar": b, "rule_id": "budget_gross_mismatch",
                 "reason": explain_exclusion(b, "", "budget_gross_mismatch",
-                                            extra={"poorest_user": poorest}),
+                                            extra={"poorest_user": poorest,
+                                                   "multiplier": budget_mult}),
             })
             continue
         # 4a. age_policy_mismatch: 21+ bars exclude underage users.

@@ -117,6 +117,10 @@ class GroupInput:
     # instead of a single flat user.vibe_weights, so a "warm-up" stop prefers
     # different vibes than a "peak" stop.
     arc_profile: Optional[tuple[dict[str, float], ...]] = None
+    # Per-plan override for the budget_gross_mismatch multiplier. Default
+    # (None) means read from rules.yaml. Club-heavy night styles bump this
+    # to 2.5 because real nightlife venues run above normal bar prices.
+    budget_multiplier: Optional[float] = None
 
 
 # ---------------------------------------------------------------------------
