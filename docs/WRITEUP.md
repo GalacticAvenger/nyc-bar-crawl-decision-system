@@ -58,7 +58,7 @@ I started with my actual personal Google Maps bar list — 159 entries with name
 
 ## 5. Worked example
 
-Three friends — Alice (intimate / conversation, $20 cap, cocktails), Bob (lively / unpretentious, $12, beer), Carol (hidden-gem / conversation, $16, cocktails) — Friday 7pm to 11:30pm, EV + LES only, three stops. Vibe variance lands at 0.39, so the meta-selector fires Copeland (rule: vibe variance > 0.30). The plan: **Lost in Paradise Rooftop → The Back Room → Vida Verde**, with explanations like:
+Three friends, Alice (intimate / conversation, $20 cap, cocktails), Bob (lively / unpretentious, $12, beer), Carol (hidden-gem / conversation, $16, cocktails) — Friday 7pm to 11:30pm, EV + LES only, three stops. Vibe variance lands at 0.39, so the meta-selector fires Copeland (rule: vibe variance > 0.30). The plan: **Lost in Paradise Rooftop → The Back Room → Vida Verde**, with explanations like:
 
 > We open at **Lost in Paradise Rooftop** at 7:08pm, a mid-priced, conversational spot in Lower East Side. The vibe matches what the group wanted (tags: airy, conversation, craft-cocktails), strong consensus pick (4.7★ over 6,621 reviews), and Alice rated this highest of the 3. The decisive factor: it's a widely-loved spot. But it's over Bob's cap (~$14/drink over Bob's $12 cap) — Bob is paying over their cap at this stop.
 
