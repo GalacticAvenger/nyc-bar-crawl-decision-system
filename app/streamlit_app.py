@@ -364,7 +364,45 @@ def main():
     # =====================================================================
     # Main pane
     # =====================================================================
-    if not submitted:
+    # Phase 4 fix: use session_state to persist results across reruns.
+    # `submitted` is only True on the rerun where the form was just sent,
+    # so any sidebar interaction (selectbox, checkbox) would otherwise wipe
+    # the results — including the reaction UI's own controls. We only
+    # *re-plan* when submitted is True; we *render* whatever's in
+    # session_state on every rerun.
+
+    if submitted:
+        start_dt, end_dt = _combine_with_next_day(d_val, start_t, end_t)
+        # Build the arc profile — one vibe_weights dict per stage of the night.
+        arc_profile = tuple(dict(weights) for _role, weights in style["arc"])
+        group = GroupInput(
+            users=user_prefs,
+            start_time=start_dt, end_time=end_dt,
+            max_stops=max_stops,
+            neighborhoods=tuple(neighborhoods),
+            arc_profile=arc_profile,
+            walking_only=style.get("walking_only", True),
+            budget_multiplier=style.get("budget_multiplier"),
+        )
+        st.session_state["group"] = group
+        st.session_state["bars"] = bars
+        st.session_state["cases"] = cases
+        st.session_state["rules"] = rules
+        st.session_state["style_name"] = style_name
+        with st.spinner("Planning…"):
+            result = plan_crawl(group, bars=bars, cases=cases, rules=rules)
+        st.session_state["result"] = result
+        # Wipe any prior reaction selections so the new plan doesn't
+        # inherit stale verdicts pointing at indices that may not exist.
+        for k in list(st.session_state.keys()):
+            if k.startswith(("verdict_", "user_", "lock_")):
+                del st.session_state[k]
+
+    # On every rerun, render from session_state if a result is present;
+    # otherwise show the splash.
+    result = st.session_state.get("result")
+    group = st.session_state.get("group")
+    if result is None or group is None:
         st.info(
             "Pick a night style on the left, set each person's budget + drinks, "
             "and hit **Plan crawl**. The night style controls the vibe arc — "
@@ -379,37 +417,12 @@ def main():
         )
         return
 
-    start_dt, end_dt = _combine_with_next_day(d_val, start_t, end_t)
-    duration_hours = (end_dt - start_dt).total_seconds() / 3600
+    style_name_used = st.session_state.get("style_name", style_name)
+    duration_hours = (group.end_time - group.start_time).total_seconds() / 3600
     st.caption(
-        f"**{style_name}** — {start_dt.strftime('%a %-I:%M%p')} → "
-        f"{end_dt.strftime('%a %-I:%M%p')} ({duration_hours:.1f} hours)"
+        f"**{style_name_used}** — {group.start_time.strftime('%a %-I:%M%p')} → "
+        f"{group.end_time.strftime('%a %-I:%M%p')} ({duration_hours:.1f} hours)"
     )
-
-    # Build the arc profile — one vibe_weights dict per stage of the night.
-    # This is what tells the planner that "stop 1 = warm-up", "stop N = peak".
-    arc_profile = tuple(dict(weights) for _role, weights in style["arc"])
-
-    group = GroupInput(
-        users=user_prefs,
-        start_time=start_dt, end_time=end_dt,
-        max_stops=max_stops,
-        neighborhoods=tuple(neighborhoods),
-        arc_profile=arc_profile,
-        walking_only=style.get("walking_only", True),
-        budget_multiplier=style.get("budget_multiplier"),
-    )
-
-    # Stash inputs so a replan click (which doesn't go through the form)
-    # can use the same group + data without re-submitting the form.
-    st.session_state["group"] = group
-    st.session_state["bars"] = bars
-    st.session_state["cases"] = cases
-    st.session_state["rules"] = rules
-
-    with st.spinner("Planning…"):
-        result = plan_crawl(group, bars=bars, cases=cases, rules=rules)
-    st.session_state["result"] = result
 
     if not result.route.stops:
         st.error("No feasible crawl under these constraints.")

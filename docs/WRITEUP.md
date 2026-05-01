@@ -197,33 +197,167 @@ The per-user served-ness table (§3, stakeholder taxonomy) is the final honesty 
 
 ## 7. Evaluation
 
-- **Unit tests**: 75 passing (`tests/`). Coverage spans qualitative thresholds, score formulas, Pareto filter, temporal window logic, Haversine accuracy (Times Square ↔ Union Square within 5%), all five aggregation strategies, meta-selector rule firing, CBR retrieval + adaptation, runner-up + counterfactual generation, and explanation template specificity (every stop explanation must name ≥1 user, ≥1 bar attribute, ≥1 weight/criterion).
-- **Integration tests**: 7 full-pipeline scenarios (aligned friends, wide-budget gap, many-vetoes, infeasible window, empty group, determinism, time-window respect).
-- **Notebook**: 45 cells, all execute top-to-bottom in a fresh kernel without errors (`jupyter nbconvert --execute demo.ipynb`).
-- **Performance**: end-to-end `plan_crawl` on 143 bars × 3 users × 3 stops with structural counterfactuals: well under 1 second on a 2023 MacBook.
+- **Unit tests**: 151 passing, 1 skipped (`tests/`). Coverage spans qualitative thresholds, score formulas, Pareto filter, temporal-window logic, Haversine accuracy (Times Square ↔ Union Square within 5%), all five aggregation strategies, meta-selector rule firing, CBR retrieval + **adaptation** (Phase 3), runner-up + counterfactual generation, explanation template specificity, and the four post-proposal phases (StrategyDecision shape + deeper-analysis trigger, structured-Argument placeholder-leak guard, CBR adaptation + dealbreaker preservation, dialogic replan + locked-stop fixity + revert semantics).
+- **Integration tests**: full-pipeline scenarios (aligned friends, wide-budget gap, many-vetoes, infeasible window, empty group, determinism, time-window respect).
+- **Evaluation harness**: `evaluation/eval_harness.py` runs 45 scenarios across aligned / disagreement-forcing / edge / all 9 night-style / 20 random groups. `evaluation/eval_deep.py` runs 15 deep probes (determinism, user-order invariance, structural invariants, threshold transitions, dataset coverage, runner-up gap distribution, CBR retrieval coherence, vibe vocab leakage). Detailed findings + fixes in `evaluation/REPORT.md` and `evaluation/FIXES.md`.
+- **Invariants**: across all 45 scenarios + 100 random plans — every stop is open at arrival, monotonic times hold, no veto bar appears, neighborhood + max-stops constraints respected, walking-distance arithmetic re-verifies. Same input ⇒ identical route signature.
+- **Notebook**: cells execute top-to-bottom in a fresh kernel (`jupyter nbconvert --execute notebooks/demo.ipynb`).
+- **Performance**: end-to-end `plan_crawl` on 143 bars × 3 users × 3 stops with structural counterfactuals: p50 ≈ 28 ms / p95 ≈ 60 ms on a 2023 MacBook.
 
 ## 8. Limitations
 
-The honest version:
+The honest version (post-Phase-4):
 
 - **Hours, happy hours, and specials are category defaults, not live data.** A real deployment would hit Google Places or a dedicated feed.
 - **Vibes are heuristic.** We infer from Google category + user notes; two bars with the same Google category get the same default vibes even when they differ in character.
 - **Router is exact only for ≤ 7 stops.** Realistic group crawls are 3–5, so this is fine; but a large party crawl of 10+ stops would fall back to 2-opt.
-- **No preference learning.** Weights are user-supplied; we don't update from outcomes.
+- **Preference learning is bounded** (Phase 4) — multiplicative reject-bumps capped at 2× original, additive budget-widening at 50% of overshoot. The system intentionally avoids gradient-descent or Bayesian updates so updates remain narratable. The downside: subtle drift from many small reactions takes more rounds to express than a Bayesian update would.
+- **Locked-stop replan path bypasses 2-opt.** Phase 4's `_greedy_fill_with_locks` greedy-fills around fixed positions and skips global swap — the rationale is that the user pinned them, so the planner shouldn't overrule. A more aggressive route quality could be reclaimed with a constrained 2-opt that only swaps unlocked positions.
 - **Single-night crawls only.** A weekend arc (Fri night → Sat brunch → Sat night) is out of scope.
 - **English-only, US drink categories.** Internationalizing would require vocabulary extensions.
-- **Dataset is geographically concentrated** in downtown Manhattan, Hell's Kitchen, Williamsburg, Bushwick, Astoria — matching where the author actually goes. A UES-only crawl has fewer plausible plans.
+- **Dataset is geographically concentrated** in downtown Manhattan, Hell's Kitchen, Williamsburg, Bushwick, Astoria — matching where the author actually goes. A UES-only crawl has fewer plausible plans. The eval harness measured 27/143 (≈19%) unique-bar coverage across 100 random plans — a known funnel from the default East Village start.
+
+## 8.5 Post-proposal additions: deepening the explanation surface (Phases 1–4)
+
+After the proposal was approved, four additional phases were implemented to push the system closer to what the course's VOTE / Slade / Schank-style explanation literature actually asks for. Each phase was test-first, gated by a green pytest run + green eval harness before commit. The phases are independent (each ships value alone) but compose cleanly.
+
+### 8.5.1 Phase 1 — VOTE-shaped strategy decisions
+
+The original meta-selector returned a `(strategy_name, rule_id, rationale_string)` tuple — enough to drive scoring, not enough to explain. Phase 1 packages the meta-selector's output into a `StrategyDecision` dataclass that carries:
+
+- `strategy_id` (the old string return, preserved for back-compat)
+- `rank` ∈ {A, B, C, E} — A = strong moral / structural claim (`approval_veto`, `egalitarian_min`); B = positional / pairwise (`borda_count`, `copeland_pairwise`); C = shallow fallback (`utilitarian_sum`); E = "margin too thin, deeper analysis warranted"
+- `narrative_name` (e.g. `"Protect the person who'd otherwise be left out"`) — phrase usable in explanation prose
+- `quote` — a quotable sentence a group member might say that captures the strategy's spirit
+- `triggering_profile_signal` — the specific metric + comparison that fired the rule (e.g. `"budget_spread_ratio=2.4× exceeded threshold 2.0×"`)
+- `applies_when` — the English version of the machine-readable condition
+- `considered_alternatives` — for each of the four losing strategies, a `(strategy_id, rank, why_not_chosen)` triple. `why_not_chosen` cites either *"a higher-rank strategy applied"* or the specific threshold the metric failed to clear.
+
+Plus a deeper-analysis tier: when the chosen plan's mean normalized runner-up gap (across stops) falls below a YAML-configurable threshold (default 0.05), the decision's `rank` is reset to `E` and `requires_deeper_analysis=True`. A new `decision_system.deeper_analysis(plan_result)` function returns a side-by-side per-stop diff (winner vs runner-up + criteria gaps + unlock hints) for the caller to render. This is the system saying *"we picked, but it was close — here's the side-by-side."*
+
+The rank/quote/applies_when fields live in `data/rules.yaml` so adding a new strategy is a config edit, not a code change.
+
+### 8.5.2 Phase 2 — Structured Arguments
+
+Per-stop and strategy explanations were template-driven but ad-hoc — a per-stop function with branching, a per-strategy function with five if-elif arms. Phase 2 introduces a two-layer model:
+
+- `Premise(subject, criterion, direction, magnitude, evidence)` — a single reason, for or against, with a normalized contribution magnitude and a concrete evidence string ("$14/drink, moderate tier" / "rank A; dealbreaker_density=0.0 below threshold").
+- `Argument(conclusion, supporting, opposing, decisive_premise, sacrifice, runner_up)` — assembled from upstream traces; never re-derives.
+- `render_argument(arg) → str` — a single linearizer that emits prose in this fixed shape: `[conclusion]. [top scored supporting + preserved editorial premises]. The decisive factor: [decisive premise]. But [top opposing] — [sacrifice]. The closest alternative was [runner_up].`
+
+Per-criterion renderers are direction-aware: budget under `supports` reads *"it fits the group's budget"*; under `opposes` it reads *"it's over Alex's cap"* — the old direction-blind template would have produced *"it fits Alex's budget (~$22 over Alex's $18 cap)"*, which is incoherent prose.
+
+`build_stop_argument` and `build_strategy_argument` build the structured object. The strategy Argument's decisive premise cites `decision.triggering_profile_signal`; its opposing premises cite the top two `considered_alternatives` (with the strategy named in prose). A CBR Argument generator (added in Phase 3) follows the same pattern.
+
+The hard constraint, enforced by tests: rendered prose must never contain literal template placeholders like `{subject}` or `{criterion}`. An exhaustive sweep over every renderer × direction × subject × evidence + a full plan-tree walk on a real `plan_crawl` output guarantees this — a missing slot fails CI, not the user's screen.
+
+The legacy per-stop function is preserved as `explain_stop_legacy` so a side-by-side comparison is always available.
+
+### 8.5.3 Phase 3 — Adaptive CBR (closing Slade's R-loop)
+
+The original CBR was retrieve-only: top-3 cases were displayed as a narrative anchor but never influenced routing. Phase 3 implements the *Revise* step — `adapt_case(case, group, bars, rules) → AdaptedCase` performs three layered adaptations:
+
+1. **Length adaptation** — pad or trim the case's `solution_sequence` to match `group.max_stops`. Trimming drops the lowest-priority stage (smallest `vibe_profile` magnitude); padding repeats the final stage's profile with `role="extended"`.
+2. **Vibe adaptation** — if any user has a must-have vibe (weight ≥ 0.8) absent from every stage of the case, inject it into the richest stage's `vibe_profile`.
+3. **Constraint adaptation** — if the case targets a neighborhood the group excluded, retarget to the nearest allowed neighborhood (centroid distance over the bar dataset).
+
+Every change is logged as an `Adaptation(field_changed, from_value, to_value, reason)` record. Stages with no feasible bars in the current dataset (under the group's neighborhood constraint) are flagged as `unadapted_stages` — the router treats them as soft priors rather than required waypoints, so the system fails gracefully instead of crashing on edge cases.
+
+The adapted case is then passed to `best_route` as a `seed_sequence`. At each stop position, candidates receive an additive **CBR seed bonus** = `cbr_seed_bonus * (matched stage-vibe weight / total stage-vibe weight)`. The bonus magnitude is YAML-configurable (`routing_config.cbr_seed_bonus: 0.15`). Critically, this is a **prior, not a constraint** — a strongly-scoring off-archetype bar can still win the slot. Tests verify the prior nature by demonstrating that some chosen bar in some real plan has tags outside the seed's vibe-union.
+
+The CBR Argument (rendered into the plan's explanation tree) reads, for example: *"This plan resembles our **East Village Dive Tour** archetype, adapted for your group. We adapted the archetype: group's max_stops=3 is below archetype's 4; dropped stage 'middle_2' (lowest-priority). The decisive factor: strongest archetype match on vibe (score 0.78, overall similarity 0.70)."*
+
+When similarity falls below a configurable weak-match threshold, an opposing premise fires: *"the nearest archetype is a weaker-than-usual match — take the framing loosely."*
+
+### 8.5.4 Phase 4 — Dialogic replan with bounded preference learning
+
+A first-class second public entry point: `replan_with_reactions(previous_plan, reactions, original_group, bars, cases, rules)`.
+
+A `Reaction(user_id, stop_index, verdict, lock, swap_target_bar_id)` is one user's reaction to one stop. `verdict` is `accept | reject | swap`; `lock=True` pins the stop in place across the replan.
+
+**Preference update rule** (intentionally simple, defensibly explainable, never Bayesian):
+
+- On a `reject`: for each criterion where the rejected stop's bar scored in the user's bottom quartile across the plan, multiply that user's weight on that criterion by 1.3, capped at 2× the original.
+- On an `accept` of an over-budget stop: widen the user's `max_per_drink` cap by half the overshoot.
+- On a `swap`: treat as a reject on the current stop + an implicit accept on the swap target if specified.
+
+Every change emits a `PreferenceUpdate(user_id, field, from_value, to_value, reason, triggered_by_reaction)` record with English reason: *"Alex rejected stop 2, which scored in their bottom quartile on 'noise'; bumped the weight by 30% (capped at 2× original)"*.
+
+**Locked-stop routing** — a new `_greedy_fill_with_locks` path in `routing.best_route` honors `locked_bars: dict[idx, Bar]`, fixing those positions and greedy-filling the rest. The router does not 2-opt across locks (the user pinned them). Feasibility (in-window arrival, bar-open) is still enforced; an infeasible lock returns an empty route with the reason logged.
+
+**Delta attribution** — `build_delta_argument(before, after, reactions, pref_updates)` produces a `DeltaArgument` where every changed stop is attributed to either:
+- a specific `Reaction` (if the reaction targeted that stop index), or
+- a named `PreferenceUpdate` ripple ("ripple: updated Alex's noise"), or
+- flagged in `unattributed` if neither applies.
+
+Tests assert that `unattributed` is empty for normal flows. An unattributable change is treated as a **bug**, not a side-effect to hide.
+
+**Revert semantics** — `revert_user_updates(original_users, updated_users, pref_updates, user_id)` undoes one user's preference changes without losing the others'. The pref-update narrative ends with *"Say 'revert Alex' or 'revert Sarah' to undo those updates and replan"*.
+
+The Streamlit UI surfaces this end-to-end: a per-stop verdict selector (accept / reject / swap) + a lock checkbox, a "Replan" button, and post-replan rendering of the pref-update paragraph + the delta narrative + the new plan.
+
+### 8.5.5 Phase 4.1 — Style-aware budget realism
+
+A late-cycle UX fix prompted by an observed failure: *"Pregame → clubs"* night style was producing karaoke bars instead of nightclubs. Root cause was two-fold and not in scoring: (a) the default neighborhood filter (East Village + LES) hard-excluded every dance-floor bar in the dataset (Bushwick / Williamsburg), and (b) the hardcoded 2.0× budget gross-mismatch multiplier excluded real clubs that legitimately run $20–32/drink.
+
+Fix:
+
+- Moved the budget multiplier to `data/rules.yaml` (`dealbreaker_rules.budget_gross_mismatch.multiplier`) — no hardcoded magic number in `src/` per the standing rule.
+- Added `GroupInput.budget_multiplier: Optional[float]` per-plan override.
+- Each `NIGHT_STYLES` entry in the Streamlit app now declares its own `budget` (slider default) and `budget_multiplier` (relaxation): `Pregame → clubs` and `Late-night only` and `Rooftop summer` and `Birthday party` get 2.5×; conversation styles stay at 2.0×.
+- The exclusion explainer cites the actual multiplier that fired (e.g. *"$32 is more than 2.5× Alex's $10 cap"*), not a hardcoded "2×".
+- Mr. Purple's vibe tagging in `bar_overrides.yaml` corrected — added `dj-set / late-close / music-loud / instagrammable`, dropped `conversation` (which was in an `opposing_pair` with `dance-floor` and silently penalized the bar on every club-heavy stage).
+
+After the fix, `Pregame → clubs` with neighborhoods expanded to include Bushwick produces *Planet Rose → House of Yes → Sing Sing Ave A.* — House of Yes is an actual Bushwick dance club. The peak slot now pulls real nightlife.
+
+### 8.5.6 Cumulative impact
+
+| Metric | Before phases | After phase 4.1 |
+|---|---|---|
+| Tests | 75 | 151 |
+| Public API entry points | 1 (`plan_crawl`) | 3 (`plan_crawl`, `deeper_analysis`, `replan_with_reactions`) |
+| `src/` modules | 11 | 13 (+ `argument`, `dialogic`) |
+| CBR loop | Retrieve-only (R1) | Full R1+R2+R3 (Retrieve, Reuse, Revise) |
+| Strategy output | tuple (name, rule, rationale) | `StrategyDecision` dataclass with rank + considered_alternatives + deeper-analysis trigger |
+| Per-stop explanation | per-criterion template branching | `Argument` → `render_argument` (data-driven shape) |
+| Preference learning | none | bounded multiplicative + revertable |
+| Eval harness scenarios | 0 | 45 + 15 deep probes |
+| Latency p50 / p95 | not benchmarked | 28 / 60 ms |
 
 ## 9. Future work
 
-Natural extensions, in priority order:
+Natural extensions, in priority order. (Items the proposal listed as future work that Phases 1–4 actually shipped have been removed; the surviving list is everything still genuinely open.)
 
-1. **Live data integration** — Yelp/Google Places for real hours, current specials, and crowd telemetry. The decision system doesn't change; only the dataset-build stage does.
-2. **Preference learning** — after a crawl, the user rates each stop, and the system updates their weights by gradient descent on a regret function. Note: the *decisions* remain symbolic; only the weights are learned.
-3. **Multi-night arcs** — brunch → cocktails → dinner → nightcap across a weekend.
-4. **Capacity forecasting** — a time-of-day + day-of-week model of crowding. Our `crowd_level_by_hour` is a category template; a real model would be learned.
-5. **Richer stakeholder modeling** — e.g., one user is the designated driver (no alcohol), one wants food, one has a flight in the morning. The aggregation can extend to accommodate role-based constraints.
-6. **Larger dataset** — expand to 500+ bars via the author's friends' lists (social-graph provenance preserved).
+1. **Live data integration** — Yelp / Google Places for real hours, current specials, and crowd telemetry. The decision system doesn't change; only the dataset-build stage does. This is the single highest-leverage upgrade because it turns "plausible category defaults" into facts.
+2. **Multi-night arcs** — brunch → cocktails → dinner → nightcap across a weekend. The temporal layer already supports past-midnight hours; what's missing is a multi-day `GroupInput` and an arc model that reasons about Friday-night hangover affecting Saturday-noon brunch choices.
+3. **Capacity forecasting** — a time-of-day + day-of-week model of crowding. Our `crowd_level_by_hour` is a category template; a real model would be learned from Google Popular Times or BestTime.
+4. **Richer stakeholder modeling** — e.g., one user is the designated driver (no alcohol), one wants food, one has a flight in the morning. The aggregation can extend to accommodate role-based constraints; the `UserPreference` shape would need a `roles` field.
+5. **Larger dataset** — expand to 500+ bars via the author's friends' lists (social-graph provenance preserved). The bottleneck is curation effort, not architecture.
+6. **Replan-loop UX iteration** — the current Streamlit reaction UI is functional but minimal (radio + buttons). A drag-to-reorder, tap-to-swap mobile-first interaction would make the dialogic loop feel native rather than form-driven.
+7. **Locked-stop 2-opt** — Phase 4's lock path skips global swap; a constrained 2-opt that swaps only unlocked positions could reclaim some objective without overruling the user's pins.
+8. **Bayesian preference posterior** — the multiplicative reject-bump rule is intentionally simple to keep updates narratable. A Bayesian alternative would be more sample-efficient but harder to explain. The right experiment is to run both side-by-side and measure user trust + correctness on identical scenarios.
+
+## 9.5 Screenshots
+
+All artifacts in `docs/screenshots/` are programmatically regenerated from the current code (no hand-edited images).
+
+**Streamlit UI** (captured via headless Playwright against `streamlit run app/streamlit_app.py`):
+
+- `ui_initial.png` — splash + sidebar before any plan; the night-style arc visible on the left
+- `ui_plan.png` — full plan render: map + Gantt timeline + Phase 1 strategy explanation ("We used **Respect the intensity of preference**…") + Phase 2 Argument-shaped per-stop prose ("The decisive factor: …")
+- `ui_replan.png` — after a `reject` reaction on stop 1: the **Updated plan** section shows the auto-narrated preference-update paragraph ("Friend 1's noise weight rose from 0.10 to 0.13. Reason: rejected stop 1, which scored in their bottom quartile on 'noise'…") followed by the new plan with the locked stop preserved
+
+**Visualizations** (`src/visualize.py` outputs):
+
+- `route_map.html` — Folium interactive map of the aligned-trio plan
+- `timeline.png` — matplotlib Gantt of the same plan
+- `score_breakdown.png` — per-criterion stacked bar chart, averaged across users
+- `pregame_clubs_route.html` + `pregame_clubs_timeline.png` — Phase 4.1 fix demo: `Pregame → clubs` with neighborhoods expanded to Bushwick now produces *Planet Rose → House of Yes → Sing Sing Ave A.*; House of Yes is an actual Bushwick dance club, demonstrating that the budget-multiplier + neighborhood-default fixes pull real nightlife into the dataset's reach.
+
+**Inspection artifacts** (markdown showing internals other UIs would hide):
+
+- `argument_internals.md` — raw structured `Argument` for one stop: every `Premise` listed with subject / criterion / direction / magnitude / evidence, the decisive premise marked, the rendered prose at the bottom — proves the prose is *composed*, not hand-written
+- `replan_demo.md` — full transcript of a `replan_with_reactions` invocation: original plan, reactions, auto-narrated preference updates, delta narrative with per-stop attribution, and the new plan with locked stops marked
 
 ## 10. How to run
 
@@ -245,7 +379,14 @@ jupyter notebook notebooks/demo.ipynb
 streamlit run app/streamlit_app.py
 ```
 
-Yale Zoo compatibility: core modules use only `numpy`, `pandas`, `pyyaml`, `jsonschema`, `matplotlib`, `folium`, `jupyter`. Nothing system-level.
+Yale Zoo compatibility: core decision-system modules use only `numpy`, `pandas`, `pyyaml`, `jsonschema`, `matplotlib`, `folium`, `jupyter` — nothing system-level. The optional Streamlit UI adds `streamlit` (also pure-Python). Screenshot regeneration uses Playwright + Chromium, but those are author-side tooling — the code under review needs neither.
+
+To regenerate the screenshots after code changes:
+```bash
+python -m pip install playwright && python -m playwright install chromium
+streamlit run app/streamlit_app.py --server.headless=true --server.port=8501 &
+python scripts/regenerate_screenshots.py    # see scripts/ for the Playwright driver
+```
 
 ## 11. Division of labor
 

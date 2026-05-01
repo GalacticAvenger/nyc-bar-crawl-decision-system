@@ -132,45 +132,45 @@
       },
       {
         "n_users": 4,
-        "median_ms": 7.0
+        "median_ms": 7.1
       },
       {
         "n_users": 6,
-        "median_ms": 10.3
+        "median_ms": 10.5
       },
       {
         "n_users": 8,
-        "median_ms": 11.7
+        "median_ms": 11.9
       },
       {
         "n_users": 10,
-        "median_ms": 8.3
+        "median_ms": 8.4
       }
     ],
     "by_max_stops": [
       {
         "max_stops": 1,
-        "median_ms": 14.0
+        "median_ms": 14.2
       },
       {
         "max_stops": 2,
-        "median_ms": 16.0
+        "median_ms": 16.7
       },
       {
         "max_stops": 3,
-        "median_ms": 18.6
+        "median_ms": 18.9
       },
       {
         "max_stops": 4,
-        "median_ms": 23.4
+        "median_ms": 24.2
       },
       {
         "max_stops": 5,
-        "median_ms": 44.5
+        "median_ms": 45.3
       },
       {
         "max_stops": 6,
-        "median_ms": 191.8
+        "median_ms": 194.5
       }
     ]
   },

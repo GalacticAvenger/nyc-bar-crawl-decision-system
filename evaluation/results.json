@@ -1,7 +1,7 @@
 [
   {
     "name": "aligned_two_friends",
-    "time_ms": 7.06,
+    "time_ms": 7.03,
     "n_users": 2,
     "max_stops": 3,
     "n_stops": 3,
@@ -77,7 +77,7 @@
   },
   {
     "name": "budget_gap_three",
-    "time_ms": 4.77,
+    "time_ms": 4.78,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -154,7 +154,7 @@
   },
   {
     "name": "many_vetoes_three",
-    "time_ms": 24.68,
+    "time_ms": 24.82,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -232,7 +232,7 @@
   },
   {
     "name": "vibe_split_three",
-    "time_ms": 46.1,
+    "time_ms": 45.54,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -309,7 +309,7 @@
   },
   {
     "name": "intense_user_three",
-    "time_ms": 24.42,
+    "time_ms": 24.29,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -324,9 +324,9 @@
       "2025-05-02T22:12:46.373452"
     ],
     "neighborhoods_in_route": [
-      "NoMad",
       "Midtown",
-      "East Village"
+      "East Village",
+      "NoMad"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -387,7 +387,7 @@
   },
   {
     "name": "solo",
-    "time_ms": 14.06,
+    "time_ms": 12.8,
     "n_users": 1,
     "max_stops": 2,
     "n_stops": 2,
@@ -457,7 +457,7 @@
   },
   {
     "name": "eight_friends",
-    "time_ms": 53.57,
+    "time_ms": 49.28,
     "n_users": 8,
     "max_stops": 4,
     "n_stops": 4,
@@ -542,7 +542,7 @@
   },
   {
     "name": "infeasible_window",
-    "time_ms": 1.54,
+    "time_ms": 1.36,
     "n_users": 1,
     "max_stops": 3,
     "n_stops": 0,
@@ -597,7 +597,7 @@
   },
   {
     "name": "morning_window",
-    "time_ms": 1.52,
+    "time_ms": 1.06,
     "n_users": 1,
     "max_stops": 2,
     "n_stops": 0,
@@ -637,7 +637,7 @@
   },
   {
     "name": "nonexistent_neighborhood",
-    "time_ms": 0.11,
+    "time_ms": 0.1,
     "n_users": 1,
     "max_stops": 3,
     "n_stops": 0,
@@ -676,7 +676,7 @@
   },
   {
     "name": "all_cheap",
-    "time_ms": 10.76,
+    "time_ms": 10.04,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -691,8 +691,8 @@
       "2025-05-02T21:54:52.421090"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "utilitarian_sum",
     "rule_fired": "strategy_utilitarian",
@@ -753,7 +753,7 @@
   },
   {
     "name": "all_splurge",
-    "time_ms": 28.07,
+    "time_ms": 27.01,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -768,8 +768,8 @@
       "2025-05-02T21:49:35.756557"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "utilitarian_sum",
     "rule_fired": "strategy_utilitarian",
@@ -828,7 +828,7 @@
   },
   {
     "name": "step_free_required",
-    "time_ms": 0.15,
+    "time_ms": 0.12,
     "n_users": 1,
     "max_stops": 2,
     "n_stops": 0,
@@ -868,7 +868,7 @@
   },
   {
     "name": "empty_user_prefs",
-    "time_ms": 12.48,
+    "time_ms": 12.04,
     "n_users": 1,
     "max_stops": 2,
     "n_stops": 2,
@@ -881,8 +881,8 @@
       "2025-05-02T21:05:04.640488"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "utilitarian_sum",
     "rule_fired": "strategy_utilitarian",
@@ -939,7 +939,7 @@
   },
   {
     "name": "max_one_stop",
-    "time_ms": 10.18,
+    "time_ms": 10.19,
     "n_users": 1,
     "max_stops": 1,
     "n_stops": 1,
@@ -1005,7 +1005,7 @@
   },
   {
     "name": "six_stops_long_window",
-    "time_ms": 193.27,
+    "time_ms": 192.7,
     "n_users": 2,
     "max_stops": 6,
     "n_stops": 6,
@@ -1092,7 +1092,7 @@
   },
   {
     "name": "arc_chill_two",
-    "time_ms": 39.62,
+    "time_ms": 35.83,
     "n_users": 2,
     "max_stops": 3,
     "n_stops": 3,
@@ -1168,7 +1168,7 @@
   },
   {
     "name": "arc_pregame_clubs_four",
-    "time_ms": 70.5,
+    "time_ms": 60.9,
     "n_users": 4,
     "max_stops": 3,
     "n_stops": 3,
@@ -1246,7 +1246,7 @@
   },
   {
     "name": "arc_rooftop_summer_three",
-    "time_ms": 52.16,
+    "time_ms": 49.67,
     "n_users": 3,
     "max_stops": 3,
     "n_stops": 3,
@@ -1261,8 +1261,8 @@
       "2025-05-02T20:53:01.962439"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1323,7 +1323,7 @@
   },
   {
     "name": "arc_games_night_three",
-    "time_ms": 36.18,
+    "time_ms": 34.15,
     "n_users": 3,
     "max_stops": 2,
     "n_stops": 2,
@@ -1395,7 +1395,7 @@
   },
   {
     "name": "arc_late_night_two",
-    "time_ms": 29.05,
+    "time_ms": 29.24,
     "n_users": 2,
     "max_stops": 2,
     "n_stops": 2,
@@ -1466,7 +1466,7 @@
   },
   {
     "name": "arc_date_night_two",
-    "time_ms": 29.7,
+    "time_ms": 29.54,
     "n_users": 2,
     "max_stops": 2,
     "n_stops": 2,
@@ -1479,8 +1479,8 @@
       "2025-05-02T20:37:48.592292"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1538,7 +1538,7 @@
   },
   {
     "name": "arc_birthday_six",
-    "time_ms": 91.14,
+    "time_ms": 83.52,
     "n_users": 6,
     "max_stops": 3,
     "n_stops": 3,
@@ -1618,7 +1618,7 @@
   },
   {
     "name": "arc_dive_tour_three",
-    "time_ms": 35.38,
+    "time_ms": 35.66,
     "n_users": 3,
     "max_stops": 4,
     "n_stops": 4,
@@ -1635,9 +1635,9 @@
       "2025-05-03T00:27:57.012903"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
       "Hell's Kitchen",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1700,7 +1700,7 @@
   },
   {
     "name": "arc_post_dinner_two",
-    "time_ms": 28.83,
+    "time_ms": 28.52,
     "n_users": 2,
     "max_stops": 2,
     "n_stops": 2,
@@ -1713,8 +1713,8 @@
       "2025-05-02T22:37:48.592292"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "borda_count",
     "rule_fired": "strategy_borda",
@@ -1772,7 +1772,7 @@
   },
   {
     "name": "random_seed_0",
-    "time_ms": 31.1,
+    "time_ms": 29.8,
     "n_users": 4,
     "max_stops": 1,
     "n_stops": 1,
@@ -1841,7 +1841,7 @@
   },
   {
     "name": "random_seed_1",
-    "time_ms": 40.39,
+    "time_ms": 36.87,
     "n_users": 2,
     "max_stops": 1,
     "n_stops": 1,
@@ -1908,7 +1908,7 @@
   },
   {
     "name": "random_seed_2",
-    "time_ms": 16.12,
+    "time_ms": 14.97,
     "n_users": 1,
     "max_stops": 5,
     "n_stops": 2,
@@ -1978,7 +1978,7 @@
   },
   {
     "name": "random_seed_3",
-    "time_ms": 17.95,
+    "time_ms": 17.54,
     "n_users": 2,
     "max_stops": 4,
     "n_stops": 4,
@@ -1995,8 +1995,8 @@
       "2025-05-02T21:54:26.122757"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "egalitarian_min",
     "rule_fired": "strategy_egalitarian",
@@ -2058,7 +2058,7 @@
   },
   {
     "name": "random_seed_4",
-    "time_ms": 13.28,
+    "time_ms": 12.32,
     "n_users": 2,
     "max_stops": 3,
     "n_stops": 3,
@@ -2073,8 +2073,8 @@
       "2025-05-02T21:02:06.076570"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "egalitarian_min",
     "rule_fired": "strategy_egalitarian",
@@ -2134,7 +2134,7 @@
   },
   {
     "name": "random_seed_5",
-    "time_ms": 37.33,
+    "time_ms": 36.85,
     "n_users": 5,
     "max_stops": 2,
     "n_stops": 2,
@@ -2209,7 +2209,7 @@
   },
   {
     "name": "random_seed_6",
-    "time_ms": 30.74,
+    "time_ms": 30.12,
     "n_users": 5,
     "max_stops": 5,
     "n_stops": 1,
@@ -2280,7 +2280,7 @@
   },
   {
     "name": "random_seed_7",
-    "time_ms": 13.36,
+    "time_ms": 13.3,
     "n_users": 3,
     "max_stops": 5,
     "n_stops": 2,
@@ -2353,7 +2353,7 @@
   },
   {
     "name": "random_seed_8",
-    "time_ms": 17.56,
+    "time_ms": 17.23,
     "n_users": 2,
     "max_stops": 4,
     "n_stops": 4,
@@ -2370,8 +2370,8 @@
       "2025-05-02T22:39:13.546039"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "utilitarian_sum",
     "rule_fired": "strategy_utilitarian",
@@ -2433,7 +2433,7 @@
   },
   {
     "name": "random_seed_9",
-    "time_ms": 27.16,
+    "time_ms": 26.73,
     "n_users": 4,
     "max_stops": 2,
     "n_stops": 2,
@@ -2506,7 +2506,7 @@
   },
   {
     "name": "random_seed_10",
-    "time_ms": 40.04,
+    "time_ms": 37.95,
     "n_users": 5,
     "max_stops": 1,
     "n_stops": 1,
@@ -2576,7 +2576,7 @@
   },
   {
     "name": "random_seed_11",
-    "time_ms": 14.35,
+    "time_ms": 13.66,
     "n_users": 4,
     "max_stops": 1,
     "n_stops": 1,
@@ -2645,7 +2645,7 @@
   },
   {
     "name": "random_seed_12",
-    "time_ms": 44.67,
+    "time_ms": 43.56,
     "n_users": 4,
     "max_stops": 5,
     "n_stops": 4,
@@ -2662,8 +2662,8 @@
       "2025-05-03T00:40:31.109169"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "utilitarian_sum",
     "rule_fired": "strategy_utilitarian",
@@ -2727,7 +2727,7 @@
   },
   {
     "name": "random_seed_13",
-    "time_ms": 35.97,
+    "time_ms": 28.96,
     "n_users": 3,
     "max_stops": 4,
     "n_stops": 4,
@@ -2807,7 +2807,7 @@
   },
   {
     "name": "random_seed_14",
-    "time_ms": 40.39,
+    "time_ms": 21.91,
     "n_users": 1,
     "max_stops": 4,
     "n_stops": 4,
@@ -2824,8 +2824,8 @@
       "2025-05-02T23:38:45.963495"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "utilitarian_sum",
     "rule_fired": "strategy_utilitarian",
@@ -2886,7 +2886,7 @@
   },
   {
     "name": "random_seed_15",
-    "time_ms": 48.41,
+    "time_ms": 32.25,
     "n_users": 2,
     "max_stops": 5,
     "n_stops": 4,
@@ -2965,7 +2965,7 @@
   },
   {
     "name": "random_seed_16",
-    "time_ms": 22.27,
+    "time_ms": 19.91,
     "n_users": 3,
     "max_stops": 1,
     "n_stops": 1,
@@ -3033,7 +3033,7 @@
   },
   {
     "name": "random_seed_17",
-    "time_ms": 37.21,
+    "time_ms": 33.36,
     "n_users": 5,
     "max_stops": 5,
     "n_stops": 4,
@@ -3115,7 +3115,7 @@
   },
   {
     "name": "random_seed_18",
-    "time_ms": 32.98,
+    "time_ms": 31.93,
     "n_users": 2,
     "max_stops": 5,
     "n_stops": 4,
@@ -3132,8 +3132,8 @@
       "2025-05-02T21:38:04.997040"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "egalitarian_min",
     "rule_fired": "strategy_egalitarian",
@@ -3195,7 +3195,7 @@
   },
   {
     "name": "random_seed_19",
-    "time_ms": 56.82,
+    "time_ms": 50.83,
     "n_users": 6,
     "max_stops": 5,
     "n_stops": 5,
@@ -3214,8 +3214,8 @@
       "2025-05-03T01:26:52.048557"
     ],
     "neighborhoods_in_route": [
-      "Lower East Side",
-      "East Village"
+      "East Village",
+      "Lower East Side"
     ],
     "strategy": "egalitarian_min",
     "rule_fired": "strategy_egalitarian",
